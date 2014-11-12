@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package invasionforce;
+package InvasionForce;
 
-import static invasionforce.Constants.*;
+import static  InvasionForce.Constants.*;
 
 class Ship extends SpaceObject implements Movable{
     
