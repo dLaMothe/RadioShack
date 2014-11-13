@@ -9,15 +9,17 @@ public class Power {
 //overview: Power holds power level of a power and set it or get it as a double. 
 //  ie. LRSensor power level equal 10
 
+	private static final double START_POWER_LEVEL = 10;
 	private double myPowerLevel;
+	
 	
 	//Constructor
 	public Power()
 	//REQUIRES: NONE
 	//MODIFIES: myPowerLevel
-	//EFFECTS: Sets myPowerLevel to 10
+	//EFFECTS: Sets myPowerLevel to START_POWER_LEVEL
 	{
-		myPowerLevel = 10;
+		myPowerLevel = START_POWER_LEVEL;
 	}
 	
 	public double getMyPower()
