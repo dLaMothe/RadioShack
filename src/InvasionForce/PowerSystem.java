@@ -10,6 +10,7 @@ import static  InvasionForce.Constants.*;
 class PowerSystem {
 //overview: Holds all the different powers
 	
+	private static final int NUMBER_OF_POWERS = 9;
 	private Power[] myPowers;
 	private double powerAvail;		
 	
@@ -20,7 +21,7 @@ class PowerSystem {
     //EFFECTS: set powerAvail to maxPower and initilize myPowers array
     {
     	powerAvail = maxPower;
-    	myPowers = new Power[9];
+    	myPowers = new Power[NUMBER_OF_POWERS];
     }
    
    
