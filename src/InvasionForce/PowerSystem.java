@@ -33,12 +33,13 @@ class PowerSystem {
 		return myPowers[type].getMyPower();
 	}
 	
-	public void setPowerLevels(int type, double powerLevel)
+	public void setPowerLevels(int type, double powerLevel)throws CriticalPowerException
 	//REQUIRES: NONE 
 	//MODIFIES: HYPRION, LRSENSOR, SRSENSOR, DEFLECTORS, MASERS, TRTMISSL, powerAvail
 	//EFFECTS: Set the power level of a specficed power by the type given and checks if power level is critical  
 	{
 		myPowers[type].setMyPower(powerLevel);
+		powerLevelCritical();
 	}
 	
 	public void increasePowerLevels(int type, double powerLevel)
@@ -49,20 +50,29 @@ class PowerSystem {
 		myPowers[type].increaseMyPower(powerLevel);
 	}
 	   
-	public void decreasePowerLevels(int type, double powerLevel)
+	public void decreasePowerLevels(int type, double powerLevel)throws CriticalPowerException
 	//REQUIRES: NONE 
 	//MODIFIES: HYPRION, LRSENSOR, SRSENSOR, DEFLECTORS, MASERS, TRTMISSL, powerAvail
 	//EFFECTS: Decrease the power level of a specficed power by the type given
 	{
 		myPowers[type].decreaseMyPower(powerLevel);
+		powerLevelCritical();
 	}
 	   
-	public void powerLevelCritical()
+	private void powerLevelCritical() throws CriticalPowerException
 	//REQUIRES: NONE 
 	//MODIFIES: NONE
 	//EFFECTS: Check if more power is being use then available return true then throws an exception
 	{
-		
+		double totalPowerUsed = 0;
+		for (int i = 0; i < NUMBER_OF_POWERS; i++)
+		{
+			totalPowerUsed += getPowerLevels(i);
+		}
+		if (powerAvail < totalPowerUsed)
+		{
+			throw new CriticalPowerException();
+		}
 	}
 	   
 	public void resetPowerAvailable()
