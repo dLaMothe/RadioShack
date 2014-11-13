@@ -68,4 +68,10 @@ public class Sector extends JPanel{
 		this.object = object;
 		label.setText(object.label);
 	}
+	
+	public void blowUp(Weapon weapon){
+		if(weapon instanceof TritonMissile){
+			quadrant.blowUp(this);
+		}
+	}
 }

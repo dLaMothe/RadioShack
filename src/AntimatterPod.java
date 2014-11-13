@@ -1,14 +1,12 @@
 
 public class AntimatterPod 
-	extends Weapon 
-	implements Movable{
+	extends Weapon{
 	
 	public AntimatterPod(){
-		//super();
-		setVelocity(new int[] {/*(int)(1 + (int)(Math.random() * 9))*/Config.EAST, 0});
 		label = "#";
 	}
 	
+	@Override
 	public void Move(){
 		curSector.putObject(new Emptiness());
 		Sector nextSector = curSector.getNext(velocity[0]);
@@ -22,14 +20,6 @@ public class AntimatterPod
 				nextSector = curSector.getNext(velocity[0]);
 			}while(nextSector == null || !(nextSector.object instanceof Emptiness));
 		}
-		nextSector.putObject(this);
-		
-		//this.curSector.quadrant.blowup(this);
-		
-	}
-	
-	public void setVelocity(int[] velocity){
-		Movable.velocity[0] = velocity[0];
-		Movable.velocity[1] = velocity[1];
+		nextSector.putObject(this);	
 	}
 }

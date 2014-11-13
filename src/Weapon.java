@@ -1,11 +1,33 @@
 
 public abstract class Weapon 
-	extends SpaceObject {
+	extends SpaceObject
+	implements Movable{
 	
-	//public abstract void Move();
+	public int[] velocity = new int[]{0, 0};
 	
-	//public abstract void setVelocity(int[] velocity);{
-	//	Movable.velocity[0] = velocity[0];
-	//	Movable.velocity[1] = velocity[1];
-	//}
+	public Weapon(){
+		int direction = 5;
+		int velocity = 1;
+		do{
+			direction = 1 + (int)(Math.random() * 9);
+		}while(direction == 5);
+		setVelocity(new int[] {direction, velocity});
+	}
+
+	public void Move(){
+		curSector.putObject(new Emptiness());
+		Sector nextSector = curSector.getNext(velocity[0]);
+		if(nextSector == null || !(nextSector.object instanceof Emptiness)){
+			destroyItself();
+			if(nextSector != null) {
+				nextSector.blowUp(this);
+			}
+		}
+		else nextSector.putObject(this);		
+	}
+	
+	public void setVelocity(int[] velocity){
+		this.velocity[0] = velocity[0];
+		this.velocity[1] = velocity[1];
+	}
 }

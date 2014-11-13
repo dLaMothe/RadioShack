@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -9,36 +11,51 @@ public class InvadeGame extends JFrame {
 	public Quadrant quadrant;
 	
 	public class Tick extends TimerTask{
-		private Movable[] objects = null;
+		private ArrayList<SpaceObject> objects = null;
 		
-		public Tick(Movable[] objects){
+		public Tick(ArrayList<SpaceObject> objects){
 			this.objects = objects;
+			
 		}
 		
 		public void run(){
-			for(Movable object: objects){
-				object.Move();
+			for(Iterator<SpaceObject> iterator = objects.iterator(); iterator.hasNext();){
+				SpaceObject object = iterator.next();
+				if(object instanceof Movable){
+					if(object.curSector != null){
+						((Movable)object).Move();
+					}
+					if(object.curSector == null){
+						iterator.remove();
+						System.out.println(objects.size());
+					}
+				}
 			}
-			
 		}
 	}
 	
 	public InvadeGame(){
 		quadrant = new Quadrant();
-		AntimatterPod pod = new AntimatterPod();
-		quadrant.grid[5][5].putObject(pod);
-		quadrant.grid[0][5].putObject(new Star());
-		quadrant.grid[5][0].putObject(new Star());
-		quadrant.grid[9][5].putObject(new Star());
-		quadrant.grid[5][9].putObject(new Star());
-		
-		TritonMissile missile = new TritonMissile();
-		quadrant.grid[2][3].putObject(missile);
+		quadrant.addOject(new Star(), quadrant.grid[5][4]);
+		quadrant.addOject(new Star(), quadrant.grid[0][5]);
+		quadrant.addOject(new Star(), quadrant.grid[4][5]);
+		quadrant.addOject(new Star(), quadrant.grid[5][0]);
+		quadrant.addOject(new Star(), quadrant.grid[9][5]);
+		quadrant.addOject(new Star(), quadrant.grid[5][9]);
+		quadrant.addOject(new TritonMissile(), quadrant.grid[1][1]);
+		quadrant.addOject(new TritonMissile(), quadrant.grid[2][2]);
+		quadrant.addOject(new TritonMissile(), quadrant.grid[3][3]);
+		quadrant.addOject(new TritonMissile(), quadrant.grid[4][4]);
+		quadrant.addOject(new TritonMissile(), quadrant.grid[5][5]);
+		quadrant.addOject(new TritonMissile(), quadrant.grid[6][6]);
+		quadrant.addOject(new TritonMissile(), quadrant.grid[7][7]);
+		quadrant.addOject(new TritonMissile(), quadrant.grid[8][8]);
+		quadrant.addOject(new AntimatterPod(), quadrant.grid[9][9]);
 		
 		initUI();
 		Timer timer = new Timer();
-		Movable[] objects =  new Movable[] {pod, missile};
-		timer.schedule(new Tick(objects), 1000, 500);
+		Tick tick = new Tick(quadrant.objects);
+		timer.schedule(tick, 3000, 1000);
 	}
 	
 	private void initUI(){

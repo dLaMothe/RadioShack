@@ -1,10 +1,13 @@
 import java.awt.*;
+import java.util.ArrayList;
+
 import javax.swing.*;
 
 public class Quadrant extends JPanel{
 	
 	private static final long serialVersionUID = 1L;
-	public Sector[][] grid = null; 
+	public Sector[][] grid = null;
+	public ArrayList<SpaceObject> objects = null;
 	
 	public Quadrant (){
 		super();
@@ -16,5 +19,20 @@ public class Quadrant extends JPanel{
 				this.add(grid[i][j]);
 			}
 		}
+		objects = new ArrayList<SpaceObject>();
+	}
+	
+	public void addOject(SpaceObject object, Sector sector){
+		objects.add(object);
+		sector.putObject(object);
+	}
+	
+	public void removeOject(SpaceObject object){	
+		objects.remove(object);
+	}
+	
+	public void blowUp(Sector sector){
+		sector.object.destroyItself();
+		sector.putObject(new Emptiness());
 	}
 }

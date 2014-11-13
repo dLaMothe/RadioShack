@@ -5,5 +5,11 @@ public abstract class SpaceObject {
 	public Sector curSector = null;
 	
 	public SpaceObject(){
+		
 	}
+	
+	public void destroyItself(){
+		curSector = null;
+	}
+
 }
