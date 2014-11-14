@@ -1,3 +1,5 @@
+import java.awt.KeyboardFocusManager;
+
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -27,6 +29,11 @@ public class InputTest {
         //creating and showing this application's GUI.
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
+            	//Hijack the keyboard manager
+            	KeyboardFocusManager manager =
+            	         KeyboardFocusManager.getCurrentKeyboardFocusManager();
+            	manager.addKeyEventDispatcher( new KeyDispatcher() );
+            	 
                 createAndShowGUI();
             }
         });
@@ -41,4 +48,5 @@ public class InputTest {
         frame.pack();
         frame.setVisible(true);
     }
+
 }

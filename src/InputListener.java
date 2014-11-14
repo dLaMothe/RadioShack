@@ -11,7 +11,14 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JFrame;
 
-
+/* 
+ * FILE: InputListener
+ * PURPOSE: Handle keyboard input from the user
+ * AUTHOR: David LaMothe
+ * NOTE: Based on example found at 
+ * https://docs.oracle.com/javase/tutorial/displayCode.html?code=https://docs.oracle.com/javase/tutorial/uiswing/examples/events/KeyEventDemoProject/src/events/KeyEventDemo.java
+ * 
+ */
 
 public class InputListener extends JFrame implements KeyListener, ActionListener {
 	//Initialize typing area
