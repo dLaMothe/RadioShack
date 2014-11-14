@@ -35,4 +35,11 @@ public class Quadrant extends JPanel{
 		sector.object.destroyItself();
 		sector.putObject(new Emptiness());
 	}
+	
+	public void blowUp(ArrayList<Sector> sectors){
+		for(Sector sector: sectors){
+			sector.object.destroyItself();
+			sector.putObject(new Emptiness());
+		}
+	}
 }

@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
@@ -55,6 +56,8 @@ public class Sector extends JPanel{
 				nextRow -= 1;
 				nextCol -= 1;
 				break;
+			default:
+				return this;
 		}
 		if(nextRow < 0 || nextRow >= Config.SECTORS_PER_SIDE
 				|| nextCol < 0 || nextCol >= Config.SECTORS_PER_SIDE){
@@ -72,6 +75,16 @@ public class Sector extends JPanel{
 	public void blowUp(Weapon weapon){
 		if(weapon instanceof TritonMissile){
 			quadrant.blowUp(this);
+		}
+		if(weapon instanceof AntimatterPod){
+			ArrayList<Sector> sectors = new ArrayList<Sector>();
+			for(int i = 1; i < 10; i++){
+				Sector sector  = this.getNext(i);
+				if(sector != null){
+					sectors.add(sector);
+				}
+			}
+			quadrant.blowUp(sectors);
 		}
 	}
 }

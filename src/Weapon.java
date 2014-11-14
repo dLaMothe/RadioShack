@@ -6,12 +6,12 @@ public abstract class Weapon
 	public int[] velocity = new int[]{0, 0};
 	
 	public Weapon(){
-		int direction = 5;
-		int velocity = 1;
+		int direction = 0;
+		int velocity = 0;
 		do{
 			direction = 1 + (int)(Math.random() * 9);
 		}while(direction == 5);
-		setVelocity(new int[] {direction, velocity});
+		setVelocity(new int[] {/*direction*/Config.SOUTH, velocity});
 	}
 
 	public void Move(){

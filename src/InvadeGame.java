@@ -42,14 +42,7 @@ public class InvadeGame extends JFrame {
 		quadrant.addOject(new Star(), quadrant.grid[5][0]);
 		quadrant.addOject(new Star(), quadrant.grid[9][5]);
 		quadrant.addOject(new Star(), quadrant.grid[5][9]);
-		quadrant.addOject(new TritonMissile(), quadrant.grid[1][1]);
-		quadrant.addOject(new TritonMissile(), quadrant.grid[2][2]);
-		quadrant.addOject(new TritonMissile(), quadrant.grid[3][3]);
-		quadrant.addOject(new TritonMissile(), quadrant.grid[4][4]);
-		quadrant.addOject(new TritonMissile(), quadrant.grid[5][5]);
-		quadrant.addOject(new TritonMissile(), quadrant.grid[6][6]);
-		quadrant.addOject(new TritonMissile(), quadrant.grid[7][7]);
-		quadrant.addOject(new TritonMissile(), quadrant.grid[8][8]);
+		quadrant.addOject(new TritonMissile(), quadrant.grid[2][5]);
 		quadrant.addOject(new AntimatterPod(), quadrant.grid[9][9]);
 		
 		initUI();
