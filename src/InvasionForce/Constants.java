@@ -22,6 +22,7 @@ public class Constants{
     public static final int ANITMATTER_POD = 6;
     public static final int ION = 7;
     public static final int HYPER = 8;
+    public static final int POWER_AVAILABLE = 9;
     
     //Capacities
     public static final int TRT_MISSLES = 3;

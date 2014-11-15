@@ -10,18 +10,17 @@ import static  InvasionForce.Constants.*;
 class PowerSystem {
 //overview: Holds all the different powers
 	
-	private static final int NUMBER_OF_POWERS = 9;
-	private Power[] myPowers;
-	private double powerAvail;		
+	private static final int NUMBER_OF_POWERS = 10;
+	private Power[] myPowers;	
 	
 	//Constructor
-    PowerSystem(double maxPower)
+    PowerSystem()
     //REQUIRES: NONE
-    //MODIFIES: powerAvail
-    //EFFECTS: set powerAvail to maxPower and initilize myPowers array
+    //MODIFIES: NONE
+    //EFFECTS: set myPowers[POWER_AVAILABLE] to MAX_POWER and initialize myPowers array
     {
-    	powerAvail = maxPower;
     	myPowers = new Power[NUMBER_OF_POWERS];
+    	myPowers[POWER_AVAILABLE].setMyPower(MAX_POWER) ;
     }
    
    
@@ -35,8 +34,8 @@ class PowerSystem {
 	
 	public void setPowerLevels(int type, double powerLevel)throws CriticalPowerException
 	//REQUIRES: NONE 
-	//MODIFIES: HYPRION, LRSENSOR, SRSENSOR, DEFLECTORS, MASERS, TRTMISSL, powerAvail
-	//EFFECTS: Set the power level of a specficed power by the type given and checks if power level is critical  
+	//MODIFIES: myPowers[HYPRION, LRSENSOR, SRSENSOR, DEFLECTORS, MASERS, TRTMISSL, POWER_AVAILABLE]
+	//EFFECTS: Set the power level of a specified power by the type given and checks if power level is critical  
 	{
 		myPowers[type].setMyPower(powerLevel);
 		powerLevelCritical();
@@ -44,16 +43,16 @@ class PowerSystem {
 	
 	public void increasePowerLevels(int type, double powerLevel)
 	//REQUIRES: NONE 
-	//MODIFIES: HYPRION, LRSENSOR, SRSENSOR, DEFLECTORS, MASERS, TRTMISSL, powerAvail
-	//EFFECTS: Increase the power level of a specficed power by the type given and checks if power level is critical
+	//MODIFIES: myPowers[HYPRION, LRSENSOR, SRSENSOR, DEFLECTORS, MASERS, TRTMISSL, POWER_AVAILABLE]
+	//EFFECTS: Increase the power level of a specified power by the type given and checks if power level is critical
 	{
 		myPowers[type].increaseMyPower(powerLevel);
 	}
 	   
 	public void decreasePowerLevels(int type, double powerLevel)throws CriticalPowerException
 	//REQUIRES: NONE 
-	//MODIFIES: HYPRION, LRSENSOR, SRSENSOR, DEFLECTORS, MASERS, TRTMISSL, powerAvail
-	//EFFECTS: Decrease the power level of a specficed power by the type given
+	//MODIFIES: myPowers[HYPRION, LRSENSOR, SRSENSOR, DEFLECTORS, MASERS, TRTMISSL, POWER_AVAILABLE]
+	//EFFECTS: Decrease the power level of a specified power by the type given
 	{
 		myPowers[type].decreaseMyPower(powerLevel);
 		powerLevelCritical();
@@ -65,11 +64,11 @@ class PowerSystem {
 	//EFFECTS: Check if more power is being use then available return true then throws an exception
 	{
 		double totalPowerUsed = 0;
-		for (int i = 0; i < NUMBER_OF_POWERS; i++)
+		for (int i = 0; i < NUMBER_OF_POWERS-1; i++)
 		{
 			totalPowerUsed += getPowerLevels(i);
 		}
-		if (powerAvail < totalPowerUsed)
+		if (myPowers[POWER_AVAILABLE].getMyPower() < totalPowerUsed)
 		{
 			throw new CriticalPowerException();
 		}
@@ -77,10 +76,10 @@ class PowerSystem {
 	   
 	public void resetPowerAvailable()
 	//REQUIRES: NONE 
-	//MODIFIES: powerAvail
-	//EFFECTS: Reset powerAvail to 100
+	//MODIFIES: myPowers[POWER_AVAILABLE]
+	//EFFECTS: Reset myPowers[POWER_AVAILABLE] to MAX_POWER
 	{
-		powerAvail = MAX_POWER;
+		myPowers[POWER_AVAILABLE].setMyPower(MAX_POWER) ;
 	}
     
 }
