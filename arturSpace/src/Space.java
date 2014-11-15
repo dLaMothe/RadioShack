@@ -5,7 +5,7 @@ public class Space {
 /**
  * @return the quadrant
  */
-public Quadrant[][] getQuadrant() {
+public Quadrant[][] getQuadrants() {
 	return quadrant;
 }
 /**
@@ -17,6 +17,18 @@ private static Space instance;
  * Private constructor for singleton
  */
 private Space() {
+}
+
+public Quadrant getQuadrant(Position p){
+	for (Quadrant[] quadrants : quadrant) {
+		for (Quadrant quadrant : quadrants) {
+			if(p == quadrant.getPosition()){
+				return quadrant;
+			}
+		}
+	}
+	return null;
+	
 }
 
 /**
