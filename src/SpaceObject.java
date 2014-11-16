@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -55,4 +56,20 @@ class SpaceObject extends Observable{
     public boolean getDetectable(){
         return detectable;
     }
+=======
+
+public abstract class SpaceObject {
+	
+	public String label;
+	public Sector curSector = null;
+	
+	public SpaceObject(){
+		
+	}
+	
+	public void destroyItself(){
+		curSector = null;
+	}
+
+>>>>>>> weapon
 }
