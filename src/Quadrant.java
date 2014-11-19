@@ -1,3 +1,6 @@
+import gameObjects.Emptiness;
+import gameObjects.SpaceObject;
+
 import java.awt.*;
 import java.util.ArrayList;
 
