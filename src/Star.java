@@ -1,3 +1,5 @@
+import gameObjects.SpaceObject;
+
 
 public class Star 
 	extends SpaceObject{
