@@ -1,5 +1,7 @@
 
 public class Config {
+	public static final int SPACE_SIZE = 10;
+	public static final int QUADRANT_SIZE = 10;
 	
 	public static final int WINDOW_SIZE = 500;
 	public static final int SECTORS_PER_SIDE = 10;
