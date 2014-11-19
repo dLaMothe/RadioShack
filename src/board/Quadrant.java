@@ -1,11 +1,12 @@
 package board;
 
-import arturCode.Config;
-import arturCode.SpacePosition;
-import csci.project.object.Star;
+import settings.Configs;
 
-public class Quadrant extends SpacePosition{
-private final Sector sectors[][] = new Sector[Config.QUADRANT_SIZE][Config.QUADRANT_SIZE];
+
+
+public class Quadrant implements Positionable{
+	protected final Position position = new Position(-1, -1);
+private final Sector sectors[][] = new Sector[Configs.QUADRANT_SIZE][Configs.QUADRANT_SIZE];
 
 /**
  * @return the sectors
@@ -18,15 +19,53 @@ public Sector[][] getSectors() {
 public Position getPosition() {
 	return position;
 } 
-public int getStarCount(){
-	int i = 0;
-	for (Sector[] sectors2 : sectors) {
-		for (Sector sector : sectors2) {
-			if(sector.getInhabitant() instanceof Star){
-				i++;
+public Sector getSector(Position p){
+	for (Sector[] sctrs : sectors) {
+		for (Sector sector : sctrs) {
+			if(p == sector.getPosition()){
+				return sector;
 			}
 		}
 	}
-	return i;
+	return null;
+	
+}
+
+public Sector getNext(Sector sector,int direction){
+	int nextRow = sector.getPosition().getRow();
+	int nextCol = sector.getPosition().getCol();
+	switch(direction){
+		case Configs.NORTH: 
+			nextRow -= 1;
+			break;
+		case Configs.NORTH_EAST:
+			nextRow -= 1;
+			nextCol += 1;
+			break;
+		case Configs.EAST:
+			nextCol += 1;
+			break;
+		case Configs.SOUTH_EAST:
+			nextRow += 1;
+			nextCol += 1;
+			break;
+		case Configs.SOUTH:
+			nextRow += 1;
+			break;
+		case Configs.SOUTH_WEST:
+			nextRow += 1;
+			nextCol -= 1;
+			break;
+		case Configs.WEST:
+			nextCol += 1;
+			break;
+		case Configs.NORTH_WEST:
+			nextRow -= 1;
+			nextCol -= 1;
+			break;
+		default:
+			return sector;
+	}
+	return getSector(new Position(nextRow, nextCol));
 }
 }

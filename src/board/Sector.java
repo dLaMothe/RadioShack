@@ -1,9 +1,9 @@
 package board;
 
-import arturCode.SpaceObject;
-import arturCode.SpacePosition;
+import gameObjects.SpaceObject;
 
-public class Sector extends SpacePosition{
+public class Sector implements Positionable{
+	protected final Position position = new Position(-1, -1);	
 private SpaceObject inhabitant;
 
 /**
