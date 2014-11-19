@@ -1,14 +1,15 @@
 package board;
+import gameObjects.SpaceObject;
+import settings.Configs;
 
-import arturCode.Config;
 
 public class Space {
- private final Quadrant quadrant[][] = new Quadrant[Config.SPACE_SIZE][Config.SPACE_SIZE];
+ private final Quadrant quadrant[][] = new Quadrant[Configs.SPACE_SIZE][Configs.SPACE_SIZE];
 
 /**
  * @return the quadrant
  */
-public Quadrant[][] getQuadrant() {
+public Quadrant[][] getQuadrants() {
 	return quadrant;
 }
 /**
@@ -20,6 +21,31 @@ private static Space instance;
  * Private constructor for singleton
  */
 private Space() {
+}
+public board.Quadrant getQuadrantOfObject(gameObjects.SpaceObject spaceObject){
+	for (board.Quadrant[] quadrants : quadrant) {
+		for (board.Quadrant quadrant : quadrants) {
+			for(board.Sector[] secs : quadrant.getSectors()){
+				for(board.Sector sec : secs){
+					if(sec.getInhabitant() == spaceObject){
+						return quadrant;
+					}
+				}
+			}
+		}
+	}
+	return null;
+}
+public Quadrant getQuadrant(Position p){
+	for (Quadrant[] quadrants : quadrant) {
+		for (Quadrant quadrant : quadrants) {
+			if(p == quadrant.getPosition()){
+				return quadrant;
+			}
+		}
+	}
+	return null;
+	
 }
 
 /**
