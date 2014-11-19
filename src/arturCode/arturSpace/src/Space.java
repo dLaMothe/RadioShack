@@ -1,6 +1,10 @@
+package arturCode.arturSpace.src;
+
+import settings.Configs;
+
 
 public class Space {
- private final Quadrant quadrant[][] = new Quadrant[SpaceConfig.SPACE_SIZE][SpaceConfig.SPACE_SIZE];
+ private final Quadrant quadrant[][] = new Quadrant[Configs.SPACE_SIZE][Configs.SPACE_SIZE];
 
 /**
  * @return the quadrant

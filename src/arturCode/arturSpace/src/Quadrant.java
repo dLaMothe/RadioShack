@@ -1,6 +1,10 @@
+package arturCode.arturSpace.src;
+
+import settings.Configs;
+
 
 public class Quadrant extends SpacePosition{
-private final Sector sectors[][] = new Sector[SpaceConfig.QUADRANT_SIZE][SpaceConfig.QUADRANT_SIZE];
+private final Sector sectors[][] = new Sector[Configs.QUADRANT_SIZE][Configs.QUADRANT_SIZE];
 
 /**
  * @return the sectors

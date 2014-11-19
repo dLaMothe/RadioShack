@@ -1,3 +1,5 @@
+package arturCode.arturSpace.src;
+
 
 public class Position {
 	private int row;

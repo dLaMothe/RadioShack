@@ -1,4 +1,4 @@
-package csci.project.model.holder;
+package arturCode.arturSpace.src;
 
 public class QuadrantData {
 	private int stars;

@@ -1,3 +1,5 @@
+package arturCode.arturSpace.src;
+
 
 public class Ship extends SpaceObject {
 /**
