@@ -8,6 +8,8 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 public class InputTest {
 	
+	private static KeyDispatcher dispatcher;
+	
     public static void main(String[] args) {
         /* Use an appropriate Look and Feel */
         try {
@@ -30,10 +32,11 @@ public class InputTest {
         //creating and showing this application's GUI.
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
+            	dispatcher = new KeyDispatcher();
             	//Hijack the keyboard manager
             	KeyboardFocusManager manager =
             	         KeyboardFocusManager.getCurrentKeyboardFocusManager();
-            	manager.addKeyEventDispatcher( new KeyDispatcher() );
+            	manager.addKeyEventDispatcher( dispatcher );
             	 
                 createAndShowGUI();
             }
@@ -41,13 +44,10 @@ public class InputTest {
     }
     
     public static void createAndShowGUI() {
-        //Create and set up the window.
-        InputListener frame = new InputListener();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-         
-        //Display the window.
-        frame.pack();
-        frame.setVisible(true);
+        
+        dispatcher.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        dispatcher.pack();
+        dispatcher.setVisible(true);
     }
 
 }
