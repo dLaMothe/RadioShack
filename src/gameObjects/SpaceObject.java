@@ -1,5 +1,7 @@
 package gameObjects;
-import Sector;
+
+import board.Positionable;
+
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -61,16 +63,12 @@ import java.util.Observable;
 //        return detectable;
 //    }
 
-public abstract class SpaceObject {
+public abstract class SpaceObject implements Positionable{
 	
 	public String label;
-	public Sector curSector = null;
 	
 	public SpaceObject(){
 		
 	}
-	
-	public void destroyItself(){
-		curSector = null;
-	}
+
 }

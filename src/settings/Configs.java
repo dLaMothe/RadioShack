@@ -11,7 +11,8 @@ package settings;
  * @author Michael Koonts
  */
 public class Configs {
-    
+	public static final  int SPACE_SIZE = 10;
+	public static final int QUADRANT_SIZE = 10;
     //Ship systems
     public static final int SHIELD = 0;
     public static final int ENGINE = 1;
