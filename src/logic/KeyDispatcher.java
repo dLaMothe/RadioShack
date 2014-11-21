@@ -43,9 +43,15 @@ public class KeyDispatcher extends JFrame implements KeyEventDispatcher, ActionL
     }
 
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
+	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		
+        //Clear the text components.
+        typingArea.setText("");
+        displayArea.setText("");
+
+         
+        //Return the focus to the typing area.
+        typingArea.requestFocusInWindow();
 	}
 
 	public void keyPressed(KeyEvent e) {
