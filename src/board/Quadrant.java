@@ -1,6 +1,7 @@
 package board;
 
 import gameObjects.SpaceObject;
+import holder.QuadrantData;
 
 import java.util.ArrayList;
 
@@ -10,6 +11,9 @@ import settings.Configs;
 
 public class Quadrant implements Positionable{
 	protected final Position position = new Position(-1, -1);
+	protected QuadrantData quadrantData;
+
+
 private final Sector sectors[][] = new Sector[Configs.QUADRANT_SIZE][Configs.QUADRANT_SIZE];
 
 /**
@@ -46,7 +50,13 @@ public Sector getSector(Position p){
 	return null;
 	
 }
+public QuadrantData getQuadrantData() {
+	return quadrantData;
+}
 
+public void setQuadrantData(QuadrantData quadrantData) {
+	this.quadrantData = quadrantData;
+}
 public Sector getNext(Sector sector,int direction){
 	int nextRow = sector.getPosition().getRow();
 	int nextCol = sector.getPosition().getCol();
