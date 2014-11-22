@@ -4,6 +4,7 @@ import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /*import java.awt.Point;
 import java.util.*;
@@ -197,18 +198,151 @@ public class GamePanels {
 	   
 	private void createRightPanel()
 	{
+		int X=0;
+		int Y=0;
+		   
 		JPanel test = new JPanel();
 		test.setLayout(new java.awt.GridBagLayout());
-		      
+		 
 		java.awt.GridBagConstraints gridConstraint = new java.awt.GridBagConstraints();
-		gridConstraint.gridx = 0;
-		gridConstraint.gridy = 0;
-		gridConstraint.weightx =.5;
-		gridConstraint.weighty = .5;
-		gridConstraint.fill = java.awt.GridBagConstraints.BOTH;
+		gridConstraint.gridx = X;
+		gridConstraint.gridy = Y++;
+		gridConstraint.weightx =1;
+		gridConstraint.weighty = 1;
+		gridConstraint.gridwidth = 2;
+		//gridConstraint.fill = java.awt.GridBagConstraints.BOTH;
+		gridConstraint.anchor = java.awt.GridBagConstraints.NORTHWEST;
+		 
+		//Filler to move other label to right postions
+		test.add(new JLabel(""),gridConstraint);
 		
-		JLabel energyLabel = new JLabel("Hails to you right");
-		test.add(energyLabel,gridConstraint);
+		//Column Zero 
+		gridConstraint.gridx = X;
+		gridConstraint.gridy = Y++;
+		gridConstraint.weighty = 0;
+		gridConstraint.gridwidth = 2;
+		gridConstraint.anchor = java.awt.GridBagConstraints.CENTER;
+		test.add(new JLabel("^ USS HEPHAESTUS ^"),gridConstraint);
+		 
+		gridConstraint.anchor = java.awt.GridBagConstraints.NORTHWEST;
+		gridConstraint.gridx = X;
+		gridConstraint.gridy = Y++;
+		gridConstraint.gridwidth = 1;
+		test.add(new JLabel("STAR_TIME"),gridConstraint);
+		
+		gridConstraint.gridx = X;
+		gridConstraint.gridy = Y++;
+		test.add(new JLabel("CONDITION"),gridConstraint);
+		
+		gridConstraint.gridx = X;
+		gridConstraint.gridy = Y++;
+		test.add(new JLabel("QUADRANT"),gridConstraint);
+		 
+		gridConstraint.gridx = X;
+		gridConstraint.gridy = Y++;
+		test.add(new JLabel("SECTOR"),gridConstraint);
+		 
+		gridConstraint.gridx = X;
+		gridConstraint.gridy = Y++;
+		test.add(new JLabel("TRITON MISLS"),gridConstraint);
+		 
+		gridConstraint.gridx = X;
+		gridConstraint.gridy = Y++;
+		test.add(new JLabel("POWER AVAIL"),gridConstraint);
+		
+		gridConstraint.gridx = X;
+		gridConstraint.gridy = Y++;
+		test.add(new JLabel("JOVIANS LEFT"),gridConstraint);
+		
+		gridConstraint.gridx = X;
+		gridConstraint.gridy = Y++;
+		test.add(new JLabel("ANTIMATTER PODS"),gridConstraint);
+		
+		gridConstraint.gridx = X;
+		gridConstraint.gridy = Y++;
+		test.add(new JLabel(" "),gridConstraint);
+		
+		gridConstraint.gridx = X;
+		gridConstraint.gridy = Y++;
+		test.add(new JLabel("SCDM: "),gridConstraint);
+		
+		gridConstraint.gridx = X;
+		gridConstraint.gridy = Y++;
+		test.add(new JLabel(" "),gridConstraint);
+		 
+		gridConstraint.gridx = X;
+		gridConstraint.gridy = Y++;
+		test.add(new JLabel("COMMAND:"),gridConstraint);
+		  
+		//Column Two
+		X=1;
+		Y=2;
+		  
+		gridConstraint.gridx = X;
+		gridConstraint.gridy = Y++;
+		JLabel starTimeLabel = new JLabel("300200");
+		test.add(starTimeLabel,gridConstraint);
+		  
+		gridConstraint.gridx = X;
+		gridConstraint.gridy = Y++;
+		JLabel conditionLabel = new JLabel("GREEN");
+		test.add(conditionLabel,gridConstraint);
+		 
+		gridConstraint.gridx = X;
+		gridConstraint.gridy = Y++;
+		JLabel quadrantLabel = new JLabel("1-3");
+		test.add(quadrantLabel,gridConstraint);
+		  
+		gridConstraint.gridx = X;
+		gridConstraint.gridy = Y++;
+		JLabel sectorLabel = new JLabel("9-2");
+		test.add(sectorLabel,gridConstraint);
+		  
+		gridConstraint.gridx = X;
+		gridConstraint.gridy = Y++;
+		JLabel tritonMislsLabel = new JLabel("10");
+		test.add(tritonMislsLabel,gridConstraint);
+		  
+		gridConstraint.gridx = X;
+		gridConstraint.gridy = Y++;
+		JLabel powerAvailLabel = new JLabel("99%");
+		test.add(powerAvailLabel,gridConstraint);
+		  
+		gridConstraint.gridx = X;
+		gridConstraint.gridy = Y++;
+		JLabel joviansLeftLabel = new JLabel("44");
+		test.add(joviansLeftLabel,gridConstraint);
+		  
+		gridConstraint.gridx = X;
+		gridConstraint.gridy = Y++;
+		JLabel antimatterPodsLabel = new JLabel("3");
+		test.add(antimatterPodsLabel,gridConstraint);
+		  
+		gridConstraint.gridx = X;
+		gridConstraint.gridy = Y++;
+		test.add(new JLabel("7 0 1"),gridConstraint);
+		  
+		gridConstraint.gridx = X;
+		gridConstraint.gridy = Y++;
+		test.add(new JLabel("6 - 2"),gridConstraint);
+		  
+		gridConstraint.gridx = X;
+		gridConstraint.gridy = Y++;
+		test.add(new JLabel("5 4 3"),gridConstraint);
+		  
+		gridConstraint.gridx = X;
+		gridConstraint.gridy = Y++;
+		JTextField textField = new JTextField(4);
+		test.add(textField,gridConstraint);
+		
+		//Filler to move other label to right postions
+		gridConstraint.gridx = X;
+		gridConstraint.gridy = Y++;
+		gridConstraint.weighty = 1;
+		gridConstraint.gridwidth = 2;
+		test.add(new JLabel(""),gridConstraint);
+		
+		
 		test.setOpaque(true);
 		test.setBackground(Color.RED);
 		rightPanel = test;
