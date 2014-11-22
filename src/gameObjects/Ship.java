@@ -5,13 +5,14 @@
  */
 package gameObjects;
 
-import static invasionforce.Constants.*;
-import Position;
+import static settings.Configs.*;
+import board.Position;
+import board.Sector;
 
 class Ship extends SpaceObject implements Movable{
     
     private final PowerSystem systems;
-    private final int missleCap = TRT_MISSLES;
+    private final int missleCap = TRT_MISSILES;
     private final int antimatterPodCap = ANTIMATTER_PODS;
     private int misslesLeft;
     private int amPodsLeft;
@@ -20,11 +21,12 @@ class Ship extends SpaceObject implements Movable{
      *
      * @param p
      */
-    public Ship(Position p) {
-        super(p);
-        systems = new PowerSystem(MAX_POWER);
-        misslesLeft = TRT_MISSLES;
+    public Ship(Sector sec) {
+        super(sec);
+        systems = new PowerSystem();
+        misslesLeft = TRT_MISSILES;
         amPodsLeft = ANTIMATTER_PODS;
+        label = "^";
     }
     
     //REQUIRES: nothing
@@ -32,14 +34,14 @@ class Ship extends SpaceObject implements Movable{
     //EFFECTS: shoots a weapon of the given type in the given direction
     //      A typical call would look like shootWeapon(MASER, NW);
     //      using the class invasionforce.Constants to value to MASER and NW
-    //      if there is sufficent power the weapon system will shoot
+    //      if there is sufficient power the weapon system will shoot
     public void shootWeapon(int type, int direction){
         
     }
     
     //REQUIRES: nothing
     //MODIFIES: this, game state
-    //EFFECTS: if there is sufficent power in the power system the appopriate engine 
+    //EFFECTS: if there is sufficient power in the power system the appropriate engine 
     //      will come on and the ship will begin moving on the given vector
     //                      vector[0] = magnitude
     //                      vector[1] = direction
@@ -50,7 +52,7 @@ class Ship extends SpaceObject implements Movable{
     
     //REQUIRES: nothing
     //MODIFIES: this
-    //EFFECTS: adds the given number of missles to the missles available and adds
+    //EFFECTS: adds the given number of missiles to the missiles available and adds
     //      the amount of power given to the power available
     public void reload(int missles, double power){
         

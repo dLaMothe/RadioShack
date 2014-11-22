@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -26,12 +25,3 @@ public interface Movable {
     public void setSpeed(int[] velocity);
     
 }
-=======
-
-public interface Movable {
-	
-	public void Move();
-	
-	public void setVelocity(int[] velocity);
-}
->>>>>>> weapon

@@ -1,6 +1,8 @@
 package gameObjects;
 
+import board.Position;
 import board.Positionable;
+import board.Sector;
 
 
 /*
@@ -8,67 +10,54 @@ import board.Positionable;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-/*
-package invasionforce;
+
 
 import java.util.Observable;
-*/
+
 /**
  *
  * @author Michael Koonts
  */
 
-//class SpaceObject extends Observable{
+public class SpaceObject extends Observable implements Positionable{
     
-//    protected Position position;
-//    protected boolean detectable = false;
+	public String label;
+    protected Sector sector;
+    protected boolean detectable = false;
 
     /**
      *
      * @param p
      */
-//    public SpaceObject(Position p){
-//        position = p;
-//    }
+    public SpaceObject(Sector sec){
+        sector = sec;
+        sector.setInhabitant(this);
+    }
     
     /**
      *
      * @return
      */
-//    public Position getPosition(){
-//        return new Position(position);
-//    }
+    @Override
+    public Position getPosition(){
+        return sector.getPosition();
+    }
     
     //REQUIRES: nothing
     //MODIFFIES: this
-    //EFFECTS: 
-//    public void setPosition(int x, int y){
-        // TODO set the object's position within the sector
-//    }
-    
-    /**
-     *
-     * @param p
-     */
-//    public void setPosition(Position p){
-        // TODO setter logic here
-//    }
+    //EFFECTS: sets this object in the sector provided
+    public void setSector(Sector sec){
+        // TODO set the object's position on the board
+    	// check if the sector can be this objects position
+    	// set both pointers this.sector & sector.inhabitant
+    }
     
     
-//    public void setDetectable(boolean b){
-//        detectable = b;
-//    }
+    public void setDetectable(boolean det){
+        detectable = det;
+    }
     
-//    public boolean getDetectable(){
-//        return detectable;
-//    }
-
-public abstract class SpaceObject implements Positionable{
-	
-	public String label;
-	
-	public SpaceObject(){
-		
-	}
-
+    public boolean getDetectable(){
+        return detectable;
+    }
 }

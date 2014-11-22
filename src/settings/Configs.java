@@ -19,14 +19,14 @@ public class Configs {
     public static final int LRSENSER = 2;
     public static final int SRSENSER = 3;
     public static final int MASER = 4;
-    public static final int TRT_MISSLE = 5;
+    public static final int TRT_MISSILE = 5;
     public static final int ANITMATTER_POD = 6;
     public static final int ION = 7;
     public static final int HYPER = 8;
     public static final int POWER_AVAILABLE = 9;
     
     //Capacities
-    public static final int TRT_MISSLES = 3;
+    public static final int TRT_MISSILES = 3;
     public static final int ANTIMATTER_PODS = 3;
     public static final double MAX_POWER = 99.0;
     

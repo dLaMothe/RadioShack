@@ -5,7 +5,7 @@ package gameObjects;
  * and open the template in the editor.
  */
 
-import static invasionforce.Constants.*;
+import static settings.Configs.*;
 
 class PowerSystem {
 //overview: Holds all the different powers
