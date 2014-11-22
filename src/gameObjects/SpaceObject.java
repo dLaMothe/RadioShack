@@ -36,20 +36,21 @@ public class SpaceObject extends Observable implements Positionable{
     
     /**
      *
-     * @return
+     * @return a valid position object
+     * 			Note: a null value indicates a problem with this
      */
     @Override
     public Position getPosition(){
         return sector.getPosition();
     }
     
-    //REQUIRES: nothing
-    //MODIFFIES: this
+    //REQUIRES: the caller to ensure that the given sector is an 
+    // appropriate place to set this object
+    //MODIFFIES: this, sec
     //EFFECTS: sets this object in the sector provided
     public void setSector(Sector sec){
-        // TODO set the object's position on the board
-    	// check if the sector can be this objects position
-    	// set both pointers this.sector & sector.inhabitant
+        sector = sec;
+        sector.setInhabitant(this);
     }
     
     

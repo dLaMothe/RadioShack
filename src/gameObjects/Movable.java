@@ -11,7 +11,7 @@ package gameObjects;
  */
 public interface Movable {
 
-    /**
+    /** Velocity is a vector it requires two scalar values: a magnitude and a direction
      *
      */
     int[] velocity = new int[2];
