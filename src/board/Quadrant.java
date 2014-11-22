@@ -1,5 +1,9 @@
 package board;
 
+import gameObjects.SpaceObject;
+
+import java.util.ArrayList;
+
 import settings.Configs;
 
 
@@ -19,6 +23,18 @@ public Sector[][] getSectors() {
 public Position getPosition() {
 	return position;
 } 
+
+public ArrayList<SpaceObject> getAllObjectsFromQuadrant(){
+	ArrayList<SpaceObject> obcts = new ArrayList<SpaceObject>();
+	for (Sector[] sctrs : sectors) {
+		for (Sector sector : sctrs) {
+			obcts.add(sector.getInhabitant());
+		}
+	}
+	return obcts;
+	
+}
+
 public Sector getSector(Position p){
 	for (Sector[] sctrs : sectors) {
 		for (Sector sector : sctrs) {

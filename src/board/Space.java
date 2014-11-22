@@ -1,5 +1,4 @@
 package board;
-import gameObjects.SpaceObject;
 import settings.Configs;
 
 
