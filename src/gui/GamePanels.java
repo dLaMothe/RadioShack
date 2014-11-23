@@ -18,6 +18,31 @@ public class GamePanels {
 	private JPanel middlePanel;
 	private JPanel rightPanel;
 	   
+	//Left Panel Labels
+	private JLabel lRSensorRowOneLabel;
+	private JLabel lRSensorRowTwoLabel;
+	private JLabel lRSensorRowThreeLabel;
+	private JLabel hYPRIONLabel;
+	private JLabel lRSENSORLabel;
+	private JLabel sRSENSORLabel;
+	private JLabel dEFLECTORSLabel;
+	private JLabel mASERLabel;
+	private JLabel tRTMISSLLabel;
+	 
+	//Right Panel Labels
+	private JLabel starTimeLabel;
+	private JLabel conditionLabel;
+	private JLabel quadrantLabel;
+	private JLabel sectorLabel;
+	private JLabel tritonMislsLabel;
+	private JLabel powerAvailLabel;
+	private JLabel joviansLeftLabel;
+	private JLabel antimatterPodsLabel;
+	private JTextField textField;
+	  
+	//Middle Panel Labels
+	private JLabel[][] grid;
+	
 	GamePanels(JFrame frame) {
 	      //super();
 		myFrame = frame;
@@ -55,7 +80,7 @@ public class GamePanels {
 		  
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
-		JLabel lRSensorRowOneLabel = new JLabel("002-003-004");
+		lRSensorRowOneLabel = new JLabel("002-003-004");
 		test.add(lRSensorRowOneLabel,gridConstraint);
 		  
 		gridConstraint.gridx = X;
@@ -64,7 +89,7 @@ public class GamePanels {
 		  
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
-		JLabel lRSensorRowTwoLabel = new JLabel("005-006-007");
+		lRSensorRowTwoLabel = new JLabel("005-006-007");
 		test.add(lRSensorRowTwoLabel,gridConstraint);
 		  
 		gridConstraint.gridx = X;
@@ -73,7 +98,7 @@ public class GamePanels {
 		  
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
-		JLabel lRSensorRowThreeLabel = new JLabel("008-009-000");
+		lRSensorRowThreeLabel = new JLabel("008-009-000");
 		test.add(lRSensorRowThreeLabel,gridConstraint);
 		  
 		gridConstraint.gridx = X;
@@ -137,32 +162,32 @@ public class GamePanels {
 		  
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
-		JLabel hYPRIONLabel = new JLabel("20");
+		hYPRIONLabel = new JLabel("20");
 		test.add(hYPRIONLabel,gridConstraint);
 		 
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
-		JLabel lRSENSORLabel = new JLabel("10");
+		lRSENSORLabel = new JLabel("10");
 		test.add(lRSENSORLabel,gridConstraint);
 		
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
-		JLabel sRSENSORLabel = new JLabel("20");
+		sRSENSORLabel = new JLabel("20");
 		test.add(sRSENSORLabel,gridConstraint);
 		
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
-		JLabel dEFLECTORSLabel = new JLabel("20");
+		dEFLECTORSLabel = new JLabel("20");
 		test.add(dEFLECTORSLabel,gridConstraint);
 		
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
-		JLabel mASERLabel = new JLabel("09");
+		mASERLabel = new JLabel("09");
 		test.add(mASERLabel,gridConstraint);
 		
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
-		JLabel tRTMISSLLabel = new JLabel("11");
+		tRTMISSLLabel = new JLabel("11");
 		test.add(tRTMISSLLabel,gridConstraint);
 		
 		//Filler to move other label to right positions
@@ -280,42 +305,42 @@ public class GamePanels {
 		  
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
-		JLabel starTimeLabel = new JLabel("300200");
+		starTimeLabel = new JLabel("300200");
 		test.add(starTimeLabel,gridConstraint);
 		  
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
-		JLabel conditionLabel = new JLabel("GREEN");
+		conditionLabel = new JLabel("GREEN");
 		test.add(conditionLabel,gridConstraint);
 		 
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
-		JLabel quadrantLabel = new JLabel("1-3");
+		quadrantLabel = new JLabel("1-3");
 		test.add(quadrantLabel,gridConstraint);
 		  
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
-		JLabel sectorLabel = new JLabel("9-2");
+		sectorLabel = new JLabel("9-2");
 		test.add(sectorLabel,gridConstraint);
 		  
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
-		JLabel tritonMislsLabel = new JLabel("10");
+		tritonMislsLabel = new JLabel("10");
 		test.add(tritonMislsLabel,gridConstraint);
 		  
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
-		JLabel powerAvailLabel = new JLabel("99%");
+		powerAvailLabel = new JLabel("99%");
 		test.add(powerAvailLabel,gridConstraint);
 		  
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
-		JLabel joviansLeftLabel = new JLabel("44");
+		joviansLeftLabel = new JLabel("44");
 		test.add(joviansLeftLabel,gridConstraint);
 		  
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
-		JLabel antimatterPodsLabel = new JLabel("3");
+		antimatterPodsLabel = new JLabel("3");
 		test.add(antimatterPodsLabel,gridConstraint);
 		  
 		gridConstraint.gridx = X;
@@ -332,7 +357,7 @@ public class GamePanels {
 		  
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
-		JTextField textField = new JTextField(4);
+		textField = new JTextField(4);
 		test.add(textField,gridConstraint);
 		
 		//Filler to move other label to right postions
