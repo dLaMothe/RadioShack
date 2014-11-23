@@ -15,15 +15,27 @@ public class Configs {
 	public static final int QUADRANT_SIZE = 10;
     //Ship systems
     public static final int SHIELD = 0;
-    public static final int ENGINE = 1;
-    public static final int LRSENSER = 2;
-    public static final int SRSENSER = 3;
-    public static final int MASER = 4;
-    public static final int TRT_MISSILE = 5;
-    public static final int ANITMATTER_POD = 6;
-    public static final int ION = 7;
-    public static final int HYPER = 8;
-    public static final int POWER_AVAILABLE = 9;
+    public static final int LRSENSOR = 1;
+    public static final int SRSENSOR = 2;
+    public static final int MASER = 3;
+    public static final int LAUNCHER = 4;
+    public static final int ION = 5;
+    public static final int HYPER = 6;
+    public static final int POWER_AVAILABLE = 7;
+    public static final int ENGINE = 8;
+    public static final int TRT_MISSILE = 9;
+    public static final int ANITMATTER_POD = 10;
+
+    //default power levels
+    public static final double INIT_SHIELD = 20.0;
+    public static final double INIT_ENGINE = 20.0;
+    public static final double INIT_LRSENSOR = 10.0;
+    public static final double INIT_SRSENSOR = 20.0;
+    public static final double INIT_MASER = 9.0;
+    public static final double INIT_TRT_MISSILE = 11.0;
+    //minimum system power(This is the minimum power a system must have in order to function)
+    public static final double MIN_SYSTEM_POWER = 2.0;
+    public static final double POWER_SAP = 0.5;
     
     //Capacities
     public static final int TRT_MISSILES = 3;
@@ -42,6 +54,7 @@ public class Configs {
 	public static final int NORTH_EAST = 9;
 	public static final int SOUTH_WEST = 1;
 	public static final int SOUTH_EAST = 3;
+	public static final int NEUTRAL = 5;
     
     //Location names
     public static final int SECTOR_X = 0;
