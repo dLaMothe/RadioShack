@@ -36,7 +36,31 @@ public class InvadeGameA extends JFrame {
 		gridConstraint.gridwidth = 3;
 		add(game.getBottomPanel(),gridConstraint);
 
-		setSize(550,550);
+		JMenuBar menuBar = new JMenuBar();
+		JMenu menu;
+		JMenuItem menuItem;
+		   
+		//+++++++++++++++++++++++++++++
+		//File Menu
+		//+++++++++++++++++++++++++++++
+		menu = new JMenu("File");
+		menuBar.add(menu);
+		menuItem = new JMenuItem(new AbstractAction("New Game") {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+		       
+			}
+		});
+		menu.add(menuItem);
+		menuItem = new JMenuItem(new AbstractAction("Exit Game") {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				dispose();
+			}
+		});
+		menu.add(menuItem);
+		 
+		setJMenuBar(menuBar);
+		
+		setSize(500,275);
 		setLocationRelativeTo(null);
 	}
 	
