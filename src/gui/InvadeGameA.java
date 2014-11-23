@@ -29,6 +29,12 @@ public class InvadeGameA extends JFrame {
 		gridConstraint.gridx = 2;
 		gridConstraint.gridy = 0;
 		add(game.getRightPanel(),gridConstraint);
+		
+		gridConstraint.gridx = 0;
+		gridConstraint.gridy = 1;
+		gridConstraint.weightx =1;
+		gridConstraint.gridwidth = 3;
+		add(game.getBottomPanel(),gridConstraint);
 
 		setSize(550,550);
 		setLocationRelativeTo(null);

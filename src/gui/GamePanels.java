@@ -20,6 +20,7 @@ public class GamePanels {
 	private JPanel leftPanel;
 	private JPanel middlePanel;
 	private JPanel rightPanel;
+	private JPanel bottomPanel;
 	   
 	//Left Panel Labels
 	private JLabel lRSensorRowOneLabel;
@@ -53,6 +54,7 @@ public class GamePanels {
 		createLeftPanel();
 		createMiddlePanel();
 		createRightPanel();
+		createBottomPanel();
 	}
 	private void createLeftPanel()
 	{
@@ -192,14 +194,7 @@ public class GamePanels {
 		gridConstraint.gridy = Y++;
 		tRTMISSLLabel = new JLabel("11");
 		test.add(tRTMISSLLabel,gridConstraint);
-		
-		//Filler to move other label to right positions
-		gridConstraint.gridx = X;
-		gridConstraint.gridy = Y++;
-		gridConstraint.weighty = 1;
-		gridConstraint.gridwidth = 2;
-		test.add(new JLabel(""),gridConstraint);
-		
+
 		test.setOpaque(true);
 		test.setBackground(Color.PINK);
 		leftPanel = test;
@@ -275,14 +270,6 @@ public class GamePanels {
 			if(i == 0 || i == GRID_WIDTH +1) test.add(new JLabel("I"),gridConstraint);
 			else test.add(new JLabel(""+(i-1)),gridConstraint);
 		}
-		  
-		Y+=2;
-		//Filler to move other label to right postions
-		gridConstraint.gridx = X;
-		gridConstraint.gridy = Y;
-		gridConstraint.weighty = 1;
-		gridConstraint.gridwidth = 2;
-		test.add(new JLabel(""),gridConstraint);
 		 
 		test.setOpaque(true);
 		test.setBackground(Color.WHITE);
@@ -428,17 +415,34 @@ public class GamePanels {
 		textField = new JTextField(4);
 		test.add(textField,gridConstraint);
 		
-		//Filler to move other label to right positions
-		gridConstraint.gridx = X;
-		gridConstraint.gridy = Y++;
-		gridConstraint.weighty = 1;
-		gridConstraint.gridwidth = 2;
-		test.add(new JLabel(""),gridConstraint);
-		
-		
 		test.setOpaque(true);
 		test.setBackground(Color.RED);
 		rightPanel = test;
+	}
+	
+	private void createBottomPanel()
+	{ 
+		JPanel test = new JPanel();
+		test.setLayout(new java.awt.GridBagLayout());
+		 
+		java.awt.GridBagConstraints gridConstraint = new java.awt.GridBagConstraints();
+		gridConstraint.gridx = 0;
+		gridConstraint.gridy = 0;
+		gridConstraint.weightx =1;
+		gridConstraint.weighty = 0;
+		gridConstraint.anchor = java.awt.GridBagConstraints.CENTER;
+		  
+		test.add(new JLabel("HYPR=H,ION=I,MSR=M,TRM=T,PWRDST=D,SELFD=S,EXPRAY=E,POD=A,XPOD=X"),gridConstraint);
+		  
+		//Filler to move other label to right postions
+		gridConstraint.gridx = 0;
+		gridConstraint.gridy = 1;
+		gridConstraint.weighty = 1;
+		test.add(new JLabel(""),gridConstraint);
+		  
+		test.setOpaque(true);
+		test.setBackground(Color.MAGENTA);
+		bottomPanel = test;
 	}
 	   
 	public JPanel getLeftPanel()
@@ -456,5 +460,8 @@ public class GamePanels {
 		return rightPanel;
 	}
 	
-	
+	public JPanel getBottomPanel()
+	{
+		return bottomPanel;
+	}
 }
