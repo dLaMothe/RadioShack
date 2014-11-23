@@ -7,6 +7,13 @@ import java.util.ArrayList;
 import settings.Configs;
 import board.Sector;
 
+/**
+ * Overview: This class provides a SpaceObject that the player can move around
+ * and use to shoot at other SpaceObjects.  This provides an interface for the 
+ * game logic to convert user input into the corresponding behavior
+ * @author Michael Koonts
+ *
+ */
 class Ship extends SpaceObject implements Movable{
     
     private static final int MAGNITUDE = 0;
