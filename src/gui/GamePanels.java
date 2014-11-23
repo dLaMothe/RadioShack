@@ -13,6 +13,9 @@ import java.awt.Color;*/
 
 public class GamePanels {
 
+	private static final int GRID_WIDTH = 10;
+	private static final int GRID_HEIGHT = 10;
+	
 	private JFrame myFrame;
 	private JPanel leftPanel;
 	private JPanel middlePanel;
@@ -204,18 +207,83 @@ public class GamePanels {
 	   
 	private void createMiddlePanel()
 	{
+		int X=0;
+		int Y=0;
+		grid = new JLabel[GRID_HEIGHT][GRID_WIDTH];
 		JPanel test = new JPanel();
 		test.setLayout(new java.awt.GridBagLayout());
-		      
+		  
 		java.awt.GridBagConstraints gridConstraint = new java.awt.GridBagConstraints();
-		gridConstraint.gridx = 0;
-		gridConstraint.gridy = 0;
-		gridConstraint.weightx =.5;
-		gridConstraint.weighty = .5;
-		gridConstraint.fill = java.awt.GridBagConstraints.BOTH;
+		gridConstraint.gridx = X;
+		gridConstraint.gridy = Y++;
+		gridConstraint.weightx =1;
+		gridConstraint.weighty = 1;
+		gridConstraint.gridwidth = 2;
+		gridConstraint.anchor = java.awt.GridBagConstraints.NORTHWEST;
+		  
+		//Filler to move other label to right postions
+		test.add(new JLabel(""),gridConstraint);
 		
-		JLabel energyLabel = new JLabel("Hails to you middle");
-		test.add(energyLabel,gridConstraint);
+		gridConstraint.gridx = X;
+		gridConstraint.gridy = Y++;
+		gridConstraint.weighty = 0;
+		gridConstraint.gridwidth = GRID_WIDTH;
+		gridConstraint.anchor = java.awt.GridBagConstraints.CENTER;
+		test.add(new JLabel("-----RADIO SHACK-----"),gridConstraint);
+		 
+		gridConstraint.gridwidth = 1;
+		 
+		for(int i = 0; i < GRID_HEIGHT; i++)
+		{
+			gridConstraint.gridx = X;
+			gridConstraint.gridy = Y+i;
+			test.add(new JLabel(i+"I"),gridConstraint);
+		}
+		 
+		X++;
+		  
+		for(int i = 0; i < GRID_HEIGHT; i++)
+		{
+			for(int j = 0; j < GRID_WIDTH; j++)
+			{
+				gridConstraint.gridx = X+j;
+				gridConstraint.gridy = Y+i;
+				grid[i][j] = new JLabel(""+j);
+				test.add(grid[i][j],gridConstraint);
+			}
+		}
+		  
+		for(int i = 0; i < GRID_HEIGHT; i++)
+		{
+			gridConstraint.gridx = X+GRID_WIDTH;
+			gridConstraint.gridy = Y+i;
+			test.add(new JLabel("I"),gridConstraint);
+		}
+		  
+		--X;
+		Y+=GRID_HEIGHT;
+		 
+		for(int i = 0; i < GRID_WIDTH+2; i++)
+		{
+			gridConstraint.gridx = X+i;
+			gridConstraint.gridy = Y;
+			if(i == 0 || i == GRID_WIDTH +1) test.add(new JLabel("I"),gridConstraint);
+			else test.add(new JLabel("-"),gridConstraint);
+			
+			gridConstraint.gridx = X+i;
+			gridConstraint.gridy = Y+1;
+			if(i == 0 || i == GRID_WIDTH +1) test.add(new JLabel("I"),gridConstraint);
+			else test.add(new JLabel(""+(i-1)),gridConstraint);
+		}
+		  
+		Y+=2;
+		//Filler to move other label to right postions
+		gridConstraint.gridx = X;
+		gridConstraint.gridy = Y;
+		gridConstraint.weighty = 1;
+		gridConstraint.gridwidth = 2;
+		test.add(new JLabel(""),gridConstraint);
+		 
 		test.setOpaque(true);
 		test.setBackground(Color.WHITE);
 		middlePanel = test;
@@ -238,7 +306,7 @@ public class GamePanels {
 		//gridConstraint.fill = java.awt.GridBagConstraints.BOTH;
 		gridConstraint.anchor = java.awt.GridBagConstraints.NORTHWEST;
 		 
-		//Filler to move other label to right postions
+		//Filler to move other label to right positions
 		test.add(new JLabel(""),gridConstraint);
 		
 		//Column Zero 
@@ -360,7 +428,7 @@ public class GamePanels {
 		textField = new JTextField(4);
 		test.add(textField,gridConstraint);
 		
-		//Filler to move other label to right postions
+		//Filler to move other label to right positions
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
 		gridConstraint.weighty = 1;
