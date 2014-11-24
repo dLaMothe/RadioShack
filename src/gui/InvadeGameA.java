@@ -17,17 +17,19 @@ public class InvadeGameA extends JFrame {
 		java.awt.GridBagConstraints gridConstraint = new java.awt.GridBagConstraints();
 		gridConstraint.gridx = 0;
 		gridConstraint.gridy = 0;
-		gridConstraint.weightx =.5;
-		gridConstraint.weighty = .5;
+		gridConstraint.weightx =.10;
+	    gridConstraint.weighty = 1;
 		gridConstraint.fill = java.awt.GridBagConstraints.BOTH;
 		add(game.getLeftPanel(),gridConstraint);
 	      
 		gridConstraint.gridx = 1;
 		gridConstraint.gridy = 0;
+		gridConstraint.weightx =.5;
 		add(game.getMiddlePanel(),gridConstraint);
 	      
 		gridConstraint.gridx = 2;
 		gridConstraint.gridy = 0;
+		gridConstraint.weightx =.10;
 		add(game.getRightPanel(),gridConstraint);
 		
 		gridConstraint.gridx = 0;
@@ -60,7 +62,7 @@ public class InvadeGameA extends JFrame {
 		 
 		setJMenuBar(menuBar);
 		
-		setSize(500,275);
+		setSize(575,275);
 		setLocationRelativeTo(null);
 	}
 	
