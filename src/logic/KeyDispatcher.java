@@ -55,8 +55,15 @@ public class KeyDispatcher extends JFrame implements KeyEventDispatcher, ActionL
 	}
 
 	public void keyPressed(KeyEvent e) {
-        if(e.getID() == KeyEvent.KEY_TYPED) {
-            typingArea.setText(typingArea.getText() + String.valueOf(e.getKeyChar()));
-        }	
+		if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+			processCommand(typingArea.getText());
+			typingArea.setText("");	
+		} else if(e.getID() == KeyEvent.KEY_TYPED) {
+			typingArea.setText(typingArea.getText() + String.valueOf(e.getKeyChar()));
+    	}	
+	}
+
+	public void processCommand(String command) {
+		System.out.println(command);
 	}
 }
