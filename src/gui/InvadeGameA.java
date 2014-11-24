@@ -1,15 +1,28 @@
 package gui;
 
+import logic.*;
+
+import java.awt.KeyboardFocusManager;
+
 import javax.swing.*;
 
+import logic.KeyDispatcher;
+
 public class InvadeGameA extends JFrame {
+	
+	private static KeyDispatcher dispatcher;
 	
 	InvadeGameA() {
 		initUI();
 	}
 	
 	private void initUI() {
-		final GamePanels game = new GamePanels(this);
+		dispatcher = new KeyDispatcher();
+    	//Hijack the keyboard manager
+    	KeyboardFocusManager manager =
+    	         KeyboardFocusManager.getCurrentKeyboardFocusManager();
+    	manager.addKeyEventDispatcher( dispatcher );
+		final GamePanels game = new GamePanels(dispatcher.getTextField());
 		setTitle("Test");
 		setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
 	      

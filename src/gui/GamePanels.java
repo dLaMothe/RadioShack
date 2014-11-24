@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.Color;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -47,10 +48,10 @@ public class GamePanels {
 	//Middle Panel Labels
 	private JLabel[][] grid;
 	
-	GamePanels(JFrame frame) {
-	      //super();
-		myFrame = frame;
-		            
+	GamePanels(JTextField text) {
+	    
+		textField = text;
+		
 		createLeftPanel();
 		createMiddlePanel();
 		createRightPanel();
@@ -412,7 +413,6 @@ public class GamePanels {
 		  
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
-		textField = new JTextField(4);
 		test.add(textField,gridConstraint);
 		
 		test.setOpaque(true);
@@ -463,5 +463,10 @@ public class GamePanels {
 	public JPanel getBottomPanel()
 	{
 		return bottomPanel;
+	}
+	
+	public JTextField getTextField()
+	{
+		return textField;
 	}
 }
