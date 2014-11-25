@@ -8,14 +8,14 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 
 
-public class KeyDispatcher extends JFrame implements KeyEventDispatcher, ActionListener {
+public class KeyDispatcher extends JFrame implements KeyEventDispatcher {
 
 	private JTextField typingArea;
-	private GameEngine game;
+	private CommandParser parser;
 	
-	public KeyDispatcher(GameEngine newGame) {
-		typingArea = new JTextField(5);
-		game = newGame;
+	public KeyDispatcher(GameEngine newGame, JTextField textField) {
+		typingArea = textField;
+		parser = new CommandParser(newGame);
 	}
 	
 	public boolean dispatchKeyEvent(KeyEvent e) {
@@ -24,22 +24,19 @@ public class KeyDispatcher extends JFrame implements KeyEventDispatcher, ActionL
         return false;
     }
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-        //Return the focus to the typing area.
-        typingArea.requestFocusInWindow();
-	}
 
 	public void keyPressed(KeyEvent e) {
 		if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-			processCommand(typingArea.getText());
-			typingArea.setText("");	
+			if(e.getID() == KeyEvent.KEY_PRESSED) {
+				String cmd = typingArea.getText();
+				processCommand(cmd);
+				typingArea.setText("");	
+			}
 		} 
 	}
 
 	public void processCommand(String command) {
-		
-		System.out.println(command);
+		parser.parseCommand(command);
 	}
 	
 	public JTextField getTextField() {

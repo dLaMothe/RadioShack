@@ -48,9 +48,9 @@ public class GamePanels {
 	//Middle Panel Labels
 	public JLabel[][] grid;
 	
-	GamePanels(JTextField text) {
+	GamePanels() {
 	    
-		textField = text;
+		textField = new JTextField(5);
 		
 		createLeftPanel();
 		createMiddlePanel();

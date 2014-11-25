@@ -15,17 +15,17 @@ public class InvadeGameA extends JFrame {
 	private GamePanels panel;
 	
 	InvadeGameA() {
+		initUI();
 		initGame();
-		dispatcher = new KeyDispatcher(game);
+		dispatcher = new KeyDispatcher(game,panel.getTextField());
     	//Hijack the keyboard manager
     	KeyboardFocusManager manager =
     	         KeyboardFocusManager.getCurrentKeyboardFocusManager();
     	manager.addKeyEventDispatcher( dispatcher );
-		initUI();
 	}
 	
 	private void initUI() {
-    	panel = new GamePanels(dispatcher.getTextField());
+    	panel = new GamePanels();
 		setTitle("Test");
 		setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
 	      
