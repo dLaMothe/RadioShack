@@ -697,7 +697,7 @@ class Ship extends SpaceObject implements Movable{
 	     */
 		private void shoot() {
 			if(Configs.NEUTRAL != direction){
-				//new Maser(this.direction);
+				//new Maser(direction, sector);
 			}
 			this.direction = Configs.NEUTRAL;
 		}
