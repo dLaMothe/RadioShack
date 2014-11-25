@@ -24,29 +24,29 @@ public class GamePanels {
 	private JPanel bottomPanel;
 	   
 	//Left Panel Labels
-	private JLabel lRSensorRowOneLabel;
-	private JLabel lRSensorRowTwoLabel;
-	private JLabel lRSensorRowThreeLabel;
-	private JLabel hYPRIONLabel;
-	private JLabel lRSENSORLabel;
-	private JLabel sRSENSORLabel;
-	private JLabel dEFLECTORSLabel;
-	private JLabel mASERLabel;
-	private JLabel tRTMISSLLabel;
+	public JLabel lRSensorRowOneLabel;
+	public JLabel lRSensorRowTwoLabel;
+	public JLabel lRSensorRowThreeLabel;
+	public JLabel hYPRIONLabel;
+	public JLabel lRSENSORLabel;
+	public JLabel sRSENSORLabel;
+	public JLabel dEFLECTORSLabel;
+	public JLabel mASERLabel;
+	public JLabel tRTMISSLLabel;
 	 
 	//Right Panel Labels
-	private JLabel starTimeLabel;
-	private JLabel conditionLabel;
-	private JLabel quadrantLabel;
-	private JLabel sectorLabel;
-	private JLabel tritonMislsLabel;
-	private JLabel powerAvailLabel;
-	private JLabel joviansLeftLabel;
-	private JLabel antimatterPodsLabel;
-	private JTextField textField;
+	public JLabel starTimeLabel;
+	public JLabel conditionLabel;
+	public JLabel quadrantLabel;
+	public JLabel sectorLabel;
+	public JLabel tritonMislsLabel;
+	public JLabel powerAvailLabel;
+	public JLabel joviansLeftLabel;
+	public JLabel antimatterPodsLabel;
+	public JTextField textField;
 	  
 	//Middle Panel Labels
-	private JLabel[][] grid;
+	public JLabel[][] grid;
 	
 	GamePanels(JTextField text) {
 	    

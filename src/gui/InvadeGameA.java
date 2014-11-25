@@ -11,18 +11,21 @@ import logic.KeyDispatcher;
 public class InvadeGameA extends JFrame {
 	
 	private static KeyDispatcher dispatcher;
+	private GameEngine game;
+	private GamePanels panel;
 	
 	InvadeGameA() {
-		initUI();
-	}
-	
-	private void initUI() {
-		dispatcher = new KeyDispatcher();
+		initGame();
+		dispatcher = new KeyDispatcher(game);
     	//Hijack the keyboard manager
     	KeyboardFocusManager manager =
     	         KeyboardFocusManager.getCurrentKeyboardFocusManager();
     	manager.addKeyEventDispatcher( dispatcher );
-		final GamePanels game = new GamePanels(dispatcher.getTextField());
+		initUI();
+	}
+	
+	private void initUI() {
+    	panel = new GamePanels(dispatcher.getTextField());
 		setTitle("Test");
 		setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
 	      
@@ -33,23 +36,23 @@ public class InvadeGameA extends JFrame {
 		gridConstraint.weightx =.10;
 	    gridConstraint.weighty = 1;
 		gridConstraint.fill = java.awt.GridBagConstraints.BOTH;
-		add(game.getLeftPanel(),gridConstraint);
+		add(panel.getLeftPanel(),gridConstraint);
 	      
 		gridConstraint.gridx = 1;
 		gridConstraint.gridy = 0;
 		gridConstraint.weightx =.5;
-		add(game.getMiddlePanel(),gridConstraint);
+		add(panel.getMiddlePanel(),gridConstraint);
 	      
 		gridConstraint.gridx = 2;
 		gridConstraint.gridy = 0;
 		gridConstraint.weightx =.10;
-		add(game.getRightPanel(),gridConstraint);
+		add(panel.getRightPanel(),gridConstraint);
 		
 		gridConstraint.gridx = 0;
 		gridConstraint.gridy = 1;
 		gridConstraint.weightx =1;
 		gridConstraint.gridwidth = 3;
-		add(game.getBottomPanel(),gridConstraint);
+		add(panel.getBottomPanel(),gridConstraint);
 
 		JMenuBar menuBar = new JMenuBar();
 		JMenu menu;
@@ -77,6 +80,13 @@ public class InvadeGameA extends JFrame {
 		
 		setSize(575,275);
 		setLocationRelativeTo(null);
+		
+		
+	}
+	
+	private void initGame() {
+		//Initialize Game
+		game = new GameEngine(panel);
 	}
 	
 	public static void main(String[] args) {

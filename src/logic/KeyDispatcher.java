@@ -10,10 +10,12 @@ import javax.swing.JTextField;
 
 public class KeyDispatcher extends JFrame implements KeyEventDispatcher, ActionListener {
 
-	JTextField typingArea;
+	private JTextField typingArea;
+	private GameEngine game;
 	
-	public KeyDispatcher() {
+	public KeyDispatcher(GameEngine newGame) {
 		typingArea = new JTextField(5);
+		game = newGame;
 	}
 	
 	public boolean dispatchKeyEvent(KeyEvent e) {
@@ -36,6 +38,7 @@ public class KeyDispatcher extends JFrame implements KeyEventDispatcher, ActionL
 	}
 
 	public void processCommand(String command) {
+		
 		System.out.println(command);
 	}
 	
