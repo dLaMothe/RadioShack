@@ -5,10 +5,10 @@ import gui.GamePanels;
 
 public class GameEngine {
 	
-	private GamePanels panels;
+	public GamePanels panels;
 	
 	public GameEngine(GamePanels newPanel) {
-		
+		panels = newPanel;
 	}
 
 }

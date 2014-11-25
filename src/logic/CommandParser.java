@@ -9,7 +9,7 @@ public class CommandParser {
 	public CommandParser(GameEngine newGame) {
 		game = newGame;
 	}
-	
+
 	public void parseCommand(String command) {
 		switch(command.charAt(firstIndex)) {
 			case 'I':
@@ -63,22 +63,17 @@ public class CommandParser {
 	private void handlePower(String cmd) {
 		switch(cmd.charAt(firstIndex)) {
 			case 'H':
-				handleIon(cmd.substring(subCommand));
+				game.panels.hYPRIONLabel.setText(cmd.substring(subCommand));
 				break;
 			case 'L':
-				handleMazer(cmd.substring(subCommand));
 				break;
 			case 'S':
-				handleTriton(cmd.substring(subCommand));
 				break;
 			case 'D':
-				handlePower(cmd.substring(subCommand));
 				break;
 			case 'M':
-				handleDestruct(cmd.substring(subCommand));
 				break;
 			case 'T':
-				handleEx(cmd.substring(subCommand));
 				break;
 			default:
 				break;
