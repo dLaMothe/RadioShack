@@ -24,7 +24,7 @@ public class GameEngine {
 	public void setPower(int type, double value) {
 		ship.adjustPower(type,value);
 		panels.powerLabels[type].setText(String.valueOf(ship.getPower(type)));
-		//panels.powerAvailLabel.setText(String.valueOf(ship.))
+		panels.powerAvailLabel.setText(String.valueOf(ship.getPower()));
 	}
 	
 	private void populatePanel() {
