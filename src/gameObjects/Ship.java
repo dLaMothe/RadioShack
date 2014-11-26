@@ -110,6 +110,15 @@ class Ship extends SpaceObject implements Movable{
     public void adjustPower(int system, double level){
         this.systems.setSystemLevel(system, level);
     }
+    
+    /**
+     * REQUIRES: @param system - be a valid system id *see settings.Configs
+     * MODIFIES: nothing
+     * EFFECTS: returns the amount of power available to the given system
+     */
+    public double getPower(int system){
+        return this.systems.getSystemPower(system);
+    }
 
     /**
      * REQUIRES: nothing
@@ -185,8 +194,16 @@ class Ship extends SpaceObject implements Movable{
 			systems.add(HYPER, new Ship.HypEngines (INIT_ENGINE));
 	        
     	}
-    	
     	/**
+    	 * REQUIRES: @param system - be a valid system id *see settings.Configs
+    	 * MODIFIES: nothing
+    	 * EFFECTS: @returns the power level of the given system
+    	 */
+    	public double getSystemPower(int system) {
+			return systems.get(system).getPower();			
+		}
+
+		/**
          * REQUIRES: nothing
          * MODIFIES: game state
          * EFFECTS: cycles through all ship systems and calls their act method.
