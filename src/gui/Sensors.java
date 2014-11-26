@@ -1,7 +1,6 @@
-package console; // <---- ? Interface , GUI, ...?
-import board.Quadrant;
-import board.Space;
-import settings.Configs.*;
+package gui; // <---- ? Interface , GUI, ...?
+import board.*;
+import static settings.Configs.*;
 /*Author Matti
  * 
  * WHAT IS STILL MISSING
@@ -92,10 +91,10 @@ public class Sensors {
 		}; 
 	*/
 	Integer localShipQuadGrid[][] 
-		= new Integer[Configs.NUM_SENSED_GRIDS][Configs.DIMENTIONS];
+		= new Integer[NUM_SENSED_GRIDS][DIMENTIONS];
 	Integer shipLRangeSenGrid[][] 
-		= new Integer[Configs.NUM_SENSED_GRIDS]
-				[Configs.NUM_ITEM_PER_SENORS_SLOT];
+		= new Integer[NUM_SENSED_GRIDS]
+				[NUM_ITEM_PER_SENORS_SLOT];
 	
 	
 	public void Sense(int rowByCol[]){
@@ -130,14 +129,14 @@ public class Sensors {
 		this.FillSurQuad();
 	}
 	
-	public void Sense(Object PlayerShip){
-		/* REQUIRES : the Playerships itself such that it contains Position:
+	/*public void Sense(Object PlayerShip){
+		 /*REQUIRES : the Playerships itself such that it contains Position:
 		 * PlayerShip.Position. Assuming that is true then Position should
 		 * offer access to Posistion.getRow() and Position.getCol();
 		 * MODIFIES : this. shipCurLocByQuad;
 		 * EFFECTS : word by word exactly the same effect as 
 		 * this.Sense(int rowByCol[]){...};
-		 * */
+		 *
 		this.shipCurLocByQuad[0] 
 			= PlayerShip.Position.getRow(); //may be improper use of "Position"
 		this.shipCurLocByQuad[1] = 
@@ -145,7 +144,7 @@ public class Sensors {
 		this.fetchSurQuadInexes();
 		this.tagArrayBorderLimits();
 		this.FillSurQuad();
-	}
+	}*/
 	
 	private void FillSurQuad(){
 		/* REQUIRES: to be called after the 2 following functions 
@@ -153,18 +152,18 @@ public class Sensors {
 		 * MODIFIES: this.shipLRangeSenGrid[][] .
 		 * EFFECTS : shipSensorGrid is populated with relevant data.
 		 *   */
-		for (int i = 0; i < Configs.NUM_SENSED_GRIDS; i++){
-			for (int k = 0; k < Configs.DIMENTIONS; k++){			
+		for (int i = 0; i < NUM_SENSED_GRIDS; i++){
+			for (int k = 0; k < DIMENTIONS; k++){			
 				/* 2 Possibilities : 1) index defined by i and k and outside 
 				 * quadrant grid : */
-				if(localShipQuadGrid[i][0] == Configs.SENSOR_SCAN_SENTINEL
-				|| localShipQuadGrid[i][1] == Configs.SENSOR_SCAN_SENTINEL){
+				if(localShipQuadGrid[i][0] == SENSOR_SCAN_SENTINEL
+				|| localShipQuadGrid[i][1] == SENSOR_SCAN_SENTINEL){
 					/* if either index is outside of grid: */
-					for(int o = 0; o < Configs.NUM_ITEM_PER_SENORS_SLOT; o++){
+					for(int o = 0; o < NUM_ITEM_PER_SENORS_SLOT; o++){
 						/*shipLRangeSenGrid[i][o] = Configs.OUTER_LIM_OF_MAP_STR;*/
-						shipLRangeSenGrid[i][o] = Configs.SENSOR_SCAN_SENTINEL;
+						shipLRangeSenGrid[i][o] = SENSOR_SCAN_SENTINEL;
 					}
-					k = Configs.DIMENTIONS; // done once : exits k-for-loop.
+					k = DIMENTIONS; // done once : exits k-for-loop.
 				}
 				else{
 					/* possibility 2: i & k are both inside of quadrant gird; 
@@ -226,15 +225,15 @@ public class Sensors {
 		//MODIFIES this.shipsQuadArea
 		//EFFECTS depending on Quadrant array size;
 		// the lower and upper limits are tagged with 
-		for(int i = 0; i < Configs.NUM_SENSED_GRIDS; i++){
+		for(int i = 0; i < 	NUM_SENSED_GRIDS; i++){
 			// was the index value outside of map (too small)
-			for(int k = 0; k < Configs.DIMENTIONS; k++){
+			for(int k = 0; k < DIMENTIONS; k++){
 				if (localShipQuadGrid[i][k] < 0){ /* > 10-1*/
-					localShipQuadGrid[i][k] = Configs.SENSOR_SCAN_SENTINEL;
+					localShipQuadGrid[i][k] = SENSOR_SCAN_SENTINEL;
 				} 				 
 				// was the index value outside of map (too large)			
-				if (localShipQuadGrid[i][k] > Configs.SPACE_SIZE-1){
-					localShipQuadGrid[i][k] = Configs.SENSOR_SCAN_SENTINEL;
+				if (localShipQuadGrid[i][k] > SPACE_SIZE-1){
+					localShipQuadGrid[i][k] = SENSOR_SCAN_SENTINEL;
 				} 			
 			}			 
 		}	

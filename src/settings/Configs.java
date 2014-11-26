@@ -65,4 +65,10 @@ public class Configs {
     public static final int QUADRENT_Y = 3;
     public static final int X = 0;
     public static final int Y = 1;
+    
+    //Mats constants
+    public static final int NUM_SENSED_GRIDS = 9;
+    public static final int DIMENTIONS = 2;
+    public static final int NUM_ITEM_PER_SENORS_SLOT = 3; 
+    public static final int SENSOR_SCAN_SENTINEL = -1;
 }
