@@ -121,6 +121,15 @@ public class Ship extends SpaceObject implements Movable{
     }
 
     /**
+     * REQUIRES: @param system - be a valid system id *see settings.Configs
+     * MODIFIES: nothing
+     * EFFECTS: returns the amount of power available to the given system
+     */
+    public double getPower(){
+        return this.systems.getPowerAvailable();
+    }
+    
+    /**
      * REQUIRES: nothing
      * MODIFIES: nothing
      * EFFECTS: @return a pointer to the ships current sector
@@ -257,8 +266,8 @@ public class Ship extends SpaceObject implements Movable{
          * the current drain on the overall system.
          */
     	public void setSystemLevel(int system, double powerLevel){
-    		double loadIncrease = powerLevel - systems.get(system).getPower();
-    		if(this.powerAvailable > (this.powerConsumed + loadIncrease)){
+    		//double loadIncrease = powerLevel - systems.get(system).getPower();
+    		//if(this.powerAvailable > (this.powerConsumed + loadIncrease)){
     			systems.get(system).setPower(powerLevel);
     			try {
 					this.calculateSystemLoad();
@@ -266,7 +275,7 @@ public class Ship extends SpaceObject implements Movable{
 					e.printStackTrace();
 					System.exit(1);
 				}
-    		}
+    		//}
     	}
     	
     	/**
