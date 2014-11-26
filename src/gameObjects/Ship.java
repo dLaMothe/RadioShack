@@ -14,7 +14,7 @@ import board.Sector;
  * @author Michael Koonts
  *
  */
-class Ship extends SpaceObject implements Movable{
+public class Ship extends SpaceObject implements Movable{
     
     private static final int MAGNITUDE = 0;
 	private static final int MAX_ION = 10;
