@@ -42,7 +42,6 @@ public class GamePanels {
 	public JLabel antimatterPodsLabel;
 	public JTextField textField;
 	
-	public final static int LabelSize = 11;
 	  
 	//Middle Panel Labels
 	public JLabel[][] grid;
@@ -50,7 +49,7 @@ public class GamePanels {
 	GamePanels() {
 	    
 		textField = new JTextField(5);
-		powerLabels = new JLabel[LabelSize];
+		powerLabels = new JLabel[TOTAL_POWERS];
 		createLeftPanel();
 		createMiddlePanel();
 		createRightPanel();

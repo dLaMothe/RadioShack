@@ -25,6 +25,8 @@ public class Configs {
     public static final int ENGINE = 8;
     public static final int TRT_MISSILE = 9;
     public static final int ANITMATTER_POD = 10;
+    
+    public static final int TOTAL_POWERS = 11;
 
     //default power levels
     public static final double INIT_SHIELD = 20.0;
