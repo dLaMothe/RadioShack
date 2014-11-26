@@ -1,4 +1,5 @@
 package logic;
+import static settings.Configs.*;
 
 public class CommandParser {
 	
@@ -63,17 +64,22 @@ public class CommandParser {
 	private void handlePower(String cmd) {
 		switch(cmd.charAt(firstIndex)) {
 			case 'H':
-				game.panels.hYPRIONLabel.setText(cmd.substring(subCommand));
+				game.setPower(ENGINE, Integer.parseInt(cmd.substring(subCommand)));
 				break;
 			case 'L':
+				game.setPower(LRSENSOR, Integer.parseInt(cmd.substring(subCommand)));
 				break;
 			case 'S':
+				game.setPower(SRSENSOR, Integer.parseInt(cmd.substring(subCommand)));
 				break;
 			case 'D':
+				game.setPower(SHIELD, Integer.parseInt(cmd.substring(subCommand)));
 				break;
 			case 'M':
+				game.setPower(MASER, Integer.parseInt(cmd.substring(subCommand)));
 				break;
 			case 'T':
+				game.setPower(LAUNCHER, Integer.parseInt(cmd.substring(subCommand)));
 				break;
 			default:
 				break;

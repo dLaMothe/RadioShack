@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.Color;
+import static settings.Configs.*;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -13,7 +14,7 @@ import javax.swing.*;
 import java.awt.Color;*/
 
 public class GamePanels {
-
+	
 	private static final int GRID_WIDTH = 10;
 	private static final int GRID_HEIGHT = 10;
 	
@@ -27,12 +28,8 @@ public class GamePanels {
 	public JLabel lRSensorRowOneLabel;
 	public JLabel lRSensorRowTwoLabel;
 	public JLabel lRSensorRowThreeLabel;
-	public JLabel hYPRIONLabel;
-	public JLabel lRSENSORLabel;
-	public JLabel sRSENSORLabel;
-	public JLabel dEFLECTORSLabel;
-	public JLabel mASERLabel;
-	public JLabel tRTMISSLLabel;
+	public JLabel powerLabels[];
+
 	 
 	//Right Panel Labels
 	public JLabel starTimeLabel;
@@ -44,6 +41,8 @@ public class GamePanels {
 	public JLabel joviansLeftLabel;
 	public JLabel antimatterPodsLabel;
 	public JTextField textField;
+	
+	public final static int LabelSize = 11;
 	  
 	//Middle Panel Labels
 	public JLabel[][] grid;
@@ -51,7 +50,7 @@ public class GamePanels {
 	GamePanels() {
 	    
 		textField = new JTextField(5);
-		
+		powerLabels = new JLabel[LabelSize];
 		createLeftPanel();
 		createMiddlePanel();
 		createRightPanel();
@@ -168,33 +167,33 @@ public class GamePanels {
 		  
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
-		hYPRIONLabel = new JLabel("20");
-		test.add(hYPRIONLabel,gridConstraint);
+		powerLabels[ENGINE] = new JLabel("20");
+		test.add(powerLabels[ENGINE],gridConstraint);
 		 
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
-		lRSENSORLabel = new JLabel("10");
-		test.add(lRSENSORLabel,gridConstraint);
+		powerLabels[LRSENSOR] = new JLabel("10");
+		test.add(powerLabels[LRSENSOR],gridConstraint);
 		
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
-		sRSENSORLabel = new JLabel("20");
-		test.add(sRSENSORLabel,gridConstraint);
+		powerLabels[SRSENSOR] = new JLabel("20");
+		test.add(powerLabels[SRSENSOR],gridConstraint);
 		
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
-		dEFLECTORSLabel = new JLabel("20");
-		test.add(dEFLECTORSLabel,gridConstraint);
+		powerLabels[SHIELD] = new JLabel("20");
+		test.add(powerLabels[SHIELD],gridConstraint);
 		
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
-		mASERLabel = new JLabel("09");
-		test.add(mASERLabel,gridConstraint);
+		powerLabels[MASER] = new JLabel("09");
+		test.add(powerLabels[MASER],gridConstraint);
 		
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
-		tRTMISSLLabel = new JLabel("11");
-		test.add(tRTMISSLLabel,gridConstraint);
+		powerLabels[LAUNCHER] = new JLabel("11");
+		test.add(powerLabels[LAUNCHER],gridConstraint);
 
 		test.setOpaque(true);
 		test.setBackground(Color.PINK);
