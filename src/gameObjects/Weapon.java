@@ -1,7 +1,8 @@
-package invade.src.gameObjects;
-import invade.src.board.Sector;
-import invade.src.board.Space;
-import invade.src.board.Quadrant;
+package gameObjects;
+
+import board.Sector;
+import board.Space;
+import board.Quadrant;
 
 public abstract class Weapon 
 	extends SpaceObject
@@ -9,33 +10,35 @@ public abstract class Weapon
 	
 	public int[] velocity = new int[]{0, 0};
 	
-	public Weapon(int[] velocity){
-		setVelocity(velocity);
+	public Weapon(Sector sector, int direction){		
+		super(Space.getInstance().
+				getQuadrant(sector.getPosition()).
+				getNext(sector, direction));
+		setSpeed(new int[]{direction, 1});	
 	}
-	
-	protected Sector getCurSector(){
-		return getCurQuadrant().getSector(position);
-	}
-	
+
 	protected Quadrant getCurQuadrant(){
 		return Space.getInstance().getQuadrantOfObject(this);
 	}
 
-	public void Move(){
-		Sector curSector = getCurSector();
-		curSector.setInhabitant(new Void());
-		Sector nextSector = getCurQuadrant().getNext(curSector, velocity[0]);
+	public void move(){
+		sector.setInhabitant(new Void());
+		Sector nextSector = getCurQuadrant().getNext(sector, velocity[0]);
 		if(nextSector == null || !(nextSector.getInhabitant() instanceof Void)){
-			curSector.setInhabitant(new Void());
+			sector.setInhabitant(new Void());
 			if(nextSector != null) {
-				nextSector.blowUp(this);
+				blowUp(nextSector);
 			}
 		}
 		else nextSector.setInhabitant(this);		
 	}
 	
-	public void setVelocity(int[] velocity){
+	public void setSpeed(int[] velocity){
 		this.velocity[0] = velocity[0];
 		this.velocity[1] = velocity[1];
+	}
+	
+	private void blowUp(Sector sector){
+		sector.setInhabitant(new Void());
 	}
 }
