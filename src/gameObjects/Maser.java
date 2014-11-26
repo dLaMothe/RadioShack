@@ -1,6 +1,6 @@
-package invade.src.gameObjects;
+package gameObjects;
 
-import invade.src.board.Sector;
+import board.Sector;
 import java.util.ArrayList;
 
 public class Maser
