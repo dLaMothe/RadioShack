@@ -2,6 +2,7 @@ package gameObjects;
 
 import board.Position;
 import board.Positionable;
+import board.Quadrant;
 import board.Sector;
 
 import java.util.Observable;
@@ -20,10 +21,11 @@ import java.util.Observable;
  * @author Michael Koonts
  */
 
-public class SpaceObject extends Observable implements Positionable{
+public abstract class SpaceObject extends Observable implements Positionable{
     
 	public String label;
     protected Sector sector;
+    protected Quadrant quadrant;
     protected boolean detectable = false;
 
     /**
@@ -76,4 +78,11 @@ public class SpaceObject extends Observable implements Positionable{
     public boolean getDetectable(){
         return detectable;
     }
+    
+    /**
+     * REQUIRES: nothing
+     * MODIFIES: this
+     * EFFECTS: effects very depending on the implementation of the SpaceObject
+     */
+    public abstract void action();
 }
