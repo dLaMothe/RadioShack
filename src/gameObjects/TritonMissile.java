@@ -49,7 +49,6 @@ public class TritonMissile
 
 	@Override
 	public void action() throws CollissionException {
-		// TODO Auto-generated method stub
-		
+		this.move();
 	}
 }
