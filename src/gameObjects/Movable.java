@@ -16,7 +16,7 @@ public interface Movable {
      */
     int[] velocity = new int[2];
 
-    public void move();
+    public void move() throws CollissionException;
 
     /**
      *

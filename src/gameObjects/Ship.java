@@ -160,9 +160,10 @@ public class Ship extends SpaceObject implements Movable{
      * EFFECTS: implements all player commands currently queued up 
      * This will have different results depending on what the player has 
      * asked the ship to do ie. move, shoot, etc.
+     * @throws CollissionException 
      */
     @Override
-    public void move() {
+    public void move() throws CollissionException {
         systems.cycle();
     }
     
@@ -185,7 +186,7 @@ public class Ship extends SpaceObject implements Movable{
     }
     
     @Override
-	public void action() {
+	public void action() throws CollissionException {
 		this.move();		
 	}
     
@@ -238,8 +239,10 @@ public class Ship extends SpaceObject implements Movable{
          * EFFECTS: cycles through all ship systems and calls their act method.
          * 			This will have different results depending on what the player has 
          * 			asked the ship to do ie. move, shoot, etc.
+		 * @throws CollissionException is potentially generated when the ship moves to 
+		 * a new sector
          */
-    	public void cycle() {
+    	public void cycle() throws CollissionException {
 			for(ShipSystem sys: systems){
 				sys.act();
 			}
@@ -312,10 +315,13 @@ public class Ship extends SpaceObject implements Movable{
 	     * 			 @param system - an initialized Ship.ShipSystem
 	     * MODIFIES: this
 	     * EFFECTS: replace system with the given one
+	     * 
+	     * Note: this method is not needed in the current version of the game, and 
+	     * to avoid potential bugs it is commented out
 	     */
-		public void setSystem(int type, ShipSystem system) {
-			this.systems.add(type, system);
-		}
+		//public void setSystem(int type, ShipSystem system) {
+		//	this.systems.add(type, system);
+		//}
 		
 		/**
 	     * REQUIRES: nothing
@@ -393,8 +399,10 @@ public class Ship extends SpaceObject implements Movable{
 	     * REQUIRES: nothing
 	     * MODIFIES: see individual overrides
 	     * EFFECTS: see individual overrides
+		 * @throws CollissionException if this.act() causes the ship to move to a new location
+		 * the exception can be generated. 
 	     */
-    	public abstract void act();
+    	public abstract void act() throws CollissionException;
     }
     
     private class Sheilds extends ShipSystem{
@@ -509,11 +517,17 @@ public class Ship extends SpaceObject implements Movable{
 	     * EFFECTS: the location of the ship in the current quadrant
 	     * If the current vector takes the ship out of the current quadrant moves to the appropriate
 	     * quadrent and deactivates this 
+		 * @throws CollissionException if the destination sector is already occupied 
 	     */
 		@Override
-		public void act() {
+		public void act() throws CollissionException {
 			if(this.active){
-				Space.getInstance().getQuadrant(quadrant.getPosition()).getNext(sector, direction);
+				Sector newSec = Space.getInstance().getQuadrant(quadrant.getPosition()).getNext(sector, direction);
+				if(null != newSec.getInhabitant()){
+					throw new CollissionException(sector.getInhabitant(), newSec.getInhabitant());
+				}else{
+					setSector(newSec);
+				}
 				/*switch (this.direction){
 				case(Configs.NORTH):
 					//y sector + 1

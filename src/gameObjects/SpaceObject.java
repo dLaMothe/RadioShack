@@ -83,6 +83,9 @@ public abstract class SpaceObject extends Observable implements Positionable{
      * REQUIRES: nothing
      * MODIFIES: this
      * EFFECTS: effects very depending on the implementation of the SpaceObject
+     * @throws CollissionException if action causes the SpaceObject to move this
+     * exception can be generated in the event that the place this is moving to 
+     * is already occupied. 
      */
-    public abstract void action();
+    public abstract void action() throws CollissionException;
 }
