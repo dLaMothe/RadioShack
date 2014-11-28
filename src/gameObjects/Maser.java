@@ -76,4 +76,9 @@ public class Maser
 		sectors.remove(0);
 		return sector;	
 	}
+
+	@Override
+	public void action() throws CollissionException {
+		this.move();		
+	}
 }

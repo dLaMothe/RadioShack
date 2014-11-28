@@ -8,4 +8,9 @@ public class Void extends SpaceObject{
 		super(sector);
 		label = "";
 	}
+
+	@Override
+	public void action() throws CollissionException {
+		this.sector.setInhabitant(null);
+	}
 }
