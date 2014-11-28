@@ -85,6 +85,7 @@ public class CommandParser {
 				game.setPower(LAUNCHER, Double.parseDouble((cmd.substring(subCommand))));
 				break;
 			default:
+				invalidCommand();
 				break;
 		}
 	}
@@ -116,6 +117,7 @@ public class CommandParser {
 	private void invalidCommand() {
 		// TODO Auto-generated method stub
 		System.out.println("Invalid Command");
+		game.invalidCommand();
 		
 	}
 }

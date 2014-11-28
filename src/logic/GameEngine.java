@@ -33,4 +33,14 @@ public class GameEngine {
 		}
 		panels.powerAvailLabel.setText(String.valueOf(ship.getPower()));
 	}
+	
+	public void invalidCommand()
+	{
+		panels.invalidCommandLabel.setText("Invalid command");
+	}
+	
+	private void clearInvalidCommand()
+	{
+		panels.invalidCommandLabel.setText("");
+	}
 }

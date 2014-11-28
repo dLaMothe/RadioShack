@@ -44,6 +44,9 @@ public class GamePanels {
 	//Middle Panel Labels
 	public JLabel[][] grid;
 	
+	//Bottom Panel Labels
+	public JLabel invalidCommandLabel;
+	
 	GamePanels() {
 		createLeftPanel();
 		createMiddlePanel();
@@ -402,12 +405,17 @@ public class GamePanels {
 		  
 		test.add(new JLabel("HYPR=H,ION=I,MSR=M,TRM=T,PWRDST=D,SELFD=S,EXPRAY=E,POD=A,XPOD=X"),gridConstraint);
 		  
-		//Filler to move other label to right postions
-		gridConstraint.gridx = 0;
 		gridConstraint.gridy = 1;
+		invalidCommandLabel = new JLabel("");
+		test.add(invalidCommandLabel,gridConstraint);
+		
+		//Filler to move other label to right postions
+		gridConstraint.gridy = 2;
 		gridConstraint.weighty = 1;
 		test.add(new JLabel(""),gridConstraint);
 		  
+		
+		
 		test.setOpaque(true);
 		test.setBackground(Color.MAGENTA);
 		bottomPanel = test;

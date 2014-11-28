@@ -78,7 +78,7 @@ public class InvadeGameA extends JFrame {
 		 
 		setJMenuBar(menuBar);
 		
-		setSize(575,285);
+		setSize(575,300);
 		setLocationRelativeTo(null);
 		
 		
