@@ -31,5 +31,6 @@ public class GameEngine {
 		for(int i = 0; i < TOTAL_POWERS; i++) {
 			panels.powerLabels[i].setText(String.valueOf(ship.getPower(i)));
 		}
+		panels.powerAvailLabel.setText(String.valueOf(ship.getPower()));
 	}
 }
