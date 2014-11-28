@@ -32,6 +32,14 @@ public class GameEngine {
 			panels.powerLabels[i].setText(String.valueOf(ship.getPower(i)));
 		}
 		panels.powerAvailLabel.setText(String.valueOf(ship.getPower()));
+		panels.antimatterPodsLabel.setText(String.valueOf(ship.getNumAntimatterPods()));
+		panels.tritonMislsLabel.setText(String.valueOf(ship.getNumTrtMissiles()));
+	}
+	
+	public void updateResource()
+	{
+		panels.antimatterPodsLabel.setText(String.valueOf(ship.getNumAntimatterPods()));
+		panels.tritonMislsLabel.setText(String.valueOf(ship.getNumTrtMissiles()));
 	}
 	
 	public void invalidCommand()
