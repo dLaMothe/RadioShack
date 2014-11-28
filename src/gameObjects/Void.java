@@ -1,17 +1,11 @@
-package invade.src.gameObjects;
+package gameObjects;
 
-import invade.src.board.Position;
-
+import board.*;
 
 public class Void extends SpaceObject{
 	
-	public Void(){
+	public Void(Sector sector){
+		super(sector);
 		label = "";
-	}
-
-	@Override
-	public Position getPosition() {
-		// TODO Auto-generated method stub
-		return position;
 	}
 }
