@@ -39,7 +39,7 @@ public class GameEngine {
 		panels.invalidCommandLabel.setText("Invalid command");
 	}
 	
-	private void clearInvalidCommand()
+	public void clearInvalidCommand()
 	{
 		panels.invalidCommandLabel.setText("");
 	}

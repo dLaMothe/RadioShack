@@ -12,6 +12,7 @@ public class CommandParser {
 	}
 
 	public void parseCommand(String command) {
+		game.clearInvalidCommand();
 		switch(command.charAt(firstIndex)) {
 			case 'I':
 				handleIon(command.substring(subCommand));
