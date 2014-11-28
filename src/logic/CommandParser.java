@@ -64,7 +64,10 @@ public class CommandParser {
 	private void handlePower(String cmd) {
 		switch(cmd.charAt(firstIndex)) {
 			case 'H':
-				game.setPower(ENGINE, Double.parseDouble((cmd.substring(subCommand))));
+				game.setPower(HYPER, Double.parseDouble((cmd.substring(subCommand))));
+				break;
+			case 'I':
+				game.setPower(ION, Double.parseDouble((cmd.substring(subCommand))));
 				break;
 			case 'L':
 				game.setPower(LRSENSOR, Double.parseDouble((cmd.substring(subCommand))));

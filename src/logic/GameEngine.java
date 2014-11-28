@@ -16,7 +16,7 @@ public class GameEngine {
 		panels = newPanel;
 		sec = new Sector();
 		ship = new Ship(sec);
-		//populatePanel();
+		populatePanel();
 	}
 	
 

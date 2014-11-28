@@ -25,9 +25,7 @@ public class GamePanels {
 	private JPanel bottomPanel;
 	   
 	//Left Panel Labels
-	public JLabel lRSensorRowOneLabel;
-	public JLabel lRSensorRowTwoLabel;
-	public JLabel lRSensorRowThreeLabel;
+	public JLabel lRSensorLabel[];
 	public JLabel powerLabels[];
 
 	 
@@ -47,9 +45,6 @@ public class GamePanels {
 	public JLabel[][] grid;
 	
 	GamePanels() {
-	    
-		textField = new JTextField(5);
-		powerLabels = new JLabel[TOTAL_POWERS];
 		createLeftPanel();
 		createMiddlePanel();
 		createRightPanel();
@@ -62,6 +57,10 @@ public class GamePanels {
 		   
 		JPanel test = new JPanel();
 		test.setLayout(new java.awt.GridBagLayout());
+		
+		textField = new JTextField(5);
+		powerLabels = new JLabel[TOTAL_POWERS];
+		lRSensorLabel = new JLabel[TOTAL_SENSORS_ROWS];
 		      
 		java.awt.GridBagConstraints gridConstraint = new java.awt.GridBagConstraints();
 		gridConstraint.gridx = X;
@@ -82,117 +81,88 @@ public class GamePanels {
 		gridConstraint.gridwidth = 1;
 		test.add(new JLabel("L-R SENSOR"),gridConstraint);
 		  
-		gridConstraint.gridx = X;
-		gridConstraint.gridy = Y++;
-		lRSensorRowOneLabel = new JLabel("002-003-004");
-		test.add(lRSensorRowOneLabel,gridConstraint);
-		  
-		gridConstraint.gridx = X;
-		gridConstraint.gridy = Y++;
-		test.add(new JLabel("----------------"),gridConstraint);
-		  
-		gridConstraint.gridx = X;
-		gridConstraint.gridy = Y++;
-		lRSensorRowTwoLabel = new JLabel("005-006-007");
-		test.add(lRSensorRowTwoLabel,gridConstraint);
-		  
-		gridConstraint.gridx = X;
-		gridConstraint.gridy = Y++;
-		test.add(new JLabel("----------------"),gridConstraint);
-		  
-		gridConstraint.gridx = X;
-		gridConstraint.gridy = Y++;
-		lRSensorRowThreeLabel = new JLabel("008-009-000");
-		test.add(lRSensorRowThreeLabel,gridConstraint);
+		for (int i = 0; i < TOTAL_SENSORS_ROWS; i++)
+		{
+			gridConstraint.gridy = Y++;
+			lRSensorLabel[i] = new JLabel("000-000-000");
+			test.add(lRSensorLabel[i],gridConstraint);
+			
+			if(i != 2)
+			{
+				gridConstraint.gridy = Y++;
+				test.add(new JLabel("----------------"),gridConstraint);
+			}
+		}
 		  
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
 		test.add(new JLabel("PWR DIST"),gridConstraint);
-		  
+
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
-		test.add(new JLabel("HYPR&ION"),gridConstraint);
-		  
+		test.add(new JLabel("DEFLECTORS"),gridConstraint);
+
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
 		test.add(new JLabel("LR SENSOR"),gridConstraint);
-		  
+
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
 		test.add(new JLabel("SR SENSOR"),gridConstraint);
 		  
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
-		test.add(new JLabel("DEFLECTORS"),gridConstraint);
+		test.add(new JLabel("MASER"),gridConstraint);
 		  
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
-		test.add(new JLabel("MASERS"),gridConstraint);
+		test.add(new JLabel("LAUNCHER"),gridConstraint);
 		  
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
-		test.add(new JLabel("TRT MISSL"),gridConstraint);
+		test.add(new JLabel("ION"),gridConstraint);
 		  
+		gridConstraint.gridx = X;
+		gridConstraint.gridy = Y++;
+		test.add(new JLabel("HYPER"),gridConstraint);
+		
 		//Column Two
 		X=1;
 		Y=1;
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
-		test.add(new JLabel("%-MINE"),gridConstraint);
+		test.add(new JLabel(MINE+"-MINE"),gridConstraint);
 		 
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
-		test.add(new JLabel("^-HEPHS"),gridConstraint);
+		test.add(new JLabel(SHIP+"-HEPHS"),gridConstraint);
 		  
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
-		test.add(new JLabel("0-SSTN"),gridConstraint);
+		test.add(new JLabel(SSTN+"-SSTN"),gridConstraint);
 		  
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
-		test.add(new JLabel("@-JCC"),gridConstraint);
+		test.add(new JLabel(JCC+"-JCC"),gridConstraint);
 		  
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
-		test.add(new JLabel("&-JBC"),gridConstraint);
+		test.add(new JLabel(JBC+"-JBC"),gridConstraint);
 		  
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
-		test.add(new JLabel("X-UNKN"),gridConstraint);
+		test.add(new JLabel(UNKN+"-UNKN"),gridConstraint);
 		  
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
 		test.add(new JLabel("%"),gridConstraint);
-		  
-		gridConstraint.gridx = X;
-		gridConstraint.gridy = Y++;
-		powerLabels[ENGINE] = new JLabel("20");
-		test.add(powerLabels[ENGINE],gridConstraint);
-		 
-		gridConstraint.gridx = X;
-		gridConstraint.gridy = Y++;
-		powerLabels[LRSENSOR] = new JLabel("10");
-		test.add(powerLabels[LRSENSOR],gridConstraint);
-		
-		gridConstraint.gridx = X;
-		gridConstraint.gridy = Y++;
-		powerLabels[SRSENSOR] = new JLabel("20");
-		test.add(powerLabels[SRSENSOR],gridConstraint);
-		
-		gridConstraint.gridx = X;
-		gridConstraint.gridy = Y++;
-		powerLabels[SHIELD] = new JLabel("20");
-		test.add(powerLabels[SHIELD],gridConstraint);
-		
-		gridConstraint.gridx = X;
-		gridConstraint.gridy = Y++;
-		powerLabels[MASER] = new JLabel("09");
-		test.add(powerLabels[MASER],gridConstraint);
-		
-		gridConstraint.gridx = X;
-		gridConstraint.gridy = Y++;
-		powerLabels[LAUNCHER] = new JLabel("11");
-		test.add(powerLabels[LAUNCHER],gridConstraint);
+
+		for(int i = 0; i < TOTAL_POWERS; i++)
+		{
+			gridConstraint.gridy = Y++;
+			powerLabels[i] = new JLabel("20");
+			test.add(powerLabels[i],gridConstraint);
+		}
 
 		test.setOpaque(true);
 		test.setBackground(Color.PINK);
@@ -399,15 +369,15 @@ public class GamePanels {
 		  
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
-		test.add(new JLabel("7 0 1"),gridConstraint);
+		test.add(new JLabel("7 8 9"),gridConstraint);
 		  
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
-		test.add(new JLabel("6 - 2"),gridConstraint);
+		test.add(new JLabel("4 5 6"),gridConstraint);
 		  
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
-		test.add(new JLabel("5 4 3"),gridConstraint);
+		test.add(new JLabel("1 2 3"),gridConstraint);
 		  
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
