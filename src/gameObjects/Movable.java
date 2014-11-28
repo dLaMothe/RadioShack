@@ -16,12 +16,11 @@ public interface Movable {
      */
     int[] velocity = new int[2];
 
-    public void move();
+    public void move() throws CollissionException;
 
     /**
      *
      * @param velocity
      */
-    public void setSpeed(int[] velocity);
-    
+    public void setSpeed(int[] velocity);  
 }
