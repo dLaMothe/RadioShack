@@ -767,11 +767,11 @@ public class Ship extends SpaceObject implements Movable{
 		private void launch(){
 			if(Configs.ANITMATTER_POD == this.type && 0 < this.antimatterPods){
 				if(null == active){
-					//this.active = new AntimatterPod(direction, sector);
+					this.active = new AntimatterPod(sector, direction);
 					this.antimatterPods--;
 				}
 			}else if(Configs.TRT_MISSILE == this.type && Configs.NEUTRAL != this.direction && 0 < this.trtmissiles){
-				//TODO new TritonMissile(direction, sector);
+				new TritonMissile(sector, direction);
 				this.trtmissiles--;
 			}
 			this.type = Launchers.NONE;
@@ -779,7 +779,7 @@ public class Ship extends SpaceObject implements Movable{
 		}
 		public void detonatePod(){
 			if(null != active){
-				//this.active.detonate();
+				this.active.detonate();
 			}
 		}
     }
