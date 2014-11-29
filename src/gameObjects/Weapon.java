@@ -4,33 +4,26 @@ import board.*;
 
 /**
  * The abstract super class for all types of weapon
+ * @author Laurens van Wingerden, Vitalii Egorchatov
  */
 public abstract class Weapon 
 	extends SpaceObject
 	implements Movable{
 	
 	/**
-	 * The flag to indicate whether the weapon hit another object.
-	 */
-	protected Boolean hit = false;
-	
-	/**
-	 * REQUIRES: The ship's current sector and the direction of the shoot.
+	 * REQUIRES: The ship's current sector and the direction of the shot.
 	 * MODIFIES: This.
 	 * EFFECTS: Creates an instance of weapon and puts it into a sector
 	 * next to the ship depending on the direction of the shoot;
-	 * sets the weapon's initial direction; makes the weapon detectable.
+	 * sets the weapon's initial direction.
 	 * @param sector The current ship's sector.
-	 * @param direction The direction of the shoot.
+	 * @param direction The direction of the shot.
 	 */
 	public Weapon(Sector sector, int direction){		
 		super(Space.getInstance().
 				getQuadrant(sector.getPosition()).
 				getNext(sector, direction));
 		setSpeed(new int[]{direction, 1});
-		setDetectable(true);
-		getCurQuadrant1()Space.getInstance().getQuadrant(sector.getPosition()).
-			getWeaponList().add(this);
 	}
 
 	/**
@@ -43,8 +36,8 @@ public abstract class Weapon
 	
 	/**
 	 * REQUIRES: The necessary velocity in the form of an array, 
-	 * in which the first item is direction and the second is speed
-	 * MODIFIES: This.
+	 * in which the first item is direction and the second is speed.
+	 * MODIFIES: This: Velocity.
 	 * EFFECTS: Changes its direction or/and speed.
 	 * @param vel The necessary weapons's velocity 
 	 */
@@ -54,20 +47,19 @@ public abstract class Weapon
 	}
 	
 	/**
-	 * REQUIRES: The valid sector to be blown up.
-	 * EFFECTS: 'Blows up' the sector; actually, put a Void into it. 
-	 * @param sector The sector to be blown up.
+	 * EFFECTS: Moves the weapon.
 	 */
-	protected void blowUp(Sector sector){
-		new Void(sector);
-	}
-
 	@Override
-	public void move() throws CollissionException {
-		// TODO Auto-generated method stub
-		
+	public void action(){
+		this.move();
 	}
-
-	@Override
-	public abstract void action() throws CollissionException;
+	
+	/**
+	 * MODIFIES: Sector: Puts null into it; Quadrant: Removes the weapon from the weapon list.
+	 * EFFECTS: Removes all the references to the weapon the sector. 
+	 */
+	protected void destroyItself(){
+		sector.setInhabitant(null);
+		getCurQuadrant().getWeaponList().remove(this);		
+	}
 }
