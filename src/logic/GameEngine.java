@@ -9,16 +9,15 @@ public class GameEngine {
 	
 	public GamePanels panels;
 	public Ship ship;
-	public Space space;
 	public Quadrant quad;
 	
 	
 	public GameEngine(GamePanels newPanel) {
 		panels = newPanel;
-		space = new Space();
-		quad = new Quadrant();
+		quad = Space.getInstance().getQuadrant(5, 5);
 		ship = new Ship(quad.getSector(new Position(5,5)));
-		populatePanel();
+		populateSidePanel();
+		populateQuadrant();
 	}
 	
 
@@ -29,14 +28,26 @@ public class GameEngine {
 		panels.powerAvailLabel.setText(String.valueOf(ship.getPower()));
 	}
 	
-	private void populatePanel() {
+	private void populateSidePanel() {
 		for(int i = 0; i < TOTAL_POWERS; i++) {
 			panels.powerLabels[i].setText(String.valueOf(ship.getPower(i)));
 		}
 		panels.powerAvailLabel.setText(String.valueOf(ship.getPower()));
 		panels.antimatterPodsLabel.setText(String.valueOf(ship.getNumAntimatterPods()));
 		panels.tritonMislsLabel.setText(String.valueOf(ship.getNumTrtMissiles()));
-		panels.sectorLabel
+		panels.quadrantLabel.setText(String.valueOf(quad.getPosition().getRow()) + "-" + String.valueOf(quad.getPosition().getCol()));
+		panels.sectorLabel.setText(String.valueOf(ship.getSector().getPosition().getRow()) + "-" + String.valueOf(ship.getSector().getPosition().getCol()));
+	}
+	
+	private void populateQuadrant() {
+		Position pos = new Position(0,0);
+		for(int i = 0; i < QUADRANT_SIZE; i++) {
+			for(int j = 0; j < QUADRANT_SIZE; j++) {
+				pos.setPositionAt(i, j);
+				if(ship.getPosition().equals(pos))
+					panels.grid[i][j].setText(String.valueOf(SHIP));
+			}
+		}
 	}
 	
 	public void updateResource()
