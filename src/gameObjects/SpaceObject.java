@@ -76,4 +76,8 @@ public class SpaceObject extends Observable implements Positionable{
     public boolean getDetectable(){
         return detectable;
     }
+    
+    public void bumped(SpaceObject object){
+    	
+    }
 }

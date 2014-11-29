@@ -29,13 +29,15 @@ public abstract class Weapon
 				getNext(sector, direction));
 		setSpeed(new int[]{direction, 1});
 		setDetectable(true);
+		getCurQuadrant()Space.getInstance().getQuadrant(sector.getPosition()).
+			getWeaponList().add(this);
 	}
 
 	/**
 	 * EFFECTS: Retrieves the weapon's current quadrant
 	 * @return The weapon's current quadrant
 	 */
-	protected Quadrant getCurQuadrant(){
+	protected Quadrant getCurQuadrant()getCurQuadrant(){
 		return Space.getInstance().getQuadrantOfObject(this);
 	}
 	

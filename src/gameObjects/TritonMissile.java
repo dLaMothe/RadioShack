@@ -1,5 +1,6 @@
 package gameObjects;
 
+import board.Quadrant;
 import board.Sector;
 
 /**
@@ -30,7 +31,20 @@ public class TritonMissile
 	 * if the next sector contains any other object.
 	 */
 	public void move(){
-		new Void(sector);
+		sector.setInhabitant(null);
+		Quadrant quadrant = getCurQuadrant();
+		Sector nextSector = quadrant.getNext(sector, velocity[0]);	
+		if(nextSector == null){
+			quadrant.getWeaponList().remove(this);
+		} else {
+			if(!(nextSector.getInhabitant() instanceof Void)) {
+				hit = true;
+			}
+			setSector(nextSector);
+		} 	
+		
+		
+		/*new Void(sector);
 		if(hit){
 			blowUp(sector);
 			setDetectable(false);
@@ -44,6 +58,6 @@ public class TritonMissile
 				hit = true;
 			}
 			setSector(nextSector);
-		} 	
+		}*/ 	
 	}
 }
