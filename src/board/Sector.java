@@ -1,10 +1,22 @@
 package board;
 
 import gameObjects.SpaceObject;
-
+import gameObjects.Void;
+/**
+ * 
+ * @author sukhenka (Sukhenko Artur)
+ *
+ */
 public class Sector implements Positionable{
-	protected final Position position = new Position(-1, -1);	
+	protected final Position sectorPosition = new Position(-1, -1);	
+	protected final Position quadrantPosition = new Position(-1, -1);
 private SpaceObject inhabitant;
+
+public Sector(Position p,Quadrant q) {
+quadrantPosition.setPositionAt(q.getPosition());
+sectorPosition.setPositionAt(p);
+inhabitant = null;
+}
 
 /**
  * @return the inhabitant
@@ -22,7 +34,7 @@ public void setInhabitant(SpaceObject inhabitant) {
 
 @Override
 public Position getPosition() {
-	return position;
+	return sectorPosition;
 }
 
 }

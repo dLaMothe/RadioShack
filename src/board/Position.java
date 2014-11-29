@@ -1,5 +1,9 @@
 package board;
-
+/**
+ * 
+ * @author sukhenka (Sukhenko Artur)
+ *
+ */
 public class Position {
 	private int row;
 	private int col;
@@ -64,6 +68,10 @@ public class Position {
 		}
 		return true;
 	}
+	public boolean isValid(){
+		return(col < 10 && row < 10);
+	}
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
