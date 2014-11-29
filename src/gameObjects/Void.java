@@ -1,7 +1,7 @@
 package gameObjects;
 
 import board.*;
-
+@Deprecated
 public class Void extends SpaceObject{
 	
 	public Void(Sector sector){
