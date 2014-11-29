@@ -1,39 +1,21 @@
 package logic;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.KeyEventDispatcher;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 
-public class KeyDispatcher extends JFrame implements KeyEventDispatcher, ActionListener {
+public class KeyDispatcher extends JFrame implements KeyEventDispatcher {
 
-	JTextField typingArea;
-	JTextArea displayArea;
+	private JTextField typingArea;
+	private CommandParser parser;
 	
-	KeyDispatcher() {
-		JButton button = new JButton("Clear");
-		button.addActionListener(this);
-		
-        displayArea = new JTextArea();
-        displayArea.setEditable(false);
-		
-		typingArea = new JTextField();
-		
-        JScrollPane scrollPane = new JScrollPane(displayArea);
-        scrollPane.setPreferredSize(new Dimension(375, 125));
-		
-		getContentPane().add(typingArea,BorderLayout.PAGE_START);
-		getContentPane().add(scrollPane,BorderLayout.CENTER);
-		getContentPane().add(button, BorderLayout.PAGE_END);
+	public KeyDispatcher(GameEngine newGame, JTextField textField) {
+		typingArea = textField;
+		parser = new CommandParser(newGame);
 	}
 	
 	public boolean dispatchKeyEvent(KeyEvent e) {
@@ -42,21 +24,22 @@ public class KeyDispatcher extends JFrame implements KeyEventDispatcher, ActionL
         return false;
     }
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-        //Clear the text components.
-        typingArea.setText("");
-        displayArea.setText("");
-
-         
-        //Return the focus to the typing area.
-        typingArea.requestFocusInWindow();
-	}
 
 	public void keyPressed(KeyEvent e) {
-        if(e.getID() == KeyEvent.KEY_TYPED) {
-            typingArea.setText(typingArea.getText() + String.valueOf(e.getKeyChar()));
-        }	
+		if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+			if(e.getID() == KeyEvent.KEY_PRESSED) {
+				String cmd = typingArea.getText();
+				processCommand(cmd);
+				typingArea.setText("");	
+			}
+		} 
+	}
+
+	public void processCommand(String command) {
+		parser.parseCommand(command);
+	}
+	
+	public JTextField getTextField() {
+		return typingArea;
 	}
 }
