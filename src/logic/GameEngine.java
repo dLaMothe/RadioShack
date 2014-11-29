@@ -1,6 +1,6 @@
 package logic;
 
-import board.Sector;
+import board.*;
 import gui.GamePanels;
 import gameObjects.*;
 import static settings.Configs.*;
@@ -9,13 +9,15 @@ public class GameEngine {
 	
 	public GamePanels panels;
 	public Ship ship;
-	public Sector sec;
+	public Space space;
+	public Quadrant quad;
 	
 	
 	public GameEngine(GamePanels newPanel) {
 		panels = newPanel;
-		sec = new Sector();
-		ship = new Ship(sec);
+		space = new Space();
+		quad = new Quadrant();
+		ship = new Ship(quad.getSector(new Position(5,5)));
 		populatePanel();
 	}
 	
@@ -34,6 +36,7 @@ public class GameEngine {
 		panels.powerAvailLabel.setText(String.valueOf(ship.getPower()));
 		panels.antimatterPodsLabel.setText(String.valueOf(ship.getNumAntimatterPods()));
 		panels.tritonMislsLabel.setText(String.valueOf(ship.getNumTrtMissiles()));
+		panels.sectorLabel
 	}
 	
 	public void updateResource()
