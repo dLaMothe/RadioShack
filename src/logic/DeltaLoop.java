@@ -6,7 +6,7 @@ import java.util.*;
 
 
 public class DeltaLoop{
-	private static final int FPS = 3;
+	private static final int FPS = 8;
 	private Timer timer;
 	private GameEngine game;
 	private boolean isRunning;
@@ -24,13 +24,8 @@ public class DeltaLoop{
 		public void run()
 		{
 			System.out.println("HELLO");
-			try {
-				game.ship.action();
-			} catch (CollissionException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			game.populateQuadrant();
+			//game.ship.sapPower();
+			game.update();
 	        if (!isRunning)
 	        {
 	            timer.cancel();

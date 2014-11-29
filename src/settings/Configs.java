@@ -1,4 +1,7 @@
 package settings;
+
+import java.awt.Color;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -27,14 +30,18 @@ public class Configs {
     public static final int ANITMATTER_POD = 10;
     
     public static final int TOTAL_POWERS = 7;
+    
+
+	public static final int INITTIME = 300200;
+	public static final int TIMEINCREMENT = 1;
 
     //default power levels
-    public static final double INIT_SHIELD = 20.0;
-    public static final double INIT_ENGINE = 10.0;
-    public static final double INIT_LRSENSOR = 10.0;
-    public static final double INIT_SRSENSOR = 20.0;
-    public static final double INIT_MASER = 9.0;
-    public static final double INIT_TRT_MISSILE = 11.0;
+    public static final double INIT_SHIELD = 0;//20.0;
+    public static final double INIT_ENGINE = 0;//10.0;
+    public static final double INIT_LRSENSOR = 0;//10.0;
+    public static final double INIT_SRSENSOR = 0;//20.0;
+    public static final double INIT_MASER = 0;//9.0;
+    public static final double INIT_TRT_MISSILE = 0;//11.0;
     //minimum system power(This is the minimum power a system must have in order to function)
     public static final double MIN_SYSTEM_POWER = 2.0;
     public static final double POWER_SAP = 0.5;
@@ -90,5 +97,16 @@ public class Configs {
     public static final int SNINE = 9;
     public static final int STEN = 10;
     
+    //CONDITION LEVELS
+    public static final double CONDITIONLEVELS[] = {75,50,25,0};
+    public static final String CONDITIONSTRINGVALUES[] = {"GREEN","YELLOW", "RED","CRITICAL"};
+    public static final Color CONDITIONCOLOR[] = {Color.GREEN,Color.YELLOW,Color.RED,Color.PINK};
+    public static final int CONDITIONLEVELAMOUNT = 3;
+    
+    //PANEL VARIABLES
+    public static final int LRARRSIZE = 3;
+    
+    
+
     
 }
