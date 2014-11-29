@@ -58,6 +58,9 @@ public abstract class SpaceObject extends Observable implements Positionable{
      * EFFECTS: sets this object in the sector provided
      */
     public void setSector(Sector sec){
+    	if(null != sector){
+    		sector.setInhabitant(null);
+    	}
         sector = sec;
         sector.setInhabitant(this);
     }

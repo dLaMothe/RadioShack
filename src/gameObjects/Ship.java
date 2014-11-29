@@ -440,6 +440,7 @@ public class Ship extends SpaceObject implements Movable{
 
 		protected boolean active;
 		protected int direction;
+		private int delta;
 
 		/**
 	     * REQUIRES: @param powerLevel - see super
@@ -450,6 +451,7 @@ public class Ship extends SpaceObject implements Movable{
 			super(powerLevel);
 			this.active = false;
 			this.direction = NEUTRAL;
+			this.setDelta(-1);
 		}
 		
 		/**
@@ -486,6 +488,14 @@ public class Ship extends SpaceObject implements Movable{
 		public int getDirection(){
 			return this.direction;
 		}
+
+		public int getDelta() {
+			return delta;
+		}
+
+		public void setDelta(int delta) {
+			this.delta = delta;
+		}
     	
     }
     
@@ -521,40 +531,51 @@ public class Ship extends SpaceObject implements Movable{
 	     */
 		@Override
 		public void act(){
-			if(this.active){
-				Sector newSec = Space.getInstance().getQuadrant(quadrant.getPosition()).getNext(sector, direction);
-				if(null != newSec.getInhabitant()){
-					
-				}else{
-					setSector(newSec);
-				}
-				/*switch (this.direction){
+			if(this.active && 0 == getDelta()){
+				Sector newSec = null;
+				switch (this.direction){
 				case(Configs.NORTH):
 					//y sector + 1
+					newSec = Space.getInstance().getQuadrant(quadrant.getxCoord(), quadrant.getyCoord()).getAbsSector(sector.getxCoord(), sector.getyCoord() + 1);
 					break;
 				case(Configs.EAST):
 					//x sector + 1
+					newSec = Space.getInstance().getQuadrant(quadrant.getxCoord(), quadrant.getyCoord()).getAbsSector(sector.getxCoord() + 1, sector.getyCoord());
 					break;
 				case(Configs.SOUTH):
 					//y sector - 1
+					newSec = Space.getInstance().getQuadrant(quadrant.getxCoord(), quadrant.getyCoord()).getAbsSector(sector.getxCoord(), sector.getyCoord() - 1);
 					break;
 				case(Configs.WEST):
 					//x sector - 1
+					newSec = Space.getInstance().getQuadrant(quadrant.getxCoord(), quadrant.getyCoord()).getAbsSector(sector.getxCoord() - 1, sector.getyCoord());
 					break;
 				case(Configs.NORTH_WEST):
 					//x sector - 1 && y sector + 1
+					newSec = Space.getInstance().getQuadrant(quadrant.getxCoord(), quadrant.getyCoord()).getAbsSector(sector.getxCoord() - 1, sector.getyCoord() + 1);
 					break;
 				case(Configs.NORTH_EAST):
 					//x sector + 1 && y sector + 1
+					newSec = Space.getInstance().getQuadrant(quadrant.getxCoord(), quadrant.getyCoord()).getAbsSector(sector.getxCoord() + 1, sector.getyCoord() + 1);
 					break;
 				case(Configs.SOUTH_EAST):
 					//x sector + 1 && y sector - 1
+					newSec = Space.getInstance().getQuadrant(quadrant.getxCoord(), quadrant.getyCoord()).getAbsSector(sector.getxCoord() + 1, sector.getyCoord() - 1);
 					break;
 				case(Configs.SOUTH_WEST):
 					//x sector - 1 && y sector - 1
+					newSec = Space.getInstance().getQuadrant(quadrant.getxCoord(), quadrant.getyCoord()).getAbsSector(sector.getxCoord() - 1, sector.getyCoord() - 1);
 					break;
-				}*/					
-			}			
+				}
+				if(null != newSec.getInhabitant()){
+					newSec.getInhabitant().bump(Ship.this);
+				}else{
+					setSector(newSec);
+				}
+				setDelta(10 - this.throttle);
+			}else if(getDelta() > 0){
+				setDelta(getDelta() - 1);
+			}
 		}
 		
 		/**
@@ -566,6 +587,11 @@ public class Ship extends SpaceObject implements Movable{
 		public void setActive(int[] velocity){
 			super.setActive(velocity);
 			this.throttle = velocity[Ship.MAGNITUDE];
+			if(0 < this.throttle){
+				setDelta(10 - this.throttle);
+			}else{
+				setDelta(-1);
+			}
 		}
 		
 		/**

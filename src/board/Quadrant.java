@@ -17,21 +17,61 @@ public class Quadrant implements Positionable {
 	 * sectors[][] array of Sectors(Sector contain SpaceObject
 	 * like Ship, Jovian etc)
 	 */
-	private final Sector sectors[][] = new Sector[Configs.QUADRANT_SIZE][Configs.QUADRANT_SIZE];
+	private final Sector[][] sectors;
 	private boolean initialized = false;
-	private ArrayList<SpaceObject> generatedObjects = new ArrayList<SpaceObject>();
+	private ArrayList<SpaceObject> quadrantPopulation;
 	private Random rand = new Random();
-	private ArrayList<Weapon> weaponList = new ArrayList<Weapon>();
+	private ArrayList<Weapon> weaponList;
+	private final int xCoord;
+	private final int yCoord;
 	/**
 	 * If ship is in this Quadrant active = true
 	 */
 	public boolean active = false;
+	
+	public Quadrant(int x, int y){
+		this.xCoord = x;
+		this.yCoord = y;
+		quadrantPopulation = new ArrayList<SpaceObject>();
+		weaponList = new ArrayList<Weapon>();
+		sectors = new Sector[Configs.QUADRANT_SIZE][Configs.QUADRANT_SIZE];
+		for(int i = 0; i < Configs.QUADRANT_SIZE; i++){
+			for(int j = 0; j < Configs.QUADRANT_SIZE; j++){
+				sectors[i][j] = new Sector(i, j);
+			}
+		}
+	}
+
+	public Quadrant(Position p) {
+		this.xCoord = p.getCol();
+		this.yCoord = p.getRow();
+		quadrantPopulation = new ArrayList<SpaceObject>();
+		weaponList = new ArrayList<Weapon>();
+		sectors = new Sector[Configs.QUADRANT_SIZE][Configs.QUADRANT_SIZE];
+		for(int i = 0; i < Configs.QUADRANT_SIZE; i++){
+			for(int j = 0; j < Configs.QUADRANT_SIZE; j++){
+				sectors[i][j] = new Sector(i, j);
+			}
+		}
+	}
 
 	/**
 	 * @return the sectors[][]
 	 */
 	public Sector[][] getSectors() {
 		return sectors;
+	}
+	
+	public Sector getAbsSector(int x, int y){
+		return this.sectors[x][y];		
+	}
+	
+	public ArrayList<SpaceObject> getPopulation(){
+		return quadrantPopulation;		
+	}
+	
+	public ArrayList<Weapon> getActiveWeapons(){
+		return weaponList;		
 	}
 
 	private void init() {
@@ -61,7 +101,7 @@ public class Quadrant implements Positionable {
 	 * method put generated spaceObjects to the sectors.
 	 */
 	public void populate() {
-		for (SpaceObject obj : generatedObjects) {
+		for (SpaceObject obj : quadrantPopulation) {
 			populateSector(obj);
 		}
 
@@ -113,14 +153,10 @@ public class Quadrant implements Positionable {
 
 	}
 
-	public Quadrant() {
-		init();
-	}
-
-	public Quadrant(Position p) {
-		position.setPositionAt(p);
-		init();
-	}
+	//public Quadrant(Position p) {
+	//	position.setPositionAt(p);
+	//	init();
+	//}
 
 	public Sector getNext(Sector sector, int direction) {
 		int nextRow = sector.getPosition().getRow();
@@ -167,11 +203,11 @@ public class Quadrant implements Positionable {
 	}
 
 	public ArrayList<SpaceObject> getGeneratedObjects() {
-		return generatedObjects;
+		return quadrantPopulation;
 	}
 
 	public void setGeneratedObjects(ArrayList<SpaceObject> generatedObjects) {
-		this.generatedObjects = generatedObjects;
+		this.quadrantPopulation = generatedObjects;
 	}
 
 	public ArrayList<Weapon> getWeaponList() {
@@ -180,5 +216,13 @@ public class Quadrant implements Positionable {
 
 	public void setWeaponList(ArrayList<Weapon> weaponList) {
 		this.weaponList = weaponList;
+	}
+
+	public int getyCoord() {
+		return yCoord;
+	}
+
+	public int getxCoord() {
+		return xCoord;
 	}
 }

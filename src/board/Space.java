@@ -8,7 +8,7 @@ import settings.Configs;
  * @version Fri Nov 28 5:45 PM
  */
 public class Space {
-	private final Quadrant quadrant[][] = new Quadrant[Configs.SPACE_SIZE][Configs.SPACE_SIZE];
+	private final Quadrant quadrant[][];
 	private boolean initialized = false;
 	public boolean debug = false;
 
@@ -32,14 +32,19 @@ public class Space {
 	}
 
 	private Space() {
-
+		quadrant = new Quadrant[Configs.SPACE_SIZE][Configs.SPACE_SIZE];
+		for(int i = 0; i < Configs.SPACE_SIZE; i++){
+			for(int j = 0; j < Configs.SPACE_SIZE; j++){
+				quadrant[i][j] = new Quadrant(i, j);
+			}
+		}
 	}
 
 	public void init() {
 		if (!initialized) {
 			for (int i = 0; i < quadrant.length; i++) {
 				for (int j = 0; j < quadrant.length; j++) {
-					quadrant[i][j] = new Quadrant(new Position(i, j)); // is it
+					//quadrant[i][j] = new Quadrant(new Position(i, j)); // is it
 																		// right
 																		// order?
 					if (debug) {
@@ -84,6 +89,10 @@ public class Space {
 	public Quadrant getQuadrant(Position p) {
 		return quadrant[p.getRow()][p.getCol()];
 
+	}
+	
+	public Quadrant getAbsQuadrant(int x, int y){
+		return this.quadrant[x][y];
 	}
 
 	/**
