@@ -19,9 +19,9 @@ public class Quadrant implements Positionable {
 	 */
 	private final Sector sectors[][] = new Sector[Configs.QUADRANT_SIZE][Configs.QUADRANT_SIZE];
 	private boolean initialized = false;
-	private ArrayList<SpaceObject> generatedObjects = new ArrayList<SpaceObject>();
+	private final ArrayList<SpaceObject> generatedObjects = new ArrayList<SpaceObject>();
 	private Random rand = new Random();
-	private ArrayList<Weapon> weaponList = new ArrayList<Weapon>();
+	private final ArrayList<Weapon> weaponList = new ArrayList<Weapon>();
 	/**
 	 * If ship is in this Quadrant active = true
 	 */
@@ -70,7 +70,8 @@ public class Quadrant implements Positionable {
 	private void populateSector(SpaceObject obj) {
 		Position p = randomPosition();
 		if (getSector(p).getInhabitant() == null) {
-			getSector(p).setInhabitant(obj);
+			obj.setSector(getSector(p));
+			//getSector(p).setInhabitant(obj);
 		} else {
 			populateSector(obj);
 		}
@@ -99,11 +100,11 @@ public class Quadrant implements Positionable {
 
 	public void unpopulate() {
 		weaponList.clear();
-		for (Sector[] sctrs : sectors) {
-			for (Sector sector : sctrs) {
-				sector.setInhabitant(null);
-			}
-
+		for (SpaceObject i : generatedObjects) {
+			//for (Sector sector : sctrs) {
+			//	sector.setInhabitant(null);
+			//}
+			i.setSector(null);
 		}
 	}
 
@@ -170,15 +171,8 @@ public class Quadrant implements Positionable {
 		return generatedObjects;
 	}
 
-	public void setGeneratedObjects(ArrayList<SpaceObject> generatedObjects) {
-		this.generatedObjects = generatedObjects;
-	}
-
 	public ArrayList<Weapon> getWeaponList() {
 		return weaponList;
 	}
 
-	public void setWeaponList(ArrayList<Weapon> weaponList) {
-		this.weaponList = weaponList;
-	}
 }

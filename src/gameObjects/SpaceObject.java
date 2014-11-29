@@ -4,6 +4,7 @@ import board.Position;
 import board.Positionable;
 import board.Quadrant;
 import board.Sector;
+import board.Space;
 
 import java.util.Observable;
 
@@ -37,6 +38,7 @@ public abstract class SpaceObject extends Observable implements Positionable{
     public SpaceObject(Sector sec){
         sector = sec;
         sector.setInhabitant(this);
+        quadrant = Space.getInstance().getQuadrant(sector.getQuadPosition());
     }
     
     /**
@@ -58,11 +60,9 @@ public abstract class SpaceObject extends Observable implements Positionable{
      * EFFECTS: sets this object in the sector provided
      */
     public void setSector(Sector sec){
-    	if(null != sector){
-    		sector.setInhabitant(null);
-    	}
+    	if(null != sector) sector.setInhabitant(null);
         sector = sec;
-        sector.setInhabitant(this);
+        if(null != sector) sector.setInhabitant(this);
     }
     /**
      * REQUIRES: nothing

@@ -532,42 +532,10 @@ public class Ship extends SpaceObject implements Movable{
 		@Override
 		public void act(){
 			if(this.active && 0 == getDelta()){
-				Sector newSec = Space.getInstance().getQuadrant(sector.getQuadPosition()).getNext(sector, direction);
-				/*switch (this.direction){
-				case(Configs.NORTH):
-					//y sector + 1
-					newSec = Space.getInstance().getQuadrant(quadrant.getxCoord(), quadrant.getyCoord()).getAbsSector(sector.getxCoord(), sector.getyCoord() + 1);
-					break;
-				case(Configs.EAST):
-					//x sector + 1
-					newSec = Space.getInstance().getQuadrant(quadrant.getxCoord(), quadrant.getyCoord()).getAbsSector(sector.getxCoord() + 1, sector.getyCoord());
-					break;
-				case(Configs.SOUTH):
-					//y sector - 1
-					newSec = Space.getInstance().getQuadrant(quadrant.getxCoord(), quadrant.getyCoord()).getAbsSector(sector.getxCoord(), sector.getyCoord() - 1);
-					break;
-				case(Configs.WEST):
-					//x sector - 1
-					newSec = Space.getInstance().getQuadrant(quadrant.getxCoord(), quadrant.getyCoord()).getAbsSector(sector.getxCoord() - 1, sector.getyCoord());
-					break;
-				case(Configs.NORTH_WEST):
-					//x sector - 1 && y sector + 1
-					newSec = Space.getInstance().getQuadrant(quadrant.getxCoord(), quadrant.getyCoord()).getAbsSector(sector.getxCoord() - 1, sector.getyCoord() + 1);
-					break;
-				case(Configs.NORTH_EAST):
-					//x sector + 1 && y sector + 1
-					newSec = Space.getInstance().getQuadrant(quadrant.getxCoord(), quadrant.getyCoord()).getAbsSector(sector.getxCoord() + 1, sector.getyCoord() + 1);
-					break;
-				case(Configs.SOUTH_EAST):
-					//x sector + 1 && y sector - 1
-					newSec = Space.getInstance().getQuadrant(quadrant.getxCoord(), quadrant.getyCoord()).getAbsSector(sector.getxCoord() + 1, sector.getyCoord() - 1);
-					break;
-				case(Configs.SOUTH_WEST):
-					//x sector - 1 && y sector - 1
-					newSec = Space.getInstance().getQuadrant(quadrant.getxCoord(), quadrant.getyCoord()).getAbsSector(sector.getxCoord() - 1, sector.getyCoord() - 1);
-					break;
-				}*/
-				if(null != newSec.getInhabitant()){
+				Sector newSec = Space.getInstance().getQuadrant(quadrant.getPosition()).getNext(sector, direction);
+				if(null == newSec){
+					//go to next quadrant
+				}else if(null != newSec.getInhabitant()){
 					newSec.getInhabitant().bump(Ship.this);
 				}else{
 					setSector(newSec);
@@ -795,9 +763,10 @@ public class Ship extends SpaceObject implements Movable{
 				if(null == active){
 					this.active = new AntimatterPod(sector, direction);
 					this.antimatterPods--;
+					Space.getInstance().getQuadrant(sector.getQuadPosition()).getWeaponList().add(this.active);
 				}
 			}else if(Configs.TRT_MISSILE == this.type && Configs.NEUTRAL != this.direction && 0 < this.trtmissiles){
-				new TritonMissile(sector, direction);
+				Space.getInstance().getQuadrant(sector.getQuadPosition()).getWeaponList().add(new TritonMissile(sector, direction));
 				this.trtmissiles--;
 			}
 			this.type = Launchers.NONE;
