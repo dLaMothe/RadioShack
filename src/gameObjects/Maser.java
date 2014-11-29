@@ -78,7 +78,19 @@ public class Maser
 	}
 
 	@Override
-	public void action() throws CollissionException {
+	public void action(){
 		this.move();		
+	}
+
+	@Override
+	public void bumped() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void bump(SpaceObject sb) {
+		// TODO Auto-generated method stub
+		
 	}
 }

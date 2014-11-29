@@ -29,6 +29,8 @@ public abstract class Weapon
 				getNext(sector, direction));
 		setSpeed(new int[]{direction, 1});
 		setDetectable(true);
+		getCurQuadrant1()Space.getInstance().getQuadrant(sector.getPosition()).
+			getWeaponList().add(this);
 	}
 
 	/**

@@ -163,7 +163,7 @@ public class Ship extends SpaceObject implements Movable{
      * @throws CollissionException 
      */
     @Override
-    public void move() throws CollissionException {
+    public void move(){
         systems.cycle();
     }
     
@@ -186,7 +186,7 @@ public class Ship extends SpaceObject implements Movable{
     }
     
     @Override
-	public void action() throws CollissionException {
+	public void action(){
 		this.move();		
 	}
     
@@ -242,7 +242,7 @@ public class Ship extends SpaceObject implements Movable{
 		 * @throws CollissionException is potentially generated when the ship moves to 
 		 * a new sector
          */
-    	public void cycle() throws CollissionException {
+    	public void cycle(){
 			for(ShipSystem sys: systems){
 				sys.act();
 			}
@@ -402,7 +402,7 @@ public class Ship extends SpaceObject implements Movable{
 		 * @throws CollissionException if this.act() causes the ship to move to a new location
 		 * the exception can be generated. 
 	     */
-    	public abstract void act() throws CollissionException;
+    	public abstract void act();
     }
     
     private class Sheilds extends ShipSystem{
@@ -520,11 +520,11 @@ public class Ship extends SpaceObject implements Movable{
 		 * @throws CollissionException if the destination sector is already occupied 
 	     */
 		@Override
-		public void act() throws CollissionException {
+		public void act(){
 			if(this.active){
 				Sector newSec = Space.getInstance().getQuadrant(quadrant.getPosition()).getNext(sector, direction);
 				if(null != newSec.getInhabitant()){
-					throw new CollissionException(sector.getInhabitant(), newSec.getInhabitant());
+					
 				}else{
 					setSector(newSec);
 				}
@@ -839,4 +839,16 @@ public class Ship extends SpaceObject implements Movable{
 			this.direction = direction;		
 		}
     }
+
+	@Override
+	public void bumped() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void bump(SpaceObject sb) {
+		// TODO Auto-generated method stub
+		
+	}
 }

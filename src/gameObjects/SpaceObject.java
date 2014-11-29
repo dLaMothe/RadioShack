@@ -87,5 +87,10 @@ public abstract class SpaceObject extends Observable implements Positionable{
      * exception can be generated in the event that the place this is moving to 
      * is already occupied. 
      */
-    public abstract void action() throws CollissionException;
+    public abstract void action();
+    
+    public abstract void bumped();
+    
+    public abstract void bump(SpaceObject sb);
+    
 }

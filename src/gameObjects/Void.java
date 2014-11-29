@@ -10,7 +10,19 @@ public class Void extends SpaceObject{
 	}
 
 	@Override
-	public void action() throws CollissionException {
+	public void action(){
 		this.sector.setInhabitant(null);
+	}
+
+	@Override
+	public void bumped() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void bump(SpaceObject sb) {
+		// TODO Auto-generated method stub
+		
 	}
 }
