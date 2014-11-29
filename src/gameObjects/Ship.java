@@ -532,8 +532,8 @@ public class Ship extends SpaceObject implements Movable{
 		@Override
 		public void act(){
 			if(this.active && 0 == getDelta()){
-				Sector newSec = null;
-				switch (this.direction){
+				Sector newSec = Space.getInstance().getQuadrant(sector.getQuadPosition()).getNext(sector, direction);
+				/*switch (this.direction){
 				case(Configs.NORTH):
 					//y sector + 1
 					newSec = Space.getInstance().getQuadrant(quadrant.getxCoord(), quadrant.getyCoord()).getAbsSector(sector.getxCoord(), sector.getyCoord() + 1);
@@ -566,7 +566,7 @@ public class Ship extends SpaceObject implements Movable{
 					//x sector - 1 && y sector - 1
 					newSec = Space.getInstance().getQuadrant(quadrant.getxCoord(), quadrant.getyCoord()).getAbsSector(sector.getxCoord() - 1, sector.getyCoord() - 1);
 					break;
-				}
+				}*/
 				if(null != newSec.getInhabitant()){
 					newSec.getInhabitant().bump(Ship.this);
 				}else{

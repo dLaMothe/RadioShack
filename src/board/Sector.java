@@ -11,20 +11,10 @@ public class Sector implements Positionable {
 	protected final Position sectorPosition = new Position(-1, -1);
 	protected final Position quadrantPosition = new Position(-1, -1);
 	private SpaceObject inhabitant;
-	private final int xCoord;
-	private final int yCoord;
 
 	public Sector(Position p, Quadrant q) {
 		quadrantPosition.setPositionAt(q.getPosition());
 		sectorPosition.setPositionAt(p);
-		inhabitant = null;
-		this.xCoord = p.getCol();
-		this.yCoord = p.getRow();
-	}
-
-	public Sector(int x, int y) {
-		xCoord = x;
-		yCoord = y;
 		inhabitant = null;
 	}
 
@@ -47,13 +37,9 @@ public class Sector implements Positionable {
 	public Position getPosition() {
 		return sectorPosition;
 	}
-
-	public int getxCoord() {
-		return xCoord;
-	}
-
-	public int getyCoord() {
-		return yCoord;
+	
+	public Position getQuadPosition(){
+		return quadrantPosition;
 	}
 
 }
