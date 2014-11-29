@@ -497,6 +497,14 @@ public class Ship extends SpaceObject implements Movable{
 			this.delta = delta;
 		}
     	
+		protected void moveToNextQuadrant() {
+			// TODO Auto-generated method stub
+			// figure out which quadrant is the next quadrant
+			// unpopulate the current quadrant 
+			// remove yourself from the current quadrant's generated objects list
+			// add yourself to the next quadrant's generated objects list
+			// populate the next quadrant
+		}
     }
     
     /**
@@ -534,7 +542,7 @@ public class Ship extends SpaceObject implements Movable{
 			if(this.active && 0 == getDelta()){
 				Sector newSec = Space.getInstance().getQuadrant(quadrant.getPosition()).getNext(sector, direction);
 				if(null == newSec){
-					//go to next quadrant
+					moveToNextQuadrant();
 				}else if(null != newSec.getInhabitant()){
 					newSec.getInhabitant().bump(Ship.this);
 				}else{
@@ -545,7 +553,7 @@ public class Ship extends SpaceObject implements Movable{
 				setDelta(getDelta() - 1);
 			}
 		}
-		
+
 		/**
 	     * REQUIRES: see super
 	     * MODIFIES: this

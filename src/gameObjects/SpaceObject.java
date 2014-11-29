@@ -39,6 +39,9 @@ public abstract class SpaceObject extends Observable implements Positionable{
         sector = sec;
         sector.setInhabitant(this);
         quadrant = Space.getInstance().getQuadrant(sector.getQuadPosition());
+        if(!(this instanceof Weapon)){
+        	quadrant.getGeneratedObjects().add(this);
+        }
     }
     
     /**
