@@ -19,7 +19,7 @@ public class Ship extends SpaceObject implements Movable{
     
     private static final int MAGNITUDE = 0;
 	private static final int MAX_ION = 10;
-	public static final int DIRECTION = 0;
+	public static final int DIRECTION = 1;
 	private final PowerSystem systems;
     /**
      * REQUIRES: @param sec - see super class for requirements

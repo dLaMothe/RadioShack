@@ -10,22 +10,24 @@ public class GameEngine {
 	public GamePanels panels;
 	public Ship ship;
 	public Quadrant quad;
+	public DeltaLoop deltaLoop;
 	
 	
 	public GameEngine(GamePanels newPanel) {
 		panels = newPanel;
 		quad = Space.getInstance().getQuadrant(5, 5);
 		ship = new Ship(quad.getSector(new Position(5,5)));
+		deltaLoop = new DeltaLoop(this);
 		populateSidePanel();
 		populateQuadrant();
 	}
 	
-
-	
-	public void setPower(int type, double value) {
-		ship.adjustPower(type,value);
-		panels.powerLabels[type].setText(String.valueOf(ship.getPower(type)));
-		panels.powerAvailLabel.setText(String.valueOf(ship.getPower()));
+	public void setVelocity(int speed, int direction) {
+		int[] velocity;
+		velocity = new int[2];
+		velocity[0] = speed;
+		velocity[1] = direction;
+		ship.setSpeed(velocity);
 	}
 	
 	private void populateSidePanel() {
@@ -39,15 +41,24 @@ public class GameEngine {
 		panels.sectorLabel.setText(String.valueOf(ship.getSector().getPosition().getRow()) + "-" + String.valueOf(ship.getSector().getPosition().getCol()));
 	}
 	
-	private void populateQuadrant() {
+	public void populateQuadrant() {
 		Position pos = new Position(0,0);
 		for(int i = 0; i < QUADRANT_SIZE; i++) {
 			for(int j = 0; j < QUADRANT_SIZE; j++) {
 				pos.setPositionAt(i, j);
-				if(ship.getPosition().equals(pos))
-					panels.grid[i][j].setText(String.valueOf(SHIP));
+				if(ship.getPosition().equals(pos)) {
+					panels.grid[i][j].setText(SHIP);
+				} else {
+					panels.grid[i][j].setText(EMPTY);
+				}
 			}
 		}
+	}
+	
+	public void setPower(int type, double value) {
+		ship.adjustPower(type,value);
+		panels.powerLabels[type].setText(String.valueOf(ship.getPower(type)));
+		panels.powerAvailLabel.setText(String.valueOf(ship.getPower()));
 	}
 	
 	public void updateResource()

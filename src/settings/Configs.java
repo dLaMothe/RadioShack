@@ -50,6 +50,7 @@ public class Configs {
 	public static final int WINDOW_SIZE = 500;
 	public static final int SECTORS_PER_SIDE = 10;
 	
+	
 	public static final int NORTH = 8;
 	public static final int SOUTH = 2;
 	public static final int WEST = 4;
@@ -68,10 +69,26 @@ public class Configs {
     public static final int X = 0;
     public static final int Y = 1;
     
+    //BOARD CHARACTERS
     public static final String MINE ="%";
     public static final String SHIP ="^";
     public static final String SSTN ="0";
     public static final String JCC ="@";
     public static final String JBC ="&";
     public static final String UNKN ="X";
+    public static final String EMPTY = "-";
+    
+    //SPEED CONSTANTS
+    public static final int SONE = 1;
+    public static final int STWO = 2;
+    public static final int STHREE = 3;
+    public static final int SFOUR = 4;
+    public static final int SFIVE = 5;
+    public static final int SSIX = 6;
+    public static final int SSEVEN = 7;
+    public static final int SEIGHT = 8;
+    public static final int SNINE = 9;
+    public static final int STEN = 10;
+    
+    
 }
