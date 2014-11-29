@@ -1,7 +1,11 @@
 package gameObjects;
 
 import board.Sector;
-
+/**
+ * 
+ * @author sukhenka
+ *
+ */
 public class SpaceStation extends SpaceObject{
 
 	public SpaceStation(Sector sec) {

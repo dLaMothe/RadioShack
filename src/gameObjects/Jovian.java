@@ -2,6 +2,10 @@ package gameObjects;
 
 import board.Sector;
 
+/**
+ * @author sukhenka
+ *
+ */
 public class Jovian extends SpaceObject{
 
 	public Jovian(Sector sec) {
