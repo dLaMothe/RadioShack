@@ -36,12 +36,12 @@ public class Configs {
 	public static final int TIMEINCREMENT = 1;
 
     //default power levels
-    public static final double INIT_SHIELD = 0;//20.0;
-    public static final double INIT_ENGINE = 0;//10.0;
-    public static final double INIT_LRSENSOR = 0;//10.0;
-    public static final double INIT_SRSENSOR = 0;//20.0;
-    public static final double INIT_MASER = 0;//9.0;
-    public static final double INIT_TRT_MISSILE = 0;//11.0;
+    public static final double INIT_SHIELD = 20.0;
+    public static final double INIT_ENGINE = 10.0;
+    public static final double INIT_LRSENSOR = 10.0;
+    public static final double INIT_SRSENSOR = 20.0;
+    public static final double INIT_MASER = 9.0;
+    public static final double INIT_TRT_MISSILE = 11.0;
     //minimum system power(This is the minimum power a system must have in order to function)
     public static final double MIN_SYSTEM_POWER = 2.0;
     public static final double POWER_SAP = 0.5;

@@ -63,36 +63,6 @@ public class GameEngine {
 		updateCondition();
 	}
 	
-	public void isActiveSR(boolean isActive) {
-		for(int i = 0; i < QUADRANT_SIZE; i++) {
-			for(int j = 0; j < QUADRANT_SIZE; j++) {
-					panels.grid[i][j].setVisible(isActive);
-			}
-		}
-	}
-
-	public void isActiveLR(boolean isActive) {
-		for(int i = 0; i < LRARRSIZE; i++) {
-			panels.lRSensorLabel[i].setVisible(isActive);
-		}
-	}
-	
-	public void updateResource()
-	{
-		panels.antimatterPodsLabel.setText(String.valueOf(ship.getNumAntimatterPods()));
-		panels.tritonMislsLabel.setText(String.valueOf(ship.getNumTrtMissiles()));
-	}
-	
-	public void updateCondition()
-	{
-		for (int i = CONDITIONLEVELAMOUNT; i >= 0; i--){
-			if (ship.getPower() >= CONDITIONLEVELS[i]){
-				panels.conditionLabel.setText(CONDITIONSTRINGVALUES[i]);
-				panels.conditionLabel.setForeground(CONDITIONCOLOR[i]);
-			}
-		}
-	}
-	
 	public void setPower(int type, double value) {
 		ship.adjustPower(type,value);
 		panels.powerLabels[type].setText(String.valueOf(ship.getPower(type)));
@@ -108,5 +78,41 @@ public class GameEngine {
 	public void clearInvalidCommand()
 	{
 		panels.invalidCommandLabel.setText("");
+	}
+	
+	public void shootWeapon(int type, int direction) {
+		ship.shootWeapon(type, direction);
+		updateResource();
+	}
+	
+	private void isActiveSR(boolean isActive) {
+		for(int i = 0; i < QUADRANT_SIZE; i++) {
+			for(int j = 0; j < QUADRANT_SIZE; j++) {
+					panels.grid[i][j].setVisible(isActive);
+			}
+		}
+	}
+
+	private void isActiveLR(boolean isActive) {
+		for(int i = 0; i < LRARRSIZE; i++) {
+			panels.lRSensorLabel[i].setVisible(isActive);
+		}
+	}
+
+	
+	private void updateResource()
+	{
+		panels.antimatterPodsLabel.setText(String.valueOf(ship.getNumAntimatterPods()));
+		panels.tritonMislsLabel.setText(String.valueOf(ship.getNumTrtMissiles()));
+	}
+	
+	private void updateCondition()
+	{
+		for (int i = CONDITIONLEVELAMOUNT; i >= 0; i--){
+			if (ship.getPower() >= CONDITIONLEVELS[i]){
+				panels.conditionLabel.setText(CONDITIONSTRINGVALUES[i]);
+				panels.conditionLabel.setForeground(CONDITIONCOLOR[i]);
+			}
+		}
 	}
 }

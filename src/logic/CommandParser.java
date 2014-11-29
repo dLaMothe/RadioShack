@@ -18,10 +18,10 @@ public class CommandParser {
 				handleIonDirection(command.substring(subCommand));
 				break;
 			case 'M':
-				handleMazer(command.substring(subCommand));
+				handleWeapon(command.substring(subCommand),MASER);
 				break;
 			case 'T':
-				handleTriton(command.substring(subCommand));
+				handleWeapon(command.substring(subCommand),TRT_MISSILE);
 				break;
 			case 'D':
 				handlePower(command.substring(subCommand));
@@ -33,7 +33,7 @@ public class CommandParser {
 				handleEx(command.substring(subCommand));
 				break;
 			case 'A':
-				handlePod(command.substring(subCommand));
+				handleWeapon(command.substring(subCommand),ANITMATTER_POD);
 				break;
 			case 'X':
 				handleExperiment(command.substring(subCommand));
@@ -130,15 +130,41 @@ public class CommandParser {
 		}
 	}
 	
-	private void handleMazer(String substring) {
-		// TODO Auto-generated method stub
-		System.out.println("M Process: " + substring);
-		
-	}
-
-	private void handleTriton(String substring) {
-		// TODO Auto-generated method stub
-		System.out.println("T Process: " + substring);	
+	private void handleWeapon(String substring, int type) {
+		try {
+			switch(Integer.parseInt(substring.substring(firstIndex, firstIndex + 1) )) {
+				case NORTH: 
+					game.shootWeapon(type, NORTH);
+					break;
+				case SOUTH:
+					game.shootWeapon(type, SOUTH);
+					break;
+				case WEST:
+					game.shootWeapon(type, WEST);
+					break;
+				case EAST:
+					game.shootWeapon(type, EAST);
+					break;
+				case NORTH_WEST:
+					game.shootWeapon(type, NORTH_WEST);
+					break;
+				case NORTH_EAST:
+					game.shootWeapon(type, NORTH_EAST);
+					break;
+				case SOUTH_WEST:
+					game.shootWeapon(type, SOUTH_WEST);
+					break;
+				case SOUTH_EAST:
+					game.shootWeapon(type, SOUTH_EAST);
+					break;
+				default: 
+					invalidCommand();
+					break;
+					
+			}
+		} catch(NumberFormatException e) {
+			invalidCommand();
+		}
 	}
 	
 	private void handlePower(String cmd) {

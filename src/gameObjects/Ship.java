@@ -43,7 +43,7 @@ public class Ship extends SpaceObject implements Movable{
      *     if there is sufficient power the weapon system will shoot
      */
     public void shootWeapon(int type, int direction){
-        if(Configs.INIT_MASER == type){
+        if(Configs.MASER == type){
         	((MaserCannon) systems.getSystem(type)).arm(direction);
         }else{
         	((Launchers) systems.getSystem(LAUNCHER)).loadtube(type, direction);
