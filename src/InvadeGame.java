@@ -2,24 +2,23 @@
 import java.util.*;
 import java.util.Timer;
 
-import javax.swing.*;
 import settings.Configs;
+import board.*;
+import gameObjects.*;
 
-public class InvadeGame extends JFrame {
+public class InvadeGame {
 
-	private static final long serialVersionUID = 1L;
-	public QuadrantTest quadrant;
+	public Quadrant quadrant;
 	
-	AntimatterPodTest antimatter = null;
-	MaserTest maser = null;
-	TritonMissileTest triton = null;
+	AntimatterPod antimatter = null;
+	Maser maser = null;
+	TritonMissile triton = null;
 	
 	
 	public class Tick extends TimerTask{	
 		
 		public void run(){
-			
-			if(antimatter != null && antimatter.getDetectable()){
+			/*if(antimatter != null && antimatter.getDetectable()){
 				antimatter.move();
 			}
 			
@@ -29,40 +28,31 @@ public class InvadeGame extends JFrame {
 			
 			if(triton != null && triton.getDetectable()){
 				triton.move();
-			}
+			}*/
 		}
 	}
 	
 	public InvadeGame(){
-		quadrant = new QuadrantTest();
+		quadrant = new Quadrant();
 		
-		new AntimatterPodTest(quadrant, quadrant.getSectors()[0][7], 5);
+		new AntimatterPod(quadrant.getSectors()[0][7], 5);
 		
 		//antimatter = new AntimatterPodTest(quadrant, quadrant.getSectors()[4][2], 2);
 		
 		//triton = new TritonMissileTest(quadrant, quadrant.getSectors()[0][7], 2);
 		
-		maser = new MaserTest(quadrant, quadrant.getSectors()[0][7], 1);	
+		maser = new Maser(quadrant.getSectors()[0][7], 1);	
 	
 		//new AntimatterPodTest(quadrant, quadrant.getSectors()[7][7], 5);
 		
-		
-		initUI();
 		Timer timer = new Timer();
 		Tick tick = new Tick();
 		timer.schedule(tick, 1000, 200);
 	}
-	
-	private void initUI(){
-		setTitle("Invade");
-		setContentPane(quadrant);
-		setSize(Configs.WINDOW_SIZE, Configs.WINDOW_SIZE);
-		setLocationRelativeTo(null);	
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	}
+
 	
 	public static void main(String[] args){
 		InvadeGame window = new InvadeGame();		
-		window.setVisible(true);
+		//window.setVisible(true);
 	}
 }
