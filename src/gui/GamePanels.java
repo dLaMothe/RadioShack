@@ -372,15 +372,15 @@ public class GamePanels {
 		  
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
-		test.add(new JLabel("7 8 9"),gridConstraint);
+		test.add(new JLabel(NORTH_WEST + " " + NORTH + " " + NORTH_EAST),gridConstraint);
 		  
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
-		test.add(new JLabel("4 5 6"),gridConstraint);
+		test.add(new JLabel(WEST + " " + NEUTRAL + " " + EAST),gridConstraint);
 		  
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
-		test.add(new JLabel("1 2 3"),gridConstraint);
+		test.add(new JLabel(SOUTH_WEST + " " + SOUTH + " " + SOUTH_EAST),gridConstraint);
 		  
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
