@@ -64,13 +64,13 @@ public class GameEngine {
 		updateCondition();
 	}
 	
-	public void setPower(int type, double value) {
-		//try{
+	public void setPower(int type, double value){//throws NumberFormatException {
+		try{
 			ship.adjustPower(type,value);
-		//}
-		//catch (CriticalPowerException e){
-			
-		//}
+		}
+		catch (CriticalPowerException e){
+			criticalPowerLevelCommand();
+		}
 		panels.powerLabels[type].setText(String.valueOf(ship.getPower(type)));
 		panels.powerAvailLabel.setText(String.valueOf(ship.getUnusedPower()) + "%");
 		panels.totalPowerLabel.setText(String.valueOf(ship.getPower()) + "%");
@@ -79,7 +79,7 @@ public class GameEngine {
 	
 	public void invalidCommand()
 	{
-		panels.invalidCommandLabel.setText("Invalid command");
+		panels.invalidCommandLabel.setText("Captain your an idiot");
 	}
 	
 	public void clearInvalidCommand()
@@ -94,7 +94,7 @@ public class GameEngine {
 	
 	private void criticalPowerLevelCommand()
 	{
-		panels.invalidCommandLabel.setText("Captian power level going critical");
+		panels.invalidCommandLabel.setText("Captian the power levels are going critical");
 	}
 	
 	private void isActiveSR(boolean isActive) {
