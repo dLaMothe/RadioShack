@@ -19,7 +19,7 @@ public class Ship extends SpaceObject implements Movable{
     
     private static final int MAGNITUDE = 0;
 	private static final int MAX_ION = 10;
-	public static final int DIRECTION = 0;
+	public static final int DIRECTION = 1;
 	private final PowerSystem systems;
     /**
      * REQUIRES: @param sec - see super class for requirements
@@ -469,6 +469,7 @@ public class Ship extends SpaceObject implements Movable{
 				this.active = true;
 			}
 			this.direction = velocity[Ship.DIRECTION];
+                        this.setDelta(-1);
 		}
 		
 		/**
@@ -543,6 +544,8 @@ public class Ship extends SpaceObject implements Movable{
 				Sector newSec = Space.getInstance().getQuadrant(quadrant.getPosition()).getNext(sector, direction);
 				if(null == newSec){
 					moveToNextQuadrant();
+                                        int[] stop = {0, Configs.NEUTRAL};
+                                        this.setActive(stop);
 				}else if(null != newSec.getInhabitant()){
 					newSec.getInhabitant().bump(Ship.this);
 				}else{
