@@ -20,6 +20,7 @@ public class Ship extends SpaceObject implements Movable{
     private static final int MAGNITUDE = 0;
 	private static final int MAX_ION = 10;
 	public static final int DIRECTION = 1;
+	private final int[] STOP = {0, Configs.NEUTRAL};
 	private final PowerSystem systems;
     /**
      * REQUIRES: @param sec - see super class for requirements
@@ -43,7 +44,7 @@ public class Ship extends SpaceObject implements Movable{
      *     if there is sufficient power the weapon system will shoot
      */
     public void shootWeapon(int type, int direction){
-        if(Configs.MASER == type){
+        if(Configs.INIT_MASER == type){
         	((MaserCannon) systems.getSystem(type)).arm(direction);
         }else{
         	((Launchers) systems.getSystem(LAUNCHER)).loadtube(type, direction);
@@ -121,14 +122,22 @@ public class Ship extends SpaceObject implements Movable{
     }
 
     /**
-     * REQUIRES: @param system - be a valid system id *see settings.Configs
+     * REQUIRES: nothing
      * MODIFIES: nothing
-     * EFFECTS: returns the amount of power available to the given system
+     * EFFECTS: returns the total amount of power available to all systems
      */
     public double getPower(){
         return this.systems.getPowerAvailable();
     }
     
+    /**
+     * REQUIRES: nothing
+     * MODIFIES: nothing
+     * EFFECTS: returns the amount of power not distributed to a system 
+     */
+    public double getUnusedPower(){
+        return this.systems.getPowerAvailable() - this.systems.getPowerConsumed();
+    }
     /**
      * REQUIRES: nothing
      * MODIFIES: nothing
@@ -163,7 +172,7 @@ public class Ship extends SpaceObject implements Movable{
      * @throws CollissionException 
      */
     @Override
-    public void move() throws CollissionException {
+    public void move(){
         systems.cycle();
     }
     
@@ -186,7 +195,7 @@ public class Ship extends SpaceObject implements Movable{
     }
     
     @Override
-	public void action() throws CollissionException {
+	public void action(){
 		this.move();		
 	}
     
@@ -242,7 +251,7 @@ public class Ship extends SpaceObject implements Movable{
 		 * @throws CollissionException is potentially generated when the ship moves to 
 		 * a new sector
          */
-    	public void cycle() throws CollissionException {
+    	public void cycle(){
 			for(ShipSystem sys: systems){
 				sys.act();
 			}
@@ -402,7 +411,7 @@ public class Ship extends SpaceObject implements Movable{
 		 * @throws CollissionException if this.act() causes the ship to move to a new location
 		 * the exception can be generated. 
 	     */
-    	public abstract void act() throws CollissionException;
+    	public abstract void act();
     }
     
     private class Sheilds extends ShipSystem{
@@ -440,6 +449,7 @@ public class Ship extends SpaceObject implements Movable{
 
 		protected boolean active;
 		protected int direction;
+		private int delta;
 
 		/**
 	     * REQUIRES: @param powerLevel - see super
@@ -450,6 +460,7 @@ public class Ship extends SpaceObject implements Movable{
 			super(powerLevel);
 			this.active = false;
 			this.direction = NEUTRAL;
+			this.setDelta(-1);
 		}
 		
 		/**
@@ -467,6 +478,7 @@ public class Ship extends SpaceObject implements Movable{
 				this.active = true;
 			}
 			this.direction = velocity[Ship.DIRECTION];
+                this.setDelta(-1);
 		}
 		
 		/**
@@ -477,16 +489,23 @@ public class Ship extends SpaceObject implements Movable{
 		public boolean getActive(){
 			return active;
 		}
-		
-		/**
-	     * REQUIRES: nothing
-	     * MODIFIES: nothing
-	     * EFFECTS: @returns the direction this is currently pointed in
-	     */
-		public int getDirection(){
-			return this.direction;
+
+		public int getDelta() {
+			return delta;
+		}
+
+		public void setDelta(int delta) {
+			this.delta = delta;
 		}
     	
+		protected void moveToNextQuadrant() {
+			// TODO Auto-generated method stub
+			// figure out which quadrant is the next quadrant
+			// unpopulate the current quadrant 
+			// remove yourself from the current quadrant's generated objects list
+			// add yourself to the next quadrant's generated objects list
+			// populate the next quadrant
+		}
     }
     
     /**
@@ -520,43 +539,23 @@ public class Ship extends SpaceObject implements Movable{
 		 * @throws CollissionException if the destination sector is already occupied 
 	     */
 		@Override
-		public void act() throws CollissionException {
-			if(this.active){
+		public void act(){
+			if(this.active && 0 == getDelta()){
 				Sector newSec = Space.getInstance().getQuadrant(quadrant.getPosition()).getNext(sector, direction);
-				if(null != newSec.getInhabitant()){
-					throw new CollissionException(sector.getInhabitant(), newSec.getInhabitant());
+				if(null == newSec){
+					moveToNextQuadrant();
+                    this.setActive(STOP);
+				}else if(null != newSec.getInhabitant()){
+					newSec.getInhabitant().bump(Ship.this);
 				}else{
 					setSector(newSec);
 				}
-				/*switch (this.direction){
-				case(Configs.NORTH):
-					//y sector + 1
-					break;
-				case(Configs.EAST):
-					//x sector + 1
-					break;
-				case(Configs.SOUTH):
-					//y sector - 1
-					break;
-				case(Configs.WEST):
-					//x sector - 1
-					break;
-				case(Configs.NORTH_WEST):
-					//x sector - 1 && y sector + 1
-					break;
-				case(Configs.NORTH_EAST):
-					//x sector + 1 && y sector + 1
-					break;
-				case(Configs.SOUTH_EAST):
-					//x sector + 1 && y sector - 1
-					break;
-				case(Configs.SOUTH_WEST):
-					//x sector - 1 && y sector - 1
-					break;
-				}*/					
-			}			
+				setDelta(10 - this.throttle);
+			}else if(getDelta() > 0){
+				setDelta(getDelta() - 1);
+			}
 		}
-		
+
 		/**
 	     * REQUIRES: see super
 	     * MODIFIES: this
@@ -566,15 +565,11 @@ public class Ship extends SpaceObject implements Movable{
 		public void setActive(int[] velocity){
 			super.setActive(velocity);
 			this.throttle = velocity[Ship.MAGNITUDE];
-		}
-		
-		/**
-	     * REQUIRES: nothing
-	     * MODIFIES: nothing
-	     * EFFECTS: @returns the current throttle position
-	     */
-		public int getThrottle(){
-			return this.throttle;
+			if(0 < this.throttle){
+				setDelta(10 - this.throttle);
+			}else{
+				setDelta(-1);
+			}
 		}
     }
     
@@ -604,6 +599,8 @@ public class Ship extends SpaceObject implements Movable{
 		@Override
 		public void act() {
 			if(this.active){
+				this.moveToNextQuadrant();
+				/*
 				switch (this.direction){
 				case(Configs.NORTH):
 					//y quadrant + 1
@@ -629,7 +626,7 @@ public class Ship extends SpaceObject implements Movable{
 				case(Configs.SOUTH_WEST):
 					//x quadrant - 1 && y quadrant - 1
 					break;
-				}					
+				}*/					
 			}			
 		}    	
     }
@@ -769,9 +766,10 @@ public class Ship extends SpaceObject implements Movable{
 				if(null == active){
 					this.active = new AntimatterPod(sector, direction);
 					this.antimatterPods--;
+					Space.getInstance().getQuadrant(sector.getQuadPosition()).getWeaponList().add(this.active);
 				}
 			}else if(Configs.TRT_MISSILE == this.type && Configs.NEUTRAL != this.direction && 0 < this.trtmissiles){
-				new TritonMissile(sector, direction);
+				Space.getInstance().getQuadrant(sector.getQuadPosition()).getWeaponList().add(new TritonMissile(sector, direction));
 				this.trtmissiles--;
 			}
 			this.type = Launchers.NONE;
@@ -839,4 +837,16 @@ public class Ship extends SpaceObject implements Movable{
 			this.direction = direction;		
 		}
     }
+
+	@Override
+	public void bumped() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void bump(SpaceObject sb) {
+		// TODO Auto-generated method stub
+		
+	}
 }
