@@ -19,13 +19,13 @@ public class Star extends SpaceObject{
 	}
 
 	@Override
-	public void bumped() {
+	public void bumped(SpaceObject object) {
 
 		
 	}
 
 	@Override
-	public void bump(SpaceObject sb) {
+	public void bump(SpaceObject object) {
 
 		
 	}

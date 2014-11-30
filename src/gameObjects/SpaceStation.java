@@ -20,13 +20,13 @@ public class SpaceStation extends SpaceObject{
 	}
 
 	@Override
-	public void bumped() {
+	public void bumped(SpaceObject object) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void bump(SpaceObject sb) {
+	public void bump(SpaceObject object) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -16,7 +16,7 @@ public class TritonMissile
 	 * MODIFIES: This.
 	 * EFFECTS: Creates an instance of a missile and puts it into a sector
 	 * next to the ship depending on the direction of the shot; sets the missile's label
-	 * and initial direction.
+	 * and initial direction and speed.
 	 * @param sector The current ship's sector.
 	 * @param direction The direction of the shot.
 	 */
@@ -53,7 +53,7 @@ public class TritonMissile
 	 */
 	@Override
 	public void bump(SpaceObject object) {
-		object.bumped();
+		object.bumped(this);
 		destroyItself();
 	}
 	
@@ -62,7 +62,7 @@ public class TritonMissile
 	 * EFFECTS: Destroys the missile;
 	 */
 	@Override
-	public void bumped() {
+	public void bumped(SpaceObject object) {
 		destroyItself();
 	}
 	

@@ -23,7 +23,7 @@ public class AntimatterPod
 	 * MODIFIES: This.
 	 * EFFECTS: Creates an instance of a antimatter pod and puts it into a sector
 	 * next to the ship depending on the direction of the shoot; sets the antimatter pod's label
-	 * and initial direction; initializes the random roaming generator.
+	 * and initial direction and speed; initializes the random roaming generator.
 	 * @param sector The current ship's sector.
 	 * @param direction The direction of the shoot.
 	 */
@@ -90,7 +90,7 @@ public class AntimatterPod
 	 * PURPOSE: Nothing happens because this has bounced away.
 	 */
 	@Override
-	public void bumped() {
+	public void bumped(SpaceObject object) {
 		
 	}
 }

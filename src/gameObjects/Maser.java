@@ -28,7 +28,7 @@ public class Maser
 	 * MODIFIES: This.
 	 * EFFECTS: Creates an instance of a maser and puts it into a sector
 	 * next to the ship depending on the direction of the shoot; sets the maser's label
-	 * and initial direction; initializes the maser's tail.
+	 * and initial direction and speed; initializes the maser's tail.
 	 * @param sector The current ship's sector.
 	 * @param direction The direction of the shoot.
 	 */
@@ -96,7 +96,7 @@ public class Maser
 	 */
 	@Override
 	public void bump(SpaceObject object) {
-		object.bumped();
+		object.bumped(this);
 		hit = true;
 	}
 	
@@ -106,7 +106,7 @@ public class Maser
 	 * EFFECTS: Starts destroying the maser starting with its tail.
 	 */
 	@Override
-	public void bumped() {
+	public void bumped(SpaceObject object) {
 		hit = true;	
 	}
 }
