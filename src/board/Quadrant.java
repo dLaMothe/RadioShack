@@ -129,28 +129,28 @@ public class Quadrant implements Positionable {
 		Position pos = new Position();
 		switch (direction) {
 		case Configs.NORTH:
-			nextRow -= 1;
+			nextCol -= 1;
 			break;
 		case Configs.NORTH_EAST:
-			nextRow -= 1;
-			nextCol += 1;
+			nextRow += 1;
+			nextCol -= 1;
 			break;
 		case Configs.EAST:
-			nextCol += 1;
+			nextRow += 1;
 			break;
 		case Configs.SOUTH_EAST:
 			nextRow += 1;
 			nextCol += 1;
 			break;
 		case Configs.SOUTH:
-			nextRow += 1;
+			nextCol += 1;
 			break;
 		case Configs.SOUTH_WEST:
-			nextRow += 1;
-			nextCol -= 1;
+			nextRow -= 1;
+			nextCol += 1;
 			break;
 		case Configs.WEST:
-			nextCol += 1;
+			nextRow += 1;
 			break;
 		case Configs.NORTH_WEST:
 			nextRow -= 1;
