@@ -36,6 +36,7 @@ public class GamePanels {
 	public JLabel sectorLabel;
 	public JLabel tritonMislsLabel;
 	public JLabel powerAvailLabel;
+	public JLabel totalPowerLabel;
 	public JLabel joviansLeftLabel;
 	public JLabel antimatterPodsLabel;
 	public JTextField textField;
@@ -300,6 +301,10 @@ public class GamePanels {
 		 
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
+		test.add(new JLabel("TOTAL POWER"),gridConstraint);
+		
+		gridConstraint.gridx = X;
+		gridConstraint.gridy = Y++;
 		test.add(new JLabel("POWER AVAIL"),gridConstraint);
 		
 		gridConstraint.gridx = X;
@@ -355,6 +360,11 @@ public class GamePanels {
 		tritonMislsLabel = new JLabel("10");
 		test.add(tritonMislsLabel,gridConstraint);
 		  
+		gridConstraint.gridx = X;
+		gridConstraint.gridy = Y++;
+		totalPowerLabel = new JLabel("0%");
+		test.add(totalPowerLabel,gridConstraint);
+		
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
 		powerAvailLabel = new JLabel("99%");
