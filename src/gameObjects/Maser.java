@@ -3,6 +3,8 @@ package gameObjects;
 import board.Sector;
 import java.util.ArrayList;
 
+import settings.Configs;
+
 /**
 * The Maser weapon which can move straight leaving its tail
 * and whether hit an object or or get out of bounds.
@@ -32,7 +34,7 @@ public class Maser
 	 */
 	public Maser(Sector sector, int direction){
 		super(sector, direction);
-		label = "~";
+		label = Configs.MSR;
 		sectors = new ArrayList<Sector>();
 	}
 	

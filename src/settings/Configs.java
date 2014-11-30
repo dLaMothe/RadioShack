@@ -77,13 +77,16 @@ public class Configs {
     public static final int Y = 1;
     
     //BOARD CHARACTERS
-    public static final String MINE ="%";
     public static final String SHIP ="^";
     public static final String SSTN ="0";
     public static final String JCC ="@";
     public static final String JBC ="&";
     public static final String UNKN ="X";
     public static final String EMPTY = "-";
+    public static final String TRT_MSSL ="+";
+    public static final String TRT_MINE ="%";
+    public static final String MSR ="~";
+    public static final String ANTM_POD ="#";
     
     //SPEED CONSTANTS
     public static final int SONE = 1;

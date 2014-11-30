@@ -1,5 +1,6 @@
 package gameObjects;
 
+import settings.Configs;
 import board.Quadrant;
 import board.Sector;
 
@@ -21,7 +22,7 @@ public class TritonMissile
 	 */
 	public TritonMissile(Sector sector, int direction){
 		super(sector, direction);
-		label = "$";
+		label = Configs.TRT_MSSL;
 	}
 	
 	/**
