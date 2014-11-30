@@ -90,6 +90,9 @@ public class CommandParser {
 	private void handleIonSpeed(String substring, int direction) {
 		try {
 			switch(Integer.parseInt(substring)) {
+				case SZERO: 
+					game.setVelocity(SZERO,direction);
+					break;
 				case SONE: 
 					game.setVelocity(SONE,direction);
 					break;
@@ -116,9 +119,6 @@ public class CommandParser {
 					break;
 				case SNINE:
 					game.setVelocity(SNINE,direction);
-					break;
-				case STEN:
-					game.setVelocity(STEN,direction);
 					break;
 				default: 
 					invalidCommand();

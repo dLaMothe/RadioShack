@@ -86,6 +86,7 @@ public class Configs {
     public static final String EMPTY = ".";
     
     //SPEED CONSTANTS
+    public static final int SZERO = 0;
     public static final int SONE = 1;
     public static final int STWO = 2;
     public static final int STHREE = 3;
@@ -95,7 +96,6 @@ public class Configs {
     public static final int SSEVEN = 7;
     public static final int SEIGHT = 8;
     public static final int SNINE = 9;
-    public static final int STEN = 10;
     
     //CONDITION LEVELS
     public static final double CONDITIONLEVELS[] = {75,50,25,0};
