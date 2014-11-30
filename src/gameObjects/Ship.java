@@ -107,8 +107,9 @@ public class Ship extends SpaceObject implements Movable{
      *							will be less than the power available
      * MODIFIES: this
      * EFFECTS: changes the amount of power available to the given system
+     * @throws CriticalPowerException 
      */
-    public void adjustPower(int system, double level){
+    public void adjustPower(int system, double level) throws CriticalPowerException{
         this.systems.setSystemLevel(system, level);
     }
     
@@ -235,6 +236,7 @@ public class Ship extends SpaceObject implements Movable{
 				this.calculateSystemLoad();
 			} catch (CriticalPowerException e) {
 				e.printStackTrace();
+				System.exit(1);
 			}
     	}
     	/**
@@ -300,17 +302,13 @@ public class Ship extends SpaceObject implements Movable{
          * MODIFIES: the given ship system
          * EFFECTS: Sets power available to the given system to the given value and recalculates
          * the current drain on the overall system.
+    	 * @throws CriticalPowerException 
          */
-    	public void setSystemLevel(int system, double powerLevel){
+    	public void setSystemLevel(int system, double powerLevel) throws CriticalPowerException{
     		//double loadIncrease = powerLevel - systems.get(system).getPower();
     		//if(this.powerAvailable > (this.powerConsumed + loadIncrease)){
     			systems.get(system).setPower(powerLevel);
-    			try {
-					this.calculateSystemLoad();
-				} catch (CriticalPowerException e) {
-					e.printStackTrace();
-					System.exit(1);
-				}
+    			this.calculateSystemLoad();
     		//}
     	}
     	
