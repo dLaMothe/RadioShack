@@ -36,7 +36,8 @@ public class GameEngine {
 		for(int i = 0; i < TOTAL_POWERS; i++) {
 			panels.powerLabels[i].setText(String.valueOf(ship.getPower(i)));
 		}
-		panels.powerAvailLabel.setText(String.valueOf(ship.getPower()));
+		panels.powerAvailLabel.setText(String.valueOf(ship.getUnusedPower()) + "%");
+		panels.totalPowerLabel.setText(String.valueOf(ship.getPower()) + "%");
 		panels.antimatterPodsLabel.setText(String.valueOf(ship.getNumAntimatterPods()));
 		panels.tritonMislsLabel.setText(String.valueOf(ship.getNumTrtMissiles()));
 		panels.quadrantLabel.setText(String.valueOf(quad.getPosition().getRow()) + "-" + String.valueOf(quad.getPosition().getCol()));
@@ -57,22 +58,28 @@ public class GameEngine {
 		}
 		isActiveSR(ship.getPower(SRSENSOR) > MIN_SYSTEM_POWER);
 		isActiveLR(ship.getPower(LRSENSOR) > MIN_SYSTEM_POWER);
-		panels.powerAvailLabel.setText(String.valueOf(ship.getPower()));
+		panels.totalPowerLabel.setText(String.valueOf(ship.getPower()) + "%");
 		panels.starTimeLabel.setText(String.valueOf(starTime));
 		starTime += TIMEINCREMENT;
 		updateCondition();
 	}
 	
-	public void setPower(int type, double value) {
-		ship.adjustPower(type,value);
+	public void setPower(int type, double value){//throws NumberFormatException {
+		try{
+			ship.adjustPower(type,value);
+		}
+		catch (CriticalPowerException e){
+			criticalPowerLevelCommand();
+		}
 		panels.powerLabels[type].setText(String.valueOf(ship.getPower(type)));
-		panels.powerAvailLabel.setText(String.valueOf(ship.getPower()));
+		panels.powerAvailLabel.setText(String.valueOf(ship.getUnusedPower()) + "%");
+		panels.totalPowerLabel.setText(String.valueOf(ship.getPower()) + "%");
 	}
 
 	
 	public void invalidCommand()
 	{
-		panels.invalidCommandLabel.setText("Invalid command");
+		panels.invalidCommandLabel.setText("Captain your an idiot");
 	}
 	
 	public void clearInvalidCommand()
@@ -83,6 +90,11 @@ public class GameEngine {
 	public void shootWeapon(int type, int direction) {
 		ship.shootWeapon(type, direction);
 		updateResource();
+	}
+	
+	private void criticalPowerLevelCommand()
+	{
+		panels.invalidCommandLabel.setText("Captian the power levels are going critical");
 	}
 	
 	private void isActiveSR(boolean isActive) {

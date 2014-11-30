@@ -1,5 +1,6 @@
 package logic;
 
+import gameObjects.CollissionException;
 
 import java.util.*;
 
