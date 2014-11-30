@@ -36,6 +36,7 @@ public class GamePanels {
 	public JLabel sectorLabel;
 	public JLabel tritonMislsLabel;
 	public JLabel powerAvailLabel;
+	public JLabel totalPowerLabel;
 	public JLabel joviansLeftLabel;
 	public JLabel antimatterPodsLabel;
 	public JTextField textField;
@@ -300,6 +301,10 @@ public class GamePanels {
 		 
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
+		test.add(new JLabel("TOTAL POWER"),gridConstraint);
+		
+		gridConstraint.gridx = X;
+		gridConstraint.gridy = Y++;
 		test.add(new JLabel("POWER AVAIL"),gridConstraint);
 		
 		gridConstraint.gridx = X;
@@ -357,6 +362,11 @@ public class GamePanels {
 		  
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
+		totalPowerLabel = new JLabel("0%");
+		test.add(totalPowerLabel,gridConstraint);
+		
+		gridConstraint.gridx = X;
+		gridConstraint.gridy = Y++;
 		powerAvailLabel = new JLabel("99%");
 		test.add(powerAvailLabel,gridConstraint);
 		  
@@ -372,15 +382,15 @@ public class GamePanels {
 		  
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
-		test.add(new JLabel("7 8 9"),gridConstraint);
+		test.add(new JLabel(NORTH_WEST + " " + NORTH + " " + NORTH_EAST),gridConstraint);
 		  
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
-		test.add(new JLabel("4 5 6"),gridConstraint);
+		test.add(new JLabel(WEST + " " + NEUTRAL + " " + EAST),gridConstraint);
 		  
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
-		test.add(new JLabel("1 2 3"),gridConstraint);
+		test.add(new JLabel(SOUTH_WEST + " " + SOUTH + " " + SOUTH_EAST),gridConstraint);
 		  
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
