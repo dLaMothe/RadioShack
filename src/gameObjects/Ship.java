@@ -231,7 +231,11 @@ public class Ship extends SpaceObject implements Movable{
 	        systems.add(LAUNCHER, new Ship.Launchers(INIT_TRT_MISSILE));
 			systems.add(ION, new Ship.IonEngines (INIT_ENGINE));
 			systems.add(HYPER, new Ship.HypEngines (INIT_ENGINE));
-	        
+	        try {
+				this.calculateSystemLoad();
+			} catch (CriticalPowerException e) {
+				e.printStackTrace();
+			}
     	}
     	/**
     	 * REQUIRES: @param system - be a valid system id *see settings.Configs
