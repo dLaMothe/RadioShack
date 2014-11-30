@@ -1,6 +1,8 @@
 package gameObjects;
 
 import java.util.Random;
+
+import settings.Configs;
 import board.*;
 
 /**
@@ -27,7 +29,7 @@ public class AntimatterPod
 	 */
 	public AntimatterPod(Sector sector, int direction){
 		super(sector, direction);
-		label = "#";
+		label = Configs.ANTM_POD;
 		random = new Random();
 	}
 	
