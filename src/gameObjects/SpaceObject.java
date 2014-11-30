@@ -27,7 +27,7 @@ public abstract class SpaceObject extends Observable implements Positionable{
 	public String label;
     protected Sector sector;
     protected Quadrant quadrant;
-    protected boolean detectable = false;
+    protected boolean detectable = true;
 
     /**
      * REQUIRES: @param sec - a valid board.Sector of which the inhabitant is either
@@ -83,6 +83,19 @@ public abstract class SpaceObject extends Observable implements Positionable{
     */
     public boolean getDetectable(){
         return detectable;
+    }
+    /**
+     * REQUIRES: nothing
+     * MODIFIES: this, game state
+     * EFFECTS: Removes all known references to this allowing garbage collection
+     * to remove this.
+     * Note: This is a default method, and does not do anything spectacular.
+     * Extensions to this class should override this method to add special 
+     * effects.
+     */
+    public void selfDestruct(){
+    	quadrant.getGeneratedObjects().remove(this);
+    	this.setSector(null);
     }
     
     /**

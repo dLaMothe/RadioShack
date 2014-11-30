@@ -122,14 +122,22 @@ public class Ship extends SpaceObject implements Movable{
     }
 
     /**
-     * REQUIRES: @param system - be a valid system id *see settings.Configs
+     * REQUIRES: nothing
      * MODIFIES: nothing
-     * EFFECTS: returns the amount of power available to the given system
+     * EFFECTS: returns the total amount of power available to all systems
      */
     public double getPower(){
         return this.systems.getPowerAvailable();
     }
     
+    /**
+     * REQUIRES: nothing
+     * MODIFIES: nothing
+     * EFFECTS: returns the amount of power not distributed to a system 
+     */
+    public double getUnusedPower(){
+        return this.systems.getPowerAvailable() - this.systems.getPowerConsumed();
+    }
     /**
      * REQUIRES: nothing
      * MODIFIES: nothing
