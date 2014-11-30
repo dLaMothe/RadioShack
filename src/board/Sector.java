@@ -37,5 +37,9 @@ public class Sector implements Positionable {
 	public Position getPosition() {
 		return sectorPosition;
 	}
+	
+	public Position getQuadPosition(){
+		return quadrantPosition;
+	}
 
 }
