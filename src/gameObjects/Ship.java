@@ -20,6 +20,7 @@ public class Ship extends SpaceObject implements Movable{
     private static final int MAGNITUDE = 0;
 	private static final int MAX_ION = 10;
 	public static final int DIRECTION = 1;
+	private final int[] STOP = {0, Configs.NEUTRAL};
 	private final PowerSystem systems;
     /**
      * REQUIRES: @param sec - see super class for requirements
@@ -469,7 +470,7 @@ public class Ship extends SpaceObject implements Movable{
 				this.active = true;
 			}
 			this.direction = velocity[Ship.DIRECTION];
-                        this.setDelta(-1);
+                this.setDelta(-1);
 		}
 		
 		/**
@@ -479,15 +480,6 @@ public class Ship extends SpaceObject implements Movable{
 	     */
 		public boolean getActive(){
 			return active;
-		}
-		
-		/**
-	     * REQUIRES: nothing
-	     * MODIFIES: nothing
-	     * EFFECTS: @returns the direction this is currently pointed in
-	     */
-		public int getDirection(){
-			return this.direction;
 		}
 
 		public int getDelta() {
@@ -544,8 +536,7 @@ public class Ship extends SpaceObject implements Movable{
 				Sector newSec = Space.getInstance().getQuadrant(quadrant.getPosition()).getNext(sector, direction);
 				if(null == newSec){
 					moveToNextQuadrant();
-                                        int[] stop = {0, Configs.NEUTRAL};
-                                        this.setActive(stop);
+                    this.setActive(STOP);
 				}else if(null != newSec.getInhabitant()){
 					newSec.getInhabitant().bump(Ship.this);
 				}else{
@@ -571,15 +562,6 @@ public class Ship extends SpaceObject implements Movable{
 			}else{
 				setDelta(-1);
 			}
-		}
-		
-		/**
-	     * REQUIRES: nothing
-	     * MODIFIES: nothing
-	     * EFFECTS: @returns the current throttle position
-	     */
-		public int getThrottle(){
-			return this.throttle;
 		}
     }
     
@@ -609,6 +591,8 @@ public class Ship extends SpaceObject implements Movable{
 		@Override
 		public void act() {
 			if(this.active){
+				this.moveToNextQuadrant();
+				/*
 				switch (this.direction){
 				case(Configs.NORTH):
 					//y quadrant + 1
@@ -634,7 +618,7 @@ public class Ship extends SpaceObject implements Movable{
 				case(Configs.SOUTH_WEST):
 					//x quadrant - 1 && y quadrant - 1
 					break;
-				}					
+				}*/					
 			}			
 		}    	
     }
