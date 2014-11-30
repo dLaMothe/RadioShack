@@ -56,6 +56,7 @@ public class GameEngine {
 				}
 			}
 		}
+		ship.action();
 		isActiveSR(ship.getPower(SRSENSOR) > MIN_SYSTEM_POWER);
 		isActiveLR(ship.getPower(LRSENSOR) > MIN_SYSTEM_POWER);
 		panels.totalPowerLabel.setText(String.valueOf(ship.getPower()) + "%");
@@ -76,6 +77,9 @@ public class GameEngine {
 		panels.totalPowerLabel.setText(String.valueOf(ship.getPower()) + "%");
 	}
 
+	public void selfDestruct(){
+		ship.selfDestruct();
+	}
 	
 	public void invalidCommand()
 	{

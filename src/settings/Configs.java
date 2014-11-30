@@ -83,7 +83,7 @@ public class Configs {
     public static final String JCC ="@";
     public static final String JBC ="&";
     public static final String UNKN ="X";
-    public static final String EMPTY = "-";
+    public static final String EMPTY = ".";
     
     //SPEED CONSTANTS
     public static final int SONE = 1;

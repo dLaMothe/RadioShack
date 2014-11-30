@@ -203,7 +203,7 @@ public class CommandParser {
 	private void handleDestruct(String substring) {
 		// TODO Auto-generated method stub
 		System.out.println("S Process: " + substring);
-		
+		game.selfDestruct();
 	}
 	
 	private void handleEx(String substring) {
