@@ -4,6 +4,7 @@ import board.Position;
 import board.Positionable;
 import board.Quadrant;
 import board.Sector;
+import board.Space;
 
 import java.util.Observable;
 
@@ -26,7 +27,7 @@ public abstract class SpaceObject extends Observable implements Positionable{
 	public String label;
     protected Sector sector;
     protected Quadrant quadrant;
-    protected boolean detectable = false;
+    protected boolean detectable = true;
 
     /**
      * REQUIRES: @param sec - a valid board.Sector of which the inhabitant is either
@@ -37,6 +38,10 @@ public abstract class SpaceObject extends Observable implements Positionable{
     public SpaceObject(Sector sec){
         sector = sec;
         sector.setInhabitant(this);
+        quadrant = Space.getInstance().getQuadrant(sector.getQuadPosition());
+        if(!(this instanceof Weapon)){
+        	quadrant.getGeneratedObjects().add(this);
+        }
     }
     
     /**
@@ -58,8 +63,9 @@ public abstract class SpaceObject extends Observable implements Positionable{
      * EFFECTS: sets this object in the sector provided
      */
     public void setSector(Sector sec){
+    	if(null != sector) sector.setInhabitant(null);
         sector = sec;
-        sector.setInhabitant(this);
+        if(null != sector) sector.setInhabitant(this);
     }
     /**
      * REQUIRES: nothing
@@ -78,6 +84,19 @@ public abstract class SpaceObject extends Observable implements Positionable{
     public boolean getDetectable(){
         return detectable;
     }
+    /**
+     * REQUIRES: nothing
+     * MODIFIES: this, game state
+     * EFFECTS: Removes all known references to this allowing garbage collection
+     * to remove this.
+     * Note: This is a default method, and does not do anything spectacular.
+     * Extensions to this class should override this method to add special 
+     * effects.
+     */
+    public void selfDestruct(){
+    	quadrant.getGeneratedObjects().remove(this);
+    	this.setSector(null);
+    }
     
     /**
      * REQUIRES: nothing
@@ -87,5 +106,10 @@ public abstract class SpaceObject extends Observable implements Positionable{
      * exception can be generated in the event that the place this is moving to 
      * is already occupied. 
      */
-    public abstract void action() throws CollissionException;
+    public abstract void action();
+    
+    public abstract void bumped();
+    
+    public abstract void bump(SpaceObject sb);
+    
 }

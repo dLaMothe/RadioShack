@@ -5,7 +5,8 @@ import java.util.ArrayList;
 
 /**
 * The Maser weapon which can move straight leaving its tail
-* and whether hit an object or fly away.
+* and whether hit an object or or get out of bounds.
+* @author Laurens van Wingerden, Vitalii Egorchatov
 */
 public class Maser
 	extends Weapon{
@@ -16,11 +17,16 @@ public class Maser
 	private ArrayList<Sector> sectors = null;
 	
 	/**
-	 * REQUIRES: The ship's current sector and the direction of the shoot.
+	 * The flag to indicate whether the maser hit another object.
+	 */
+	protected Boolean hit = false;
+	
+	/**
+	 * REQUIRES: The ship's current sector and the direction of the shot.
 	 * MODIFIES: This.
 	 * EFFECTS: Creates an instance of a maser and puts it into a sector
 	 * next to the ship depending on the direction of the shoot; sets the maser's label
-	 * and initial direction; makes the maser detectable; initializes the maser's tail.
+	 * and initial direction; initializes the maser's tail.
 	 * @param sector The current ship's sector.
 	 * @param direction The direction of the shoot.
 	 */
@@ -31,11 +37,11 @@ public class Maser
 	}
 	
 	/**
-	 * MODIFIES: This. The maser's current sector and tail, detectability, and flag of hitting.
+	 * MODIFIES: This: The maser's current sector and tail, and flag of hitting.
 	 * EFFECTS: Checks what is in the next sector; puts the maser into the next sector
-	 * if it contains Void; blows up the next sector if the next sector contains any other object;
-	 * removes one piece of the maser's tail if the maser has blown up the next sector or reached
-	 * the quadrant border; makes the maser undetectable if its tail is completely removed.
+	 * if it's empty; bumps the object in the next sector if the next sector contains any;
+	 * removes one piece of the maser's tail if the maser has bumped or reached
+	 * the quadrant border; destroys the maser if its tail is completely removed.
 	 */
 	@Override
 	public void move(){
@@ -43,10 +49,9 @@ public class Maser
 		if(hit){
 			tail = getNext();
 			if(tail == null){	
-				blowUp(sector);
-				setDetectable(false);
+				destroyItself();
 			} else {		
-				new Void(tail);
+				sector.setInhabitant(null);
 			}
 			return;
 		}
@@ -55,15 +60,18 @@ public class Maser
 		if(nextSector == null){
 			hit = true;
 		} else {
-			if(!(nextSector.getInhabitant() instanceof Void)) {
-				hit = true;
+			SpaceObject object = nextSector.getInhabitant();
+			if(object != null) {
+				object.bump(this);
+				//hit = true;
+			} else {
+				setSector(nextSector);
 			}
-			setSector(nextSector);
 		} 
 	}
 	
 	/**
-	 * MODIFIES: This. THe maser's tail.
+	 * MODIFIES: This: The maser's tail.
 	 * EFFECTS: Returns the first sector with the maser's tail and removes it from
 	 * the tail if the tail still exists or null otherwise.
 	 * @return The first sector with the maser's tail.
@@ -76,9 +84,27 @@ public class Maser
 		sectors.remove(0);
 		return sector;	
 	}
-
+	
+	/**
+	 * PURPOSE: This has been hit by other SpaceObject so it sets 'hit' to true 
+	 * so that it can start removing its tail and object's 
+	 * bumped() called so that they can deal with this particular impact
+	 * MODIFIES: This: hit.
+	 * EFFECTS: Starts destroying the maser starting with its tail.
+	 */
 	@Override
-	public void action() throws CollissionException {
-		this.move();		
+	public void bump(SpaceObject object) {
+		object.bumped();
+		hit = true;
+	}
+	
+	/**
+	 * PURPOSE: A feedback message from the object this has collided with.
+	 * MODIFIES: This: hit.
+	 * EFFECTS: Starts destroying the maser starting with its tail.
+	 */
+	@Override
+	public void bumped() {
+		hit = true;	
 	}
 }

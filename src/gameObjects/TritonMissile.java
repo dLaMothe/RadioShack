@@ -1,9 +1,11 @@
 package gameObjects;
 
+import board.Quadrant;
 import board.Sector;
 
 /**
- * The Triton Missile weapon which can move straight and whether hit an object or fly away.
+ * The Triton Missile weapon which can move straight and whether bump an object or get out of bounds.
+ * @author Laurens van Wingerden, Vitalii Egorchatov
  */
 public class TritonMissile 
 	extends Weapon {
@@ -12,10 +14,10 @@ public class TritonMissile
 	 * REQUIRES: The ship's current sector and the direction of the shoot.
 	 * MODIFIES: This.
 	 * EFFECTS: Creates an instance of a missile and puts it into a sector
-	 * next to the ship depending on the direction of the shoot; sets the missile's label
-	 * and initial direction; makes the missile detectable.
+	 * next to the ship depending on the direction of the shot; sets the missile's label
+	 * and initial direction.
 	 * @param sector The current ship's sector.
-	 * @param direction The direction of the shoot.
+	 * @param direction The direction of the shot.
 	 */
 	public TritonMissile(Sector sector, int direction){
 		super(sector, direction);
@@ -23,32 +25,45 @@ public class TritonMissile
 	}
 	
 	/**
-	 * MODIFIES: This. The missile's current sector, detectability, and flag of hitting.
-	 * EFFECTS: Checks what is in the next sector; makes the missile undetectable
-	 * if it has reached the quadrant border; puts the missile into the next sector
-	 * if it contains Void; blows up the next sector and makes the missile undetectable 
-	 * if the next sector contains any other object.
+	 * MODIFIES: This. The missile's current sector or destroy the missile if it bumped something.
+	 * EFFECTS: Checks what is in the next sector; destroys the missile if it has reached 
+	 * the quadrant border; puts the missile into the next sector if it's empty; 
+	 * bumps the object in the next sector if the next sector contains any.
 	 */
 	public void move(){
-		new Void(sector);
-		if(hit){
-			blowUp(sector);
-			setDetectable(false);
-			return;
-		}
-		Sector nextSector = getCurQuadrant().getNext(sector, velocity[0]);	
+		sector.setInhabitant(null);
+		Quadrant quadrant = getCurQuadrant();
+		Sector nextSector = quadrant.getNext(sector, velocity[0]);	
 		if(nextSector == null){
-			setDetectable(false);
+			destroyItself();
 		} else {
-			if(!(nextSector.getInhabitant() instanceof Void)) {
-				hit = true;
+			SpaceObject object = nextSector.getInhabitant();
+			if(object != null) {
+				object.bump(this);
 			}
 			setSector(nextSector);
-		} 	
+		} 		
 	}
-
+	
+	/**
+	 * PURPOSE: This has been hit by other SpaceObject so it destroys itself and object's 
+	 * bumped() called so that they can deal with this particular impact
+	 * EFFECTS: Destroys the missile.
+	 */
 	@Override
-	public void action() throws CollissionException {
-		this.move();
+	public void bump(SpaceObject object) {
+		object.bumped();
+		destroyItself();
 	}
+	
+	/**
+	 * PURPOSE: A feedback message from the object this has collided with.
+	 * EFFECTS: Destroys the missile;
+	 */
+	@Override
+	public void bumped() {
+		destroyItself();
+	}
+	
+	
 }
