@@ -14,14 +14,17 @@ public class JovianBattleCruiser
 		super(sector, ship);
 		label = Configs.JBC;
 	}
+	
+	@Override
+	public void bump(SpaceObject object) {
+		object.bumped(this);
+		if(object instanceof Weapon){
+			
+		}
+	}
 
 	@Override
 	public void bumped(SpaceObject object) {
 		
-	}
-
-	@Override
-	public void bump(SpaceObject object) {
-		
-	}
+	}	
 }

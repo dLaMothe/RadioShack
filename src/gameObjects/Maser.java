@@ -65,7 +65,6 @@ public class Maser
 			SpaceObject object = nextSector.getInhabitant();
 			if(object != null) {
 				object.bump(this);
-				//hit = true;
 			} else {
 				setSector(nextSector);
 			}

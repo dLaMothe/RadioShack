@@ -94,7 +94,11 @@ public abstract class SpaceObject extends Observable implements Positionable{
      * effects.
      */
     public void selfDestruct(){
-    	quadrant.getGeneratedObjects().remove(this);
+    	if(this instanceof Weapon){
+        	quadrant.getWeaponList().remove(this);
+        } else {
+        	quadrant.getGeneratedObjects().remove(this);
+    	}
     	this.setSector(null);
     }
     
