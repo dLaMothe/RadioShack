@@ -72,12 +72,13 @@ public class AntimatterPod
 				}
 			}
 		}
-		destroyItself();
+		selfDestruct();
 	}
 	
 	/**
 	 * PURPOSE: This has been hit by other SpaceObject so it bounces itself
 	 * EFFECTS: Moves this to any other random sector.
+	 * @param object The object that collided with this.
 	 */
 	@Override
 	public void bump(SpaceObject object) {
@@ -88,6 +89,7 @@ public class AntimatterPod
 	
 	/**
 	 * PURPOSE: Nothing happens because this has bounced away.
+	 * @param object The object that collided with this.
 	 */
 	@Override
 	public void bumped(SpaceObject object) {
