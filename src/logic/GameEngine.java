@@ -14,11 +14,13 @@ public class GameEngine {
 	private int starTime;
 	private int criticalCounter;
 	private int destructCounter;
+	private boolean selfDestructActive;
 	
 	
 	public GameEngine(GamePanels newPanel) {
-		criticalCounter = 0;
-		destructCounter = 0;
+		criticalCounter = INITCRITICALTIMER;
+		destructCounter = INITDESTRUCTTIMER;
+		selfDestructActive = false;
 		starTime = INITTIME;
 		panels = newPanel;
 		quad = Space.getInstance().getQuadrant(5, 5);
@@ -61,11 +63,17 @@ public class GameEngine {
 			}
 		}
 		
-		if(ship.getUnusedPower() < 0) {
-			criticalCounter++;
+		if(ship.getUnusedPower() < MIN_TOTAL_POWER) {
+			criticalCounter--;
+			panels.invalidCommandLabel.setText("Critical power: Self destruct in " + criticalCounter);
 		}
 		
-		if(criticalCounter == CRITICALMASS) {
+		if(selfDestructActive) {
+			destructCounter--;
+			panels.invalidCommandLabel.setText("Self destruct in " + destructCounter);
+		}
+		
+		if(criticalCounter == CRITICALMASS || destructCounter == SELFDESTRUCTMAX) {
 			endGame();
 		}
 		
@@ -85,7 +93,7 @@ public class GameEngine {
 			ship.adjustPower(type,value);
 		}
 		catch (CriticalPowerException e){
-			criticalCounter = 0;
+			criticalCounter = INITCRITICALTIMER;
 			panels.invalidCommandLabel.setText("Captian the power levels are going critical");
 		}
 		panels.powerLabels[type].setText(String.valueOf(ship.getPower(type)));
@@ -95,7 +103,14 @@ public class GameEngine {
 
 
 	public void selfDestruct(){
-		endGame();
+		if(selfDestructActive) {
+			selfDestructActive = false;
+			panels.invalidCommandLabel.setText("Self destruct de-actived");
+		} else {
+			selfDestructActive=true;
+			destructCounter=INITDESTRUCTTIMER;
+			panels.invalidCommandLabel.setText("Self destruct active");
+		}
 	}
 	
 	private void endGame() {

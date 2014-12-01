@@ -44,6 +44,7 @@ public class Configs {
     public static final double INIT_TRT_MISSILE = 11.0;
     //minimum system power(This is the minimum power a system must have in order to function)
     public static final double MIN_SYSTEM_POWER = 2.0;
+    public static final double MIN_TOTAL_POWER = 0;
     public static final double POWER_SAP = 0.5;
     
     public static final int TOTAL_SENSORS_ROWS = 3;
@@ -108,7 +109,7 @@ public class Configs {
     public static final String CONDITIONSTRINGVALUES[] = {"GREEN","YELLOW", "RED","CRITICAL"};
     public static final Color CONDITIONCOLOR[] = {Color.GREEN,Color.YELLOW,Color.RED,Color.PINK};
     public static final int CONDITIONLEVELAMOUNT = 3;
-    public static final int CRITICALMASS = 10;
+
     
     //PANEL VARIABLES
     public static final int LRARRSIZE = 3;
@@ -116,6 +117,11 @@ public class Configs {
     //VELOCITY VARIABLES
     public static final int SPEED = 0;
     public static final int DIRECTION = 1;
+    
+    public static final int INITDESTRUCTTIMER = 16;
+    public static final int SELFDESTRUCTMAX = 0;
+    public static final int INITCRITICALTIMER = 10;
+    public static final int CRITICALMASS = 0;
     
     
 
