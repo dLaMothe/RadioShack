@@ -28,7 +28,7 @@ public class GameEngine {
 		selfDestructActive = false;
 		starTime = INITTIME;
 		panels = newPanel;
-		quad = Space.getInstance().getQuadrant(5, 5);
+		quad = Space.getInstance().getQuadrant(0, 0);
 		ship = new Ship(quad.getSector(new Position(0,0)));
 		quadObjects = ship.getQuadrant().getGeneratedObjects();
 		weaponObjects = ship.getQuadrant().getWeaponList();
