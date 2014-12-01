@@ -32,8 +32,6 @@ public class TritonMissile
 	 */
 	public void move(){
 		sector.setInhabitant(null);
-		
-		//Quadrant quadrant = getCurQuadrant();
 		Sector nextSector = quadrant.getNext(sector, velocity[0]);	
 		if(nextSector == null){
 			selfDestruct();
@@ -46,21 +44,6 @@ public class TritonMissile
 			}
 		} 		
 	}
-	
-	/*if(this.active && 0 == getDelta()){
-		Sector newSec = Space.getInstance().getQuadrant(quadrant.getPosition()).getNext(sector, direction);
-		if(null == newSec){
-			moveToNextQuadrant();
-            this.setActive(STOP);
-		}else if(null != newSec.getInhabitant()){
-			newSec.getInhabitant().bump(Ship.this);
-		}else{
-			setSector(newSec);
-		}
-		setDelta(10 - this.throttle);
-	}else if(getDelta() > 0){
-		setDelta(getDelta() - 1);
-	}*/
 	
 	/**
 	 * PURPOSE: This has been hit by other SpaceObject so it destroys itself and object's 

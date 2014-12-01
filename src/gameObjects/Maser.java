@@ -56,7 +56,7 @@ public class Maser
 			return;
 		}
 		sectors.add(sector);
-		Sector nextSector = getCurQuadrant().getNext(sector, velocity[0]);	
+		Sector nextSector = quadrant.getNext(sector, velocity[0]);	
 		if(nextSector == null){
 			hit = true;
 		} else {
