@@ -35,7 +35,7 @@ public class TritonMissile
 		Quadrant quadrant = getCurQuadrant();
 		Sector nextSector = quadrant.getNext(sector, velocity[0]);	
 		if(nextSector == null){
-			destroyItself();
+			selfDestruct();
 		} else {
 			SpaceObject object = nextSector.getInhabitant();
 			if(object != null) {
@@ -49,21 +49,23 @@ public class TritonMissile
 	 * PURPOSE: This has been hit by other SpaceObject so it destroys itself and object's 
 	 * bumped() called so that they can deal with this particular impact
 	 * EFFECTS: Destroys the missile.
+	 * @param object The object that collided with this.
 	 */
 	@Override
 	public void bump(SpaceObject object) {
 		object.bumped(this);
-		destroyItself();
+		selfDestruct();
 	}
 	
 	/**
 >>>>>>> impShip
 	 * PURPOSE: A feedback message from the object this has collided with.
 	 * EFFECTS: Destroys the missile;
+	 * @param object The object that collided with this.
 	 */
 	@Override
 	public void bumped(SpaceObject object) {
-		destroyItself();
+		selfDestruct();
 	}
 	
 	

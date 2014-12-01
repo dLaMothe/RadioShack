@@ -2,12 +2,7 @@ package gameObjects;
 
 import board.Sector;
 import java.util.ArrayList;
-
-<<<<<<< HEAD
-=======
 import settings.Configs;
-
->>>>>>> impShip
 /**
 * The Maser weapon which can move straight leaving its tail
 * and whether hit an object or or get out of bounds.
@@ -37,11 +32,7 @@ public class Maser
 	 */
 	public Maser(Sector sector, int direction){
 		super(sector, direction);
-<<<<<<< HEAD
-		label = "~";
-=======
 		label = Configs.MSR;
->>>>>>> impShip
 		sectors = new ArrayList<Sector>();
 	}
 	
@@ -58,7 +49,7 @@ public class Maser
 		if(hit){
 			tail = getNext();
 			if(tail == null){	
-				destroyItself();
+				selfDestruct();
 			} else {		
 				sector.setInhabitant(null);
 			}
@@ -72,7 +63,6 @@ public class Maser
 			SpaceObject object = nextSector.getInhabitant();
 			if(object != null) {
 				object.bump(this);
-				//hit = true;
 			} else {
 				setSector(nextSector);
 			}
@@ -100,6 +90,7 @@ public class Maser
 	 * bumped() called so that they can deal with this particular impact
 	 * MODIFIES: This: hit.
 	 * EFFECTS: Starts destroying the maser starting with its tail.
+	 * @param object The object that collided with this.
 	 */
 	@Override
 	public void bump(SpaceObject object) {
@@ -111,6 +102,7 @@ public class Maser
 	 * PURPOSE: A feedback message from the object this has collided with.
 	 * MODIFIES: This: hit.
 	 * EFFECTS: Starts destroying the maser starting with its tail.
+	 * @param object The object that collided with this.
 	 */
 	@Override
 	public void bumped(SpaceObject object) {

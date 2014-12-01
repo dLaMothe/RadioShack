@@ -1,15 +1,9 @@
 package gameObjects;
 
 import java.util.Random;
-<<<<<<< HEAD
 import board.*;
-
-=======
 
 import settings.Configs;
-import board.*;
-
->>>>>>> impShip
 /**
 * The Antimatter Pod weapon which can move straight and change its direction
 * after running into any other object or the quadrant border.
@@ -34,11 +28,7 @@ public class AntimatterPod
 	 */
 	public AntimatterPod(Sector sector, int direction){
 		super(sector, direction);
-<<<<<<< HEAD
-		label = "#";
-=======
 		label = Configs.ANTM_POD;
->>>>>>> impShip
 		random = new Random();
 	}
 	
@@ -80,9 +70,7 @@ public class AntimatterPod
 					object.bump(this);
 				}
 			}
-<<<<<<< HEAD
 		}
-		destroyItself();
 	}
 	
 	/**
@@ -91,28 +79,15 @@ public class AntimatterPod
 	 */
 	@Override
 	public void bump(SpaceObject object) {
-		if(object != this){
+		if(object != this) {
 			this.move();
 		}
-=======
-		}
-		destroyItself();
-	}
-	
-	/**
-	 * PURPOSE: This has been hit by other SpaceObject so it bounces itself
-	 * EFFECTS: Moves this to any other random sector.
-	 */
-	@Override
-	public void bump(SpaceObject object) {
-		if(object != this){
-			this.move();
-		}
->>>>>>> impShip
+		selfDestruct();
 	}
 	
 	/**
 	 * PURPOSE: Nothing happens because this has bounced away.
+	 * @param object The object that collided with this.
 	 */
 	@Override
 	public void bumped(SpaceObject object) {

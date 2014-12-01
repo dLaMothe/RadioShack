@@ -25,7 +25,7 @@ public abstract class JovianWarship
 	 * REQUIRES: The Jovian's current sector and the ship as a target.
 	 * MODIFIES: This.
 	 * EFFECTS: Creates an instance of Jovian and puts it into a sector;
-	 * sets the weapon's initial speed; passes the ship as a target.
+	 * sets the Jovian's initial speed; passes the ship as a target.
 	 * @param sector The current Jovian's sector.
 	 * @param ship The reference to the ship.
 	 */
