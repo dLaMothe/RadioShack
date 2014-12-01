@@ -32,6 +32,8 @@ public class GameEngine {
 		panels = newPanel;
 		quad = Space.getInstance().getQuadrant(1, 1);
 		ship = new Ship(quad.getSector(new Position(0,0)));
+		Space.getInstance().initPopulation(ship);
+		quad.populate();
 		quadObjects = ship.getQuadrant().getGeneratedObjects();
 		weaponObjects = ship.getQuadrant().getWeaponList();
 		deltaLoop = new DeltaLoop(this);
