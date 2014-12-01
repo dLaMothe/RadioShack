@@ -92,14 +92,11 @@ public class Ship extends SpaceObject implements Movable{
      * EFFECTS: reduces the amount of available power.  The amount of power drained 
      *      depends on the amount of power directed to the shields and the constant 
      *  	amount declared in settings.Configs
+     * @throws CriticalPowerException 
      * 
      */
-    public void sapPower(){
-        try {
-			systems.sapPower();
-		} catch (CriticalPowerException e) {
-			e.printStackTrace();
-		}
+    public void sapPower() throws CriticalPowerException{
+    	((Sheilds) systems.getSystem(Configs.SHIELD)).sap();
     }
     
     /**
@@ -346,8 +343,8 @@ public class Ship extends SpaceObject implements Movable{
 	     * exceeding the power available a criticalPowerException will be thrown
 	     * 
 	     */
-		public void sapPower() throws CriticalPowerException{
-			this.powerAvailable -= Configs.POWER_SAP;
+		public void sapPower(double amount) throws CriticalPowerException{
+			this.powerAvailable -= amount;
 			this.calculateSystemLoad();
 		}
 		
@@ -428,17 +425,24 @@ public class Ship extends SpaceObject implements Movable{
 	     */
 		public Sheilds(double powerLevel) {
 			super(powerLevel);
-			// TODO Auto-generated constructor stub
 		}
 		/**
-	     * REQUIRES:
-	     * MODIFIES:
-	     * EFFECTS:
+	     * REQUIRES: nothing
+	     * MODIFIES: nothing
+	     * EFFECTS: stub
 	     */
 		@Override
-		public void act() {
-			// TODO Auto-generated method stub
-			
+		public void act() {			
+		}
+		
+		public void sap() throws CriticalPowerException{
+			if(this.getPower() > 0){
+				double powerToSap = Configs.POWER_SAP/this.getPower();
+				this.setPower(this.getPower() - powerToSap);
+				systems.sapPower(powerToSap);
+			}else{
+				systems.sapPower(Configs.POWER_SAP);
+			}
 		}
     	
     }
@@ -504,8 +508,6 @@ public class Ship extends SpaceObject implements Movable{
 		}
     	
 		protected void moveToNextQuadrant() {
-			// TODO Auto-generated method stub
-			// figure out which quadrant is the next quadrant
 			int xCurrent = quadrant.getPosition().getCol();
 			int yCurrent = quadrant.getPosition().getRow();
 			switch (this.direction){
@@ -905,13 +907,22 @@ public class Ship extends SpaceObject implements Movable{
 
 	@Override
 	public void bumped(SpaceObject object) {
-		// TODO Auto-generated method stub
-		
+		if(object instanceof Star){
+			this.selfDestruct();
+		}
+		if(object instanceof JovianWarship){
+			//curse at each other
+		}
+		if(object instanceof SpaceStation){
+			((Engine) systems.getSystem(Configs.ION)).setActive(STOP);
+		}
 	}
 
 	@Override
 	public void bump(SpaceObject object) {
-		// TODO Auto-generated method stub
-		
+		object.bumped(object);
+		if(object instanceof AntimatterPod){
+			this.selfDestruct();
+		}
 	}
 }
