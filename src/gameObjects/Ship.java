@@ -811,8 +811,10 @@ public class Ship extends SpaceObject implements Movable{
 	     * ie. "load the tube"
 	     */
     	public void loadtube(int type, int direction){
-    		this.type = type;
-    		this.direction = direction;
+    		if(null != Space.getInstance().getQuadrant(quadrant.getPosition()).getNext(sector, direction)){
+    			this.type = type;
+    			this.direction = direction;
+    		}
     	}
 		
     	/**
@@ -895,7 +897,9 @@ public class Ship extends SpaceObject implements Movable{
 	     * EFFECTS: Sets this to armed status
 	     */
 		public void arm(int direction) {
-			this.direction = direction;		
+			if(null != Space.getInstance().getQuadrant(quadrant.getPosition()).getNext(sector, direction)){
+				this.direction = direction;		
+			}
 		}
     }
 
