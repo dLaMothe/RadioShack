@@ -5,7 +5,10 @@ package gameObjects;
 import static settings.Configs.*;
 import java.util.ArrayList;
 import settings.Configs;
+import board.Position;
+import board.Quadrant;
 import board.Sector;
+import board.Space;
 
 /**
  * Overview: This class provides a SpaceObject that the player can move around
@@ -17,8 +20,8 @@ import board.Sector;
 public class Ship extends SpaceObject implements Movable{
     
     private static final int MAGNITUDE = 0;
-	private static final int MAX_ION = 10;
-	public static final int DIRECTION = 0;
+	public static final int DIRECTION = 1;
+	private final int[] STOP = {0, Configs.NEUTRAL};
 	private final PowerSystem systems;
     /**
      * REQUIRES: @param sec - see super class for requirements
@@ -42,7 +45,7 @@ public class Ship extends SpaceObject implements Movable{
      *     if there is sufficient power the weapon system will shoot
      */
     public void shootWeapon(int type, int direction){
-        if(Configs.INIT_MASER == type){
+        if(Configs.MASER == type){
         	((MaserCannon) systems.getSystem(type)).arm(direction);
         }else{
         	((Launchers) systems.getSystem(LAUNCHER)).loadtube(type, direction);
@@ -89,15 +92,11 @@ public class Ship extends SpaceObject implements Movable{
      * EFFECTS: reduces the amount of available power.  The amount of power drained 
      *      depends on the amount of power directed to the shields and the constant 
      *  	amount declared in settings.Configs
+     * @throws CriticalPowerException 
      * 
      */
-    public void sapPower(){
-        try {
-			systems.sapPower();
-		} catch (CriticalPowerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    public void sapPower() throws CriticalPowerException{
+    	((Sheilds) systems.getSystem(Configs.SHIELD)).sap();
     }
     
     /**
@@ -106,8 +105,9 @@ public class Ship extends SpaceObject implements Movable{
      *							will be less than the power available
      * MODIFIES: this
      * EFFECTS: changes the amount of power available to the given system
+     * @throws CriticalPowerException 
      */
-    public void adjustPower(int system, double level){
+    public void adjustPower(int system, double level) throws CriticalPowerException{
         this.systems.setSystemLevel(system, level);
     }
     
@@ -121,14 +121,22 @@ public class Ship extends SpaceObject implements Movable{
     }
 
     /**
-     * REQUIRES: @param system - be a valid system id *see settings.Configs
+     * REQUIRES: nothing
      * MODIFIES: nothing
-     * EFFECTS: returns the amount of power available to the given system
+     * EFFECTS: returns the total amount of power available to all systems
      */
     public double getPower(){
         return this.systems.getPowerAvailable();
     }
     
+    /**
+     * REQUIRES: nothing
+     * MODIFIES: nothing
+     * EFFECTS: returns the amount of power not distributed to a system 
+     */
+    public double getUnusedPower(){
+        return this.systems.getPowerAvailable() - this.systems.getPowerConsumed();
+    }
     /**
      * REQUIRES: nothing
      * MODIFIES: nothing
@@ -138,15 +146,32 @@ public class Ship extends SpaceObject implements Movable{
         return sector;
     }
     
+    public int getNumAntimatterPods(){
+    	return ((Launchers) this.systems.getSystem(Configs.LAUNCHER)).getAntiPods();
+    }
+    
+    public void detonateAntiPod(){
+    	((Launchers) this.systems.getSystem(Configs.LAUNCHER)).detonatePod();
+    }
+    
+    public int getNumTrtMissiles(){
+    	return ((Launchers) this.systems.getSystem(Configs.LAUNCHER)).getMissilesLeft();
+    }
+    
+    
+    public double getPowerConsumed(){
+    	return this.systems.getPowerConsumed();
+    }
     /**
      * REQUIRES: nothing
      * MODIFIES: game state
      * EFFECTS: implements all player commands currently queued up 
      * This will have different results depending on what the player has 
      * asked the ship to do ie. move, shoot, etc.
+     * @throws CollissionException 
      */
     @Override
-    public void move() {
+    public void move(){
         systems.cycle();
     }
     
@@ -161,27 +186,33 @@ public class Ship extends SpaceObject implements Movable{
      */
     @Override
     public void setSpeed(int[] velocity) {
-    	if(velocity[MAGNITUDE] < MAX_ION){
+    	if(velocity[MAGNITUDE] < Configs.MAX_ION){
     		this.setEngineState(ION, velocity);
     	}else{
     		this.setEngineState(HYPER, velocity);
     	}
     }
     
+    @Override
+	public void action(){
+		this.move();		
+	}
+    
+    /**
+	 * Overview: This class provides an abstraction to the ship that encapsulates
+	 * everything that requires power in order to function.  It provides a simple set 
+	 * of methods that allow the ship to function intuitively.  If the system 
+	 * requested to act doesn't have sufficient power it simply does nothing.  If the 
+	 * normal progression of the game causes the power system to become overloaded 
+	 * (the total power usage by all systems exceeds the power available)an exception
+	 * is thrown
+	 */
     private class PowerSystem {
-    	/**
-    	 * Overview: This class provides an abstraction to the ship that encapsulates
-    	 * everything that requires power in order to function.  It provides a simple set 
-    	 * of methods that allow the ship to function intuitively.  If the system 
-    	 * requested to act doesn't have sufficient power it simply does nothing.  If the 
-    	 * normal progression of the game causes the power system to become overloaded 
-    	 * (the total power usage by all systems exceeds the power available)an exception
-    	 * is thrown
-    	 */
+    	
     	private double powerAvailable;
     	private double powerConsumed;
     	private ArrayList<ShipSystem> systems;
-    	private Ship ship;
+    	public Ship ship;
     	
     	/**
     	 * REQUIRES: @param ship - a pointer to the ship that this is a part of
@@ -190,9 +221,9 @@ public class Ship extends SpaceObject implements Movable{
     	 * settings.Configs
     	 */
     	public PowerSystem(Ship ship){
-    		this.ship = ship;
     		this.powerAvailable = MAX_POWER;
     		this.powerConsumed = 0.0;
+    		this.ship = ship;
     		systems = new ArrayList<ShipSystem>();
     		systems.add(SHIELD, new Ship.Sheilds(INIT_SHIELD));
     		systems.add(LRSENSOR, new Ship.LRSensors(INIT_LRSENSOR));
@@ -201,7 +232,12 @@ public class Ship extends SpaceObject implements Movable{
 	        systems.add(LAUNCHER, new Ship.Launchers(INIT_TRT_MISSILE));
 			systems.add(ION, new Ship.IonEngines (INIT_ENGINE));
 			systems.add(HYPER, new Ship.HypEngines (INIT_ENGINE));
-	        
+	        try {
+				this.calculateSystemLoad();
+			} catch (CriticalPowerException e) {
+				e.printStackTrace();
+				System.exit(1);
+			}
     	}
     	/**
     	 * REQUIRES: @param system - be a valid system id *see settings.Configs
@@ -218,8 +254,10 @@ public class Ship extends SpaceObject implements Movable{
          * EFFECTS: cycles through all ship systems and calls their act method.
          * 			This will have different results depending on what the player has 
          * 			asked the ship to do ie. move, shoot, etc.
+		 * @throws CollissionException is potentially generated when the ship moves to 
+		 * a new sector
          */
-    	public void cycle() {
+    	public void cycle(){
 			for(ShipSystem sys: systems){
 				sys.act();
 			}
@@ -264,17 +302,13 @@ public class Ship extends SpaceObject implements Movable{
          * MODIFIES: the given ship system
          * EFFECTS: Sets power available to the given system to the given value and recalculates
          * the current drain on the overall system.
+    	 * @throws CriticalPowerException 
          */
-    	public void setSystemLevel(int system, double powerLevel){
+    	public void setSystemLevel(int system, double powerLevel) throws CriticalPowerException{
     		//double loadIncrease = powerLevel - systems.get(system).getPower();
     		//if(this.powerAvailable > (this.powerConsumed + loadIncrease)){
     			systems.get(system).setPower(powerLevel);
-    			try {
-					this.calculateSystemLoad();
-				} catch (CriticalPowerException e) {
-					e.printStackTrace();
-					System.exit(1);
-				}
+    			this.calculateSystemLoad();
     		//}
     	}
     	
@@ -292,10 +326,13 @@ public class Ship extends SpaceObject implements Movable{
 	     * 			 @param system - an initialized Ship.ShipSystem
 	     * MODIFIES: this
 	     * EFFECTS: replace system with the given one
+	     * 
+	     * Note: this method is not needed in the current version of the game, and 
+	     * to avoid potential bugs it is commented out
 	     */
-		public void setSystem(int type, ShipSystem system) {
-			this.systems.add(type, system);
-		}
+		//public void setSystem(int type, ShipSystem system) {
+		//	this.systems.add(type, system);
+		//}
 		
 		/**
 	     * REQUIRES: nothing
@@ -306,9 +343,11 @@ public class Ship extends SpaceObject implements Movable{
 	     * exceeding the power available a criticalPowerException will be thrown
 	     * 
 	     */
-		public void sapPower() throws CriticalPowerException{
-			this.powerAvailable -= Configs.POWER_SAP;
-			this.calculateSystemLoad();
+		public void sapPower(double amount) throws CriticalPowerException{
+			if(!((Engine) this.getSystem(Configs.HYPER)).getActive()){
+				this.powerAvailable -= amount;
+				this.calculateSystemLoad();
+			}
 		}
 		
 		/**
@@ -330,14 +369,15 @@ public class Ship extends SpaceObject implements Movable{
 		}
     }
     
+    /**
+	 * Overview: This class provides a common interface for all ship systems to the 
+	 * the power system.  All systems need to store the amount of power available to 
+	 * them, and need an interface to check and change that value. They also require 
+	 * a common interface that will cause the specific ship system to do whatever it 
+	 * is intended to do.  ie. the engines move the ship
+	 */
     private abstract class ShipSystem{
-    	/**
-    	 * Overview: This class provides a common interface for all ship systems to the 
-    	 * the power system.  All systems need to store the amount of power available to 
-    	 * them, and need an interface to check and change that value. They also require 
-    	 * a common interface that will cause the specific ship system to do whatever it 
-    	 * is intended to do.  ie. the engines move the ship
-    	 */
+    	
     	private double power;
     	
     	/**
@@ -372,6 +412,8 @@ public class Ship extends SpaceObject implements Movable{
 	     * REQUIRES: nothing
 	     * MODIFIES: see individual overrides
 	     * EFFECTS: see individual overrides
+		 * @throws CollissionException if this.act() causes the ship to move to a new location
+		 * the exception can be generated. 
 	     */
     	public abstract void act();
     }
@@ -385,32 +427,40 @@ public class Ship extends SpaceObject implements Movable{
 	     */
 		public Sheilds(double powerLevel) {
 			super(powerLevel);
-			// TODO Auto-generated constructor stub
 		}
 		/**
-	     * REQUIRES:
-	     * MODIFIES:
-	     * EFFECTS:
+	     * REQUIRES: nothing
+	     * MODIFIES: nothing
+	     * EFFECTS: stub
 	     */
 		@Override
-		public void act() {
-			// TODO Auto-generated method stub
-			
+		public void act() {			
+		}
+		
+		public void sap() throws CriticalPowerException{
+			if(this.getPower() > 0){
+				double powerToSap = Configs.POWER_SAP/this.getPower();
+				this.setPower(this.getPower() - powerToSap);
+				systems.sapPower(powerToSap);
+			}else{
+				systems.sapPower(Configs.POWER_SAP);
+			}
 		}
     	
     }
     
+    /**
+	 * Overview: This class provides a common engine interface.  All 
+	 * engines no matter their type need to be turned on, and be pointed in a
+	 * useful direction.  They also need to provide their user with the 
+	 * ability to check their state.  However, different engines will have different 
+	 * consequences resulting from their active state.
+	 */
     private abstract class Engine extends ShipSystem{
 
-    	/**
-    	 * Overview: This class provides a common engine interface.  All 
-    	 * engines no matter their type need to be turned on, and be pointed in a
-    	 * useful direction.  They also need to provide their user with the 
-    	 * ability to check their state.  However, different engines will have different 
-    	 * consequences resulting from their active state.
-    	 */
 		protected boolean active;
 		protected int direction;
+		private int delta;
 
 		/**
 	     * REQUIRES: @param powerLevel - see super
@@ -421,6 +471,7 @@ public class Ship extends SpaceObject implements Movable{
 			super(powerLevel);
 			this.active = false;
 			this.direction = NEUTRAL;
+			this.setDelta(-1);
 		}
 		
 		/**
@@ -438,6 +489,7 @@ public class Ship extends SpaceObject implements Movable{
 				this.active = true;
 			}
 			this.direction = velocity[Ship.DIRECTION];
+                this.setDelta(-1);
 		}
 		
 		/**
@@ -448,28 +500,89 @@ public class Ship extends SpaceObject implements Movable{
 		public boolean getActive(){
 			return active;
 		}
-		
-		/**
-	     * REQUIRES: nothing
-	     * MODIFIES: nothing
-	     * EFFECTS: @returns the direction this is currently pointed in
-	     */
-		public int getDirection(){
-			return this.direction;
+
+		public int getDelta() {
+			return delta;
+		}
+
+		public void setDelta(int delta) {
+			this.delta = delta;
 		}
     	
+		protected void moveToNextQuadrant() {
+			int xCurrent = quadrant.getPosition().getCol();
+			int yCurrent = quadrant.getPosition().getRow();
+			switch (this.direction){
+			case(Configs.NORTH):
+				yCurrent -= 1;
+				break;
+			case(Configs.EAST):
+				//x quadrant + 1
+				xCurrent +=1;
+				break;
+			case(Configs.SOUTH):
+				//y quadrant + 1
+				yCurrent += 1;
+				break;
+			case(Configs.WEST):
+				//x quadrant - 1
+				xCurrent -= 1;
+				break;
+			case(Configs.NORTH_WEST):
+				//x quadrant - 1 && y quadrant - 1
+				xCurrent -= 1;
+				yCurrent -= 1;
+				break;
+			case(Configs.NORTH_EAST):
+				//x quadrant + 1 && y quadrant - 1
+				xCurrent += 1;
+				yCurrent -= 1;
+				break;
+			case(Configs.SOUTH_EAST):
+				//x quadrant + 1 && y quadrant + 1
+				xCurrent += 1;
+				yCurrent += 1;
+				break;
+			case(Configs.SOUTH_WEST):
+				//x quadrant - 1 && y quadrant + 1
+				xCurrent -= 1;
+				yCurrent += 1;
+				break;
+			}
+			if(xCurrent > Configs.SPACE_SIZE - 1){
+				xCurrent = 0;
+			}
+			if(xCurrent < 0){
+				xCurrent = (Configs.SPACE_SIZE - 1);
+			}
+			if(yCurrent > Configs.SPACE_SIZE - 1){
+				yCurrent = 0;
+			}
+			if(yCurrent < 0){
+				yCurrent = (Configs.SPACE_SIZE - 1);
+			}
+			Quadrant next = Space.getInstance().getQuadrant(yCurrent, xCurrent);
+			quadrant.unpopulate();
+			next.getGeneratedObjects().add(systems.ship);
+			quadrant.getGeneratedObjects().remove(systems.ship);
+			quadrant = next;
+			quadrant.populate();
+			if(((Launchers) systems.getSystem(LAUNCHER)).getActive()){
+				((Launchers) systems.getSystem(LAUNCHER)).clearActive();
+			}
+		}
     }
     
+    /**
+	 * Overview: This class implements the abstract class Engine and 
+	 * if given sufficient power and a valid vector will move the ship 
+	 * within the current quadrant.  If this is left active long enough 
+	 * it will move the ship to the next quadrant on that vector before 
+	 * deactivating itself.  The value of this.throttle effects the rate
+	 * that the ship will move through the current quadrant.
+	 */
     private class IonEngines extends Engine{
 
-    	/**
-    	 * Overview: This class implements the abstract class Engine and 
-    	 * if given sufficient power and a valid vector will move the ship 
-    	 * within the current quadrant.  If this is left active long enough 
-    	 * it will move the ship to the next quadrant on that vector before 
-    	 * deactivating itself.  The value of this.throttle effects the rate
-    	 * that the ship will move through the current quadrant.
-    	 */
     	private int throttle;
     	
     	/**
@@ -488,13 +601,26 @@ public class Ship extends SpaceObject implements Movable{
 	     * EFFECTS: the location of the ship in the current quadrant
 	     * If the current vector takes the ship out of the current quadrant moves to the appropriate
 	     * quadrent and deactivates this 
+		 * @throws CollissionException if the destination sector is already occupied 
 	     */
 		@Override
-		public void act() {
-			// TODO Auto-generated method stub
-			
+		public void act(){
+			if(this.active && 0 == getDelta()){
+				Sector newSec = Space.getInstance().getQuadrant(quadrant.getPosition()).getNext(sector, direction);
+				if(null == newSec){
+					moveToNextQuadrant();
+                    this.setActive(STOP);
+				}else if(null != newSec.getInhabitant()){
+					newSec.getInhabitant().bump(Ship.this);
+				}else{
+					setSector(newSec);
+				}
+				setDelta(10 - this.throttle);
+			}else if(getDelta() > 0){
+				setDelta(getDelta() - 1);
+			}
 		}
-		
+
 		/**
 	     * REQUIRES: see super
 	     * MODIFIES: this
@@ -504,26 +630,21 @@ public class Ship extends SpaceObject implements Movable{
 		public void setActive(int[] velocity){
 			super.setActive(velocity);
 			this.throttle = velocity[Ship.MAGNITUDE];
-		}
-		
-		/**
-	     * REQUIRES: nothing
-	     * MODIFIES: nothing
-	     * EFFECTS: @returns the current throttle position
-	     */
-		public int getThrottle(){
-			return this.throttle;
+			if(0 < this.throttle){
+				setDelta(Configs.MAX_ION - this.throttle);
+			}else{
+				setDelta(-1);
+			}
 		}
     }
     
+    /**
+	 * Overview: This class implements the abstract class Engine and 
+	 * if given sufficient power and a valid vector will move the ship 
+	 * to the next quadrant in the direction indicated.  This engine will
+	 * remain active until the user shuts it off.
+	 */
     private class HypEngines extends Engine{
-
-    	/**
-    	 * Overview: This class implements the abstract class Engine and 
-    	 * if given sufficient power and a valid vector will move the ship 
-    	 * to the next quadrant in the direction indicated.  This engine will
-    	 * remain active until the user shuts it off.
-    	 */
     	
     	/**
 	     * REQUIRES: see super @param powerLevel
@@ -542,10 +663,29 @@ public class Ship extends SpaceObject implements Movable{
 	     */
 		@Override
 		public void act() {
-			// TODO Auto-generated method stub
-			
+			if(this.active){
+				if(this.getDelta() == 0){
+					this.moveToNextQuadrant();					
+				}else{
+					this.setDelta(this.getDelta() - 1);
+				}
+			}			
 		}
-    	
+		
+		/**
+	     * REQUIRES: see super
+	     * MODIFIES: this
+	     * EFFECTS: see super, sets values outside the scope of the super method
+	     */
+		@Override
+		public void setActive(int[] velocity){
+			super.setActive(velocity);
+			if(this.active){
+				setDelta(Configs.HYPER_DELTA);
+			}else{
+				setDelta(-1);
+			}
+		}
     }
     
     private class LRSensors extends ShipSystem{
@@ -611,6 +751,7 @@ public class Ship extends SpaceObject implements Movable{
     	private int trtmissiles;
 		private int type;
 		private int direction;
+		private AntimatterPod active;
 		
 		/**
 	     * REQUIRES: see super @param powerLevel
@@ -626,6 +767,21 @@ public class Ship extends SpaceObject implements Movable{
 			direction = NEUTRAL;
 		}
 		
+		public int getMissilesLeft(){
+			return this.trtmissiles;
+		}
+		
+		public int getAntiPods(){
+			return this.antimatterPods;
+		}
+		
+		public boolean getActive(){
+			return null == active;
+		}
+		
+		public void clearActive(){
+			active = null;
+		}
 		/**
 	     * REQUIRES: nothing
 	     * MODIFIES: game state
@@ -659,8 +815,10 @@ public class Ship extends SpaceObject implements Movable{
 	     * ie. "load the tube"
 	     */
     	public void loadtube(int type, int direction){
-    		this.type = type;
-    		this.direction = direction;
+    		if(null != Space.getInstance().getQuadrant(quadrant.getPosition()).getNext(sector, direction)){
+    			this.type = type;
+    			this.direction = direction;
+    		}
     	}
 		
     	/**
@@ -671,14 +829,23 @@ public class Ship extends SpaceObject implements Movable{
 	     */
 		private void launch(){
 			if(Configs.ANITMATTER_POD == this.type && 0 < this.antimatterPods){
-				//TODO call antimatterPod constructor
-				this.antimatterPods--;
+				if(null == active){
+					this.active = new AntimatterPod(sector, direction);
+					this.antimatterPods--;
+					Space.getInstance().getQuadrant(sector.getQuadPosition()).getWeaponList().add(this.active);
+				}
 			}else if(Configs.TRT_MISSILE == this.type && Configs.NEUTRAL != this.direction && 0 < this.trtmissiles){
-				//TODO new TritonMissile(direction);
+				Space.getInstance().getQuadrant(sector.getQuadPosition()).getWeaponList().add(new TritonMissile(sector, direction));
 				this.trtmissiles--;
 			}
 			this.type = Launchers.NONE;
 			this.direction = Configs.NEUTRAL;
+		}
+		public void detonatePod(){
+			if(null != active){
+				this.active.detonate();
+				this.active = null;
+			}
 		}
     }
     
@@ -723,7 +890,7 @@ public class Ship extends SpaceObject implements Movable{
 	     */
 		private void shoot() {
 			if(Configs.NEUTRAL != direction){
-				//new Maser(direction, sector);
+				Space.getInstance().getQuadrant(sector.getQuadPosition()).getWeaponList().add(new Maser(sector, direction));
 			}
 			this.direction = Configs.NEUTRAL;
 		}
@@ -734,7 +901,30 @@ public class Ship extends SpaceObject implements Movable{
 	     * EFFECTS: Sets this to armed status
 	     */
 		public void arm(int direction) {
-			this.direction = direction;		
+			if(null != Space.getInstance().getQuadrant(quadrant.getPosition()).getNext(sector, direction)){
+				this.direction = direction;		
+			}
 		}
     }
+
+	@Override
+	public void bumped(SpaceObject object) {
+		if(object instanceof Star){
+			this.selfDestruct();
+		}
+		if(object instanceof JovianWarship){
+			//curse at each other
+		}
+		if(object instanceof SpaceStation){
+			((Engine) systems.getSystem(Configs.ION)).setActive(STOP);
+		}
+	}
+
+	@Override
+	public void bump(SpaceObject object) {
+		object.bumped(object);
+		if(object instanceof AntimatterPod){
+			this.selfDestruct();
+		}
+	}
 }

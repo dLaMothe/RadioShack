@@ -22,6 +22,5 @@ public interface Movable {
      *
      * @param velocity
      */
-    public void setSpeed(int[] velocity);
-    
+    public void setSpeed(int[] velocity);  
 }

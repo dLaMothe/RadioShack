@@ -1,26 +1,50 @@
 package logic;
 import static settings.Configs.*;
 
+/*
+ * AUTHOR: DAVID LAMOTHE, MANDIP SANGHA
+ * OVERVIEW: PARSINGS COMMANDS SENT BY
+ * INPUT HANDLER AND SENDS THEM TO THE 
+ * GAME ENGINE FOR PROCESSING
+ */
+
 public class CommandParser {
 	
 	private static final int firstIndex = 0;
 	private static final int subCommand = 1;
 	private GameEngine game;
 	
+	/*
+	 * REQUIRES: New Game Object
+	 * MODIFIES: NONE
+	 * EFFECTS: Initializes game object
+	 */
 	public CommandParser(GameEngine newGame) {
 		game = newGame;
 	}
+	
+	/*
+	 * REQUIRES: String Command 
+	 * MODIFIES: NONE
+	 * EFFECTS: Parses various commands 
+	 * and calls various methods on the game object to
+	 * act on the commands
+	 */
 
 	public void parseCommand(String command) {
+		game.clearInvalidCommand();
 		switch(command.charAt(firstIndex)) {
+			case 'H':
+				handleHyperDirection(command.substring(subCommand));
+				break;
 			case 'I':
-				handleIon(command.substring(subCommand));
+				handleIonDirection(command.substring(subCommand));
 				break;
 			case 'M':
-				handleMazer(command.substring(subCommand));
+				handleWeapon(command.substring(subCommand),MASER);
 				break;
 			case 'T':
-				handleTriton(command.substring(subCommand));
+				handleWeapon(command.substring(subCommand),TRT_MISSILE);
 				break;
 			case 'D':
 				handlePower(command.substring(subCommand));
@@ -29,90 +53,323 @@ public class CommandParser {
 				handleDestruct(command.substring(subCommand));
 				break;
 			case 'E':
-				handleEx(command.substring(subCommand));
+				handleExperiment(command.substring(subCommand));
 				break;
 			case 'A':
-				handlePod(command.substring(subCommand));
+				handleWeapon(command.substring(subCommand),ANITMATTER_POD);
 				break;
 			case 'X':
-				handleExperiment(command.substring(subCommand));
+				handleEx();
 				break;
 			default:
 				invalidCommand();
+
+				System.out.println("IC 0");
 				break;
 				
 		}
 	}
+	
+	/*
+	 * REQUIRES: Substring of the initial command
+	 * MODIFIES: NONE
+	 * EFFECTS: Parses various the direction
+	 * and calls handle speed method to 
+	 * act on the commands and catch if number format is wrong
+	 * or if the substring is an empty string
+	 * 
+	 */
 
-
-
-	private void handleIon(String substring) {
-		System.out.println("I Process: " + substring);
+	private void handleHyperDirection(String substring) {
+		try {
+			switch(Integer.parseInt(substring.substring(firstIndex) )) {
+				case NORTH: 
+					handleSpeed(String.valueOf(STEN), NORTH);
+					break;
+				case SOUTH:
+					handleSpeed(String.valueOf(STEN), SOUTH);
+					break;
+				case WEST:
+					handleSpeed(String.valueOf(STEN), WEST);
+					break;
+				case EAST:
+					handleSpeed(String.valueOf(STEN), EAST);
+					break;
+				case NORTH_WEST:
+					handleSpeed(String.valueOf(STEN), NORTH_WEST);
+					break;
+				case NORTH_EAST:
+					handleSpeed(String.valueOf(STEN), NORTH_EAST);
+					break;
+				case SOUTH_WEST:
+					handleSpeed(String.valueOf(STEN), SOUTH_WEST);
+					break;
+				case SOUTH_EAST:
+					handleSpeed(String.valueOf(STEN), SOUTH_EAST);
+					break;
+				case NEUTRAL:
+					handleSpeed(String.valueOf(SZERO), NEUTRAL);
+					break;
+				default: 
+					invalidCommand();
+					break;
+					
+			}
+		} catch(NumberFormatException e) {
+			invalidCommand();
+		} catch(IndexOutOfBoundsException e) {
+			invalidCommand();
+		}
 	}
 	
-	private void handleMazer(String substring) {
-		// TODO Auto-generated method stub
-		System.out.println("M Process: " + substring);
-		
+	/*
+	 * REQUIRES: Substring of the initial command
+	 * MODIFIES: NONE
+	 * EFFECTS: Parses various the direction
+	 * and calls handle speed method to 
+	 * act on the commands and catch if number format is wrong
+	 * or if the substring is an empty string
+	 * 
+	 */
+	
+	private void handleIonDirection(String substring) {
+		try {
+			switch(Integer.parseInt(substring.substring(firstIndex, firstIndex + 1) )) {
+				case NORTH: 
+					handleSpeed(substring.substring(subCommand), NORTH);
+					break;
+				case SOUTH:
+					handleSpeed(substring.substring(subCommand), SOUTH);
+					break;
+				case WEST:
+					handleSpeed(substring.substring(subCommand), WEST);
+					break;
+				case EAST:
+					handleSpeed(substring.substring(subCommand), EAST);
+					break;
+				case NORTH_WEST:
+					handleSpeed(substring.substring(subCommand), NORTH_WEST);
+					break;
+				case NORTH_EAST:
+					handleSpeed(substring.substring(subCommand), NORTH_EAST);
+					break;
+				case SOUTH_WEST:
+					handleSpeed(substring.substring(subCommand), SOUTH_WEST);
+					break;
+				case SOUTH_EAST:
+					handleSpeed(substring.substring(subCommand), SOUTH_EAST);
+					break;
+				case NEUTRAL:
+					handleSpeed(substring.substring(subCommand), NEUTRAL);
+					break;
+				default: 
+					invalidCommand();
+					break;
+					
+			}
+		} catch(NumberFormatException e) {
+			invalidCommand();
+		} catch(IndexOutOfBoundsException e) {
+			invalidCommand();
+		}
 	}
-
-	private void handleTriton(String substring) {
-		// TODO Auto-generated method stub
-		System.out.println("T Process: " + substring);	
+	
+	/*
+	 * REQUIRES: Substring of the initial command and direction
+	 * MODIFIES: NONE
+	 * EFFECTS: Parses various the direction and speed to
+	 * game object to act on the commands and catch if number format is wrong
+	 * or if the substring is an empty string
+	 * 
+	 */
+	
+	private void handleSpeed(String substring, int direction) {
+		try {
+			switch(Integer.parseInt(substring)) {
+				case SZERO: 
+					game.setVelocity(SZERO,direction);
+					break;
+				case SONE: 
+					game.setVelocity(SONE,direction);
+					break;
+				case STWO:
+					game.setVelocity(STWO,direction);
+					break;
+				case STHREE:
+					game.setVelocity(STHREE,direction);
+					break;
+				case SFOUR:
+					game.setVelocity(SFOUR,direction);
+					break;
+				case SFIVE:
+					game.setVelocity(SFIVE,direction);
+					break;
+				case SSIX:
+					game.setVelocity(SSIX,direction);
+					break;
+				case SSEVEN:
+					game.setVelocity(SSEVEN,direction);
+					break;
+				case SEIGHT:
+					game.setVelocity(SEIGHT,direction);
+					break;
+				case SNINE:
+					game.setVelocity(SNINE,direction);
+					break;
+				case STEN:
+					game.setVelocity(STEN, direction);
+					break;
+				default: 
+					invalidCommand();
+					break;
+					
+			}
+		} catch(NumberFormatException e) {
+			invalidCommand();
+		} catch(IndexOutOfBoundsException e) {
+			invalidCommand();
+		}
 	}
+	
+	/*
+	 * REQUIRES: Substring of the initial command and type
+	 * MODIFIES: NONE
+	 * EFFECTS: Parses various the direction and type to
+	 * game object to act on the commands and catch if number format is wrong
+	 * or if the substring is an empty string
+	 * 
+	 */
+	
+	private void handleWeapon(String substring, int type) {
+		try {
+			switch(Integer.parseInt(substring.substring(firstIndex, firstIndex + 1) )) {
+				case NORTH: 
+					game.shootWeapon(type, NORTH);
+					break;
+				case SOUTH:
+					game.shootWeapon(type, SOUTH);
+					break;
+				case WEST:
+					game.shootWeapon(type, WEST);
+					break;
+				case EAST:
+					game.shootWeapon(type, EAST);
+					break;
+				case NORTH_WEST:
+					game.shootWeapon(type, NORTH_WEST);
+					break;
+				case NORTH_EAST:
+					game.shootWeapon(type, NORTH_EAST);
+					break;
+				case SOUTH_WEST:
+					game.shootWeapon(type, SOUTH_WEST);
+					break;
+				case SOUTH_EAST:
+					game.shootWeapon(type, SOUTH_EAST);
+					break;
+				default: 
+					invalidCommand();
+					break;
+					
+			}
+		} catch(NumberFormatException e) {
+			invalidCommand();
+		} catch(IndexOutOfBoundsException e) {
+			invalidCommand();
+		}
+	}
+	
+	/*
+	 * REQUIRES: Substring of the initial command 
+	 * MODIFIES: NONE
+	 * EFFECTS: Parses various the command and type to
+	 * game object to act on the commands and catch if number format is wrong
+	 * or if the substring is an empty string
+	 * 
+	 */
 	
 	private void handlePower(String cmd) {
-		switch(cmd.charAt(firstIndex)) {
-			case 'H':
-				game.setPower(ENGINE, Double.parseDouble((cmd.substring(subCommand))));
-				break;
-			case 'L':
-				game.setPower(LRSENSOR, Double.parseDouble((cmd.substring(subCommand))));
-				break;
-			case 'S':
-				game.setPower(SRSENSOR, Double.parseDouble((cmd.substring(subCommand))));
-				break;
-			case 'D':
-				game.setPower(SHIELD, Double.parseDouble((cmd.substring(subCommand))));
-				break;
-			case 'M':
-				game.setPower(MASER, Double.parseDouble((cmd.substring(subCommand))));
-				break;
-			case 'T':
-				game.setPower(LAUNCHER, Double.parseDouble((cmd.substring(subCommand))));
-				break;
-			default:
-				break;
+		try {
+			if(Double.parseDouble((cmd.substring(subCommand))) >= 0) {
+				switch(cmd.charAt(firstIndex)) {
+					case 'H':
+						game.setPower(HYPER, Double.parseDouble((cmd.substring(subCommand))));
+						break;
+					case 'I':
+						game.setPower(ION, Double.parseDouble((cmd.substring(subCommand))));
+						break;
+					case 'L':
+						game.setPower(LRSENSOR, Double.parseDouble((cmd.substring(subCommand))));
+						break;
+					case 'S':
+						game.setPower(SRSENSOR, Double.parseDouble((cmd.substring(subCommand))));
+						break;
+					case 'D':
+						game.setPower(SHIELD, Double.parseDouble((cmd.substring(subCommand))));
+						break;
+					case 'M':
+						game.setPower(MASER, Double.parseDouble((cmd.substring(subCommand))));
+						break;
+					case 'T':
+						game.setPower(LAUNCHER, Double.parseDouble((cmd.substring(subCommand))));
+						break;
+					default:
+						invalidCommand();
+						break;
+				} 
+			} else {
+					invalidCommand();
+			}
+		} catch(NumberFormatException e) {
+			invalidCommand();
+		} catch(IndexOutOfBoundsException e) {
+			invalidCommand();
 		}
 	}
 
+	/*
+	 * REQUIRES: Substring of the initial command and type
+	 * MODIFIES: NONE
+	 * EFFECTS: Calls game object self destruct
+	 * 
+	 */
 	private void handleDestruct(String substring) {
 		// TODO Auto-generated method stub
 		System.out.println("S Process: " + substring);
-		
+		game.selfDestruct();
 	}
-	
-	private void handleEx(String substring) {
+	/*
+	 * REQUIRES: NONE
+	 * MODIFIES: NONE
+	 * EFFECTS: Calls game object explode pod
+	 */
+	private void handleEx() {
 		// TODO Auto-generated method stub
-		System.out.println("E Process: " + substring);
+		game.explodePod();
 		
 	}
-	
-	private void handlePod(String substring) {
-		// TODO Auto-generated method stub
-		System.out.println("A Process: " + substring);
-		
-	}
-	
+
+	/*NOT USED
+	 * REQUIRES: NONE
+	 * MODIFIES: NONE
+	 * EFFECTS: NONE
+	 */
 	private void handleExperiment(String substring) {
 		// TODO Auto-generated method stub
 		System.out.println("X Process");
 		
 	}
 	
+	/*
+	 * REQUIRES: NONE
+	 * MODIFIES: NONE
+	 * EFFECTS: Prints "invalid command" to console and
+	 * calls game invalid command 
+	 */
 	private void invalidCommand() {
 		// TODO Auto-generated method stub
 		System.out.println("Invalid Command");
+		game.invalidCommand();
 		
 	}
 }

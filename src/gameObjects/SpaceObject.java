@@ -2,7 +2,9 @@ package gameObjects;
 
 import board.Position;
 import board.Positionable;
+import board.Quadrant;
 import board.Sector;
+import board.Space;
 
 import java.util.Observable;
 
@@ -20,11 +22,12 @@ import java.util.Observable;
  * @author Michael Koonts
  */
 
-public class SpaceObject extends Observable implements Positionable{
+public abstract class SpaceObject extends Observable implements Positionable{
     
 	public String label;
     protected Sector sector;
-    protected boolean detectable = false;
+    protected Quadrant quadrant;
+    protected boolean detectable = true;
 
     /**
      * REQUIRES: @param sec - a valid board.Sector of which the inhabitant is either
@@ -35,6 +38,10 @@ public class SpaceObject extends Observable implements Positionable{
     public SpaceObject(Sector sec){
         sector = sec;
         sector.setInhabitant(this);
+        quadrant = Space.getInstance().getQuadrant(sector.getQuadPosition());
+        if(!(this instanceof Weapon)){
+        	quadrant.getGeneratedObjects().add(this);
+        }
     }
     
     /**
@@ -56,8 +63,9 @@ public class SpaceObject extends Observable implements Positionable{
      * EFFECTS: sets this object in the sector provided
      */
     public void setSector(Sector sec){
+    	if(null != sector) sector.setInhabitant(null);
         sector = sec;
-        sector.setInhabitant(this);
+        if(null != sector) sector.setInhabitant(this);
     }
     /**
      * REQUIRES: nothing
@@ -76,4 +84,51 @@ public class SpaceObject extends Observable implements Positionable{
     public boolean getDetectable(){
         return detectable;
     }
+    /**
+     * REQUIRES: nothing
+     * MODIFIES: this, game state
+     * EFFECTS: Removes all known references to this allowing garbage collection
+     * to remove this.
+     * Note: This is a default method, and does not do anything spectacular.
+     * Extensions to this class should override this method to add special 
+     * effects.
+     */
+    public void selfDestruct(){
+    	if(this instanceof Weapon){
+        	quadrant.getWeaponList().remove(this);
+        } else {
+        	if(this instanceof JovianWarship) {
+        		Space.getInstance().decrementJovian();
+        	}
+    		quadrant.getGeneratedObjects().remove(this);
+    	}
+    	this.setSector(null);
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    public Quadrant getQuadrant(){
+    	return this.quadrant;
+    }
+    /**
+     * REQUIRES: nothing
+     * MODIFIES: this
+     * EFFECTS: effects very depending on the implementation of the SpaceObject
+     * @throws CollissionException if action causes the SpaceObject to move this
+     * exception can be generated in the event that the place this is moving to 
+     * is already occupied. 
+     */
+    
+    public String getLabel() {
+    	return this.label;
+    }
+    
+    public abstract void action() throws CriticalPowerException;
+    
+    public abstract void bumped(SpaceObject object);
+    
+    public abstract void bump(SpaceObject object);
+    
 }

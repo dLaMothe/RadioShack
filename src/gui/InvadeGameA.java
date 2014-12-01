@@ -6,14 +6,25 @@ import java.awt.KeyboardFocusManager;
 
 import javax.swing.*;
 
+import board.Space;
+
 import logic.KeyDispatcher;
 
+/*
+ * AUTHOR: MANDIP SANGHA, DAVID LAMOTHE
+ * OVERVIEW: STARTS GAME AND DRAWS JFRAME
+ */
 public class InvadeGameA extends JFrame {
 	
 	private static KeyDispatcher dispatcher;
 	private GameEngine game;
 	private GamePanels panel;
 	
+	/*
+	 * REQUIRES: NONE
+	 * MODIFIES: NONE
+	 * EFFECTS: Initializes game, UI and dispatcher
+	 */
 	InvadeGameA() {
 		initUI();
 		initGame();
@@ -24,6 +35,11 @@ public class InvadeGameA extends JFrame {
     	manager.addKeyEventDispatcher( dispatcher );
 	}
 	
+	/*
+	 * REQUIRES: NONE
+	 * MODIFIES: NONE
+	 * EFFECTS: Initializes UI 
+	 */
 	private void initUI() {
     	panel = new GamePanels();
 		setTitle("Test");
@@ -65,7 +81,14 @@ public class InvadeGameA extends JFrame {
 		menuBar.add(menu);
 		menuItem = new JMenuItem(new AbstractAction("New Game") {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-		       
+				KeyboardFocusManager manager =
+		    	         KeyboardFocusManager.getCurrentKeyboardFocusManager();
+		    	manager.removeKeyEventDispatcher( dispatcher );
+		       dispose();
+		       Space.clear();
+		       Space.getInstance();
+		       String []arr = {};
+		       main(arr);
 			}
 		});
 		menu.add(menuItem);
@@ -78,17 +101,27 @@ public class InvadeGameA extends JFrame {
 		 
 		setJMenuBar(menuBar);
 		
-		setSize(575,275);
+		setSize(575,300);
 		setLocationRelativeTo(null);
 		
 		
 	}
 	
+	/*
+	 * REQUIRES: NONE
+	 * MODIFIES: NONE
+	 * EFFECTS: Initializes game object
+	 */
 	private void initGame() {
 		//Initialize Game
 		game = new GameEngine(panel);
 	}
 	
+	/*
+	 * REQUIRES: NONE
+	 * MODIFIES: NONE
+	 * EFFECTS: Initializes whole game
+	 */
 	public static void main(String[] args) {
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			@Override
@@ -100,3 +133,4 @@ public class InvadeGameA extends JFrame {
 		});
 	}
 }
+
