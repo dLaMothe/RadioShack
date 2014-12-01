@@ -344,8 +344,10 @@ public class Ship extends SpaceObject implements Movable{
 	     * 
 	     */
 		public void sapPower(double amount) throws CriticalPowerException{
-			this.powerAvailable -= amount;
-			this.calculateSystemLoad();
+			if(!((Engine) this.getSystem(Configs.HYPER)).getActive()){
+				this.powerAvailable -= amount;
+				this.calculateSystemLoad();
+			}
 		}
 		
 		/**
