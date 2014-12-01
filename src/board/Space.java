@@ -15,6 +15,9 @@ public class Space {
 	private final Quadrant quadrant[][] = new Quadrant[Configs.SPACE_SIZE][Configs.SPACE_SIZE];
 	private boolean initialized = false;
 	public boolean debug = false;
+	public int TotalJovian = Configs.TOTAL_JOVIANS;
+	public int TotalStars = Configs.TOTAL_STARS;
+	public int TotalStations = Configs.TOTAL_STATIONS;
 
 	/**
 	 * @return the quadrant
@@ -105,18 +108,40 @@ public class Space {
 	 */
 	public void initPopulation(Ship ship){
 		int TotalJovianInGame = Configs.TOTAL_JOVIANS;
+		int TotalStarsInGame = Configs.TOTAL_STARS;
+		int TotalStationsInGame = Configs.TOTAL_STATIONS;
 		Random random = new Random();
 		Sector [][]tempSec;
 		for (int i = 0; i < quadrant.length; i++) {
 			for (int j = 0; j < quadrant.length; j++) {
 				int numJovianInSec = 0;
+				int numStarsinSec = 0;
+				int numStationInSec = 0;
 				if(TotalJovianInGame >0 ){
 					numJovianInSec = random.nextInt(5);
 					TotalJovianInGame -= numJovianInSec;
 				}
+				if(TotalStarsInGame > 0) {
+					numStarsinSec = random.nextInt(5);
+					TotalStarsInGame -= numStarsinSec;
+					
+				}
+				if(TotalStationsInGame > 0) {
+					numStationInSec = random.nextInt(2);
+					TotalStationsInGame -= numStationInSec;
+				}
 				for(int k =0; k < numJovianInSec; k++){
 					tempSec = quadrant[i][j].getSectors();
 					quadrant[i][j].getAllObjectsFromQuadrant().add(new JovianBattleCruiser(tempSec[0][k],ship));
+				}
+				
+				for(int k = 0; k < numStarsinSec; k++) {
+					tempSec = quadrant[i][j].getSectors();
+					quadrant[i][j].getAllObjectsFromQuadrant().add(new Star(tempSec[1][k]));
+				}
+				for(int k = 0; k < numStationInSec; k++) {
+					tempSec = quadrant[i][j].getSectors();
+					quadrant[i][j].getAllObjectsFromQuadrant().add(new SpaceStation(tempSec[2][k]));
 				}
 				quadrant[i][j].unpopulate();
 			}
