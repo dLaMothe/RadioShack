@@ -150,7 +150,7 @@ public class Quadrant implements Positionable {
 			nextCol += 1;
 			break;
 		case Configs.WEST:
-			nextRow += 1;
+			nextRow -= 1;
 			break;
 		case Configs.NORTH_WEST:
 			nextRow -= 1;
