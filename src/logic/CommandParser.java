@@ -78,7 +78,7 @@ public class CommandParser {
 					handleSpeed(String.valueOf(STEN), SOUTH_EAST);
 					break;
 				case NEUTRAL:
-					handleSpeed(String.valueOf(STEN), NEUTRAL);
+					handleSpeed(String.valueOf(SZERO), NEUTRAL);
 					break;
 				default: 
 					invalidCommand();
