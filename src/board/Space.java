@@ -94,6 +94,16 @@ public class Space {
 	}
 
 	/**
+	 * REQUIRES: nothing
+	 * MODIFIES: space
+	 * EFFECTS: Initializes the population of space.  Create an appropriate number of
+	 * jovians, stars and space stations and distribute them throughout the space
+	 */
+	public void initPopulation(){
+		
+	}
+	
+	/**
 	 * Static getter method for retrieving the singleton instance
 	 */
 	public static Space getInstance() {
