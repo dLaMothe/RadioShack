@@ -1,5 +1,9 @@
 package board;
 
+import gameObjects.*;
+
+import java.util.Random;
+
 import settings.Configs;
 
 /**
@@ -99,8 +103,24 @@ public class Space {
 	 * EFFECTS: Initializes the population of space.  Create an appropriate number of
 	 * jovians, stars and space stations and distribute them throughout the space
 	 */
-	public void initPopulation(){
-		
+	public void initPopulation(Ship ship){
+		int TotalJovianInGame = Configs.TOTAL_JOVIANS;
+		Random random = new Random();
+		Sector [][]tempSec;
+		for (int i = 0; i < quadrant.length; i++) {
+			for (int j = 0; j < quadrant.length; j++) {
+				int numJovianInSec = 0;
+				if(TotalJovianInGame >0 ){
+					numJovianInSec = random.nextInt(5);
+					TotalJovianInGame -= numJovianInSec;
+				}
+				for(int k =0; k < numJovianInSec; k++){
+					tempSec = quadrant[i][j].getSectors();
+					quadrant[i][j].getAllObjectsFromQuadrant().add(new JovianBattleCruiser(tempSec[0][k],ship));
+				}
+				quadrant[i][j].unpopulate();
+			}
+		}
 	}
 	
 	/**

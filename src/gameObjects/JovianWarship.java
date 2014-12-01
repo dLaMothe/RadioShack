@@ -53,7 +53,7 @@ public abstract class JovianWarship
 	@Override
 	public void move(){				
 		sector.setInhabitant(null);
-		Quadrant quadrant = getCurQuadrant();
+		//Quadrant quadrant = getCurQuadrant();
 		Sector nextSector = null;
 		int direction = 0;
 		do{
