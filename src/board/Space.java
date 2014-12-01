@@ -27,12 +27,8 @@ public class Space {
 	/**
 	 * Private constructor for singleton
 	 */
-	{
-		init();
-	}
-
 	private Space() {
-
+		init();
 	}
 
 	public void init() {
