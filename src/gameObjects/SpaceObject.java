@@ -122,7 +122,7 @@ public abstract class SpaceObject extends Observable implements Positionable{
     	return this.label;
     }
     
-    public abstract void action();
+    public abstract void action() throws CriticalPowerException;
     
     public abstract void bumped(SpaceObject object);
     

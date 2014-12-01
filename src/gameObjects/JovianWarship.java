@@ -40,9 +40,10 @@ public abstract class JovianWarship
 	
 	/**
 	 * EFFECTS: Moves the Jovian and saps the ship's power.
+	 * @throws CriticalPowerException 
 	 */
 	@Override
-	public void action(){
+	public void action() throws CriticalPowerException{
 		if(DELTA == 0) {
 			DELTA = Configs.JOVIAN_DELTA;
 			move();
