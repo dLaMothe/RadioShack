@@ -64,7 +64,7 @@ public class Maser
 			if(object != null) {
 				object.bump(this);
 			} else {
-				setSector(nextSector);
+				setSector(nextSector); 
 			}
 		} 
 	}
@@ -107,5 +107,9 @@ public class Maser
 	@Override
 	public void bumped(SpaceObject object) {
 		hit = true;	
+	}
+	
+	public ArrayList<Sector> getTail(){
+		return sectors;
 	}
 }
