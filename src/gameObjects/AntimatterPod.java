@@ -42,7 +42,6 @@ public class AntimatterPod
 	@Override
 	public void move(){				
 		sector.setInhabitant(null);
-		Quadrant quadrant = getCurQuadrant();
 		Sector nextSector = quadrant.getNext(sector, velocity[0]);		
 		if(nextSector == null || nextSector.getInhabitant() != null){
 			int direction = 0;
@@ -62,7 +61,6 @@ public class AntimatterPod
 	 * and destroys the antimatter pod.
 	 */
 	public void detonate(){	
-		Quadrant quadrant = getCurQuadrant(); 
 		for(int i = 1; i < 10; i++){			
 			Sector nextSector  = quadrant.getNext(sector, i);
 			if(nextSector != null){

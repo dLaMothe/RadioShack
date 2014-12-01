@@ -35,14 +35,6 @@ public abstract class Weapon
 				getNext(sector, direction));
 		setSpeed(new int[]{direction, 1});
 	}
-
-	/**
-	 * EFFECTS: Retrieves the weapon's current quadrant
-	 * @return The weapon's current quadrant
-	 */
-	protected Quadrant getCurQuadrant(){
-		return Space.getInstance().getQuadrantOfObject(this);
-	}
 	
 	/**
 	 * REQUIRES: The necessary velocity in the form of an array, 
