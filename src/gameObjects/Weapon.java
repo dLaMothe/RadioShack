@@ -10,6 +10,16 @@ public abstract class Weapon
 	extends SpaceObject
 	implements Movable{
 	
+	int[] velocity = new int[2];
+	
+	/**
+	 * MODIFIES: This.
+	 * EFFECTS: Creates an instance of weapon without any sector.
+	 */
+	public Weapon(){		
+		super(null);
+	}
+	
 	/**
 	 * REQUIRES: The ship's current sector and the direction of the shot.
 	 * MODIFIES: This.
@@ -42,8 +52,8 @@ public abstract class Weapon
 	 * @param vel The necessary weapons's velocity 
 	 */
 	public void setSpeed(int[] vel){
-		velocity[0] = vel[0];
-		velocity[1] = vel[1];
+		this.velocity[0] = vel[0];
+		this.velocity[1] = vel[1];
 	}
 	
 	/**
