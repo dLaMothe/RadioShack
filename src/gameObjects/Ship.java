@@ -849,7 +849,7 @@ public class Ship extends SpaceObject implements Movable{
 	     */
 		private void shoot() {
 			if(Configs.NEUTRAL != direction){
-				//new Maser(direction, sector);
+				Space.getInstance().getQuadrant(sector.getQuadPosition()).getWeaponList().add(new Maser(sector, direction));
 			}
 			this.direction = Configs.NEUTRAL;
 		}
