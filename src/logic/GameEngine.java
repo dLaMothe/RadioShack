@@ -65,7 +65,7 @@ public class GameEngine {
 			weaponObjects = ship.getQuadrant().getWeaponList();
 			panels.quadrantLabel.setText(String.valueOf(quad.getPosition().getRow()) + "-" + String.valueOf(quad.getPosition().getCol()));
 		}
-		
+
 		clearBoard();
 		for(int i= 0; i < quadObjects.size(); i++){
 			pos = quadObjects.get(i).getPosition();
@@ -80,11 +80,10 @@ public class GameEngine {
 				}
 				weaponObjects.get(i).action();
 			} else {
-				{	
+					System.out.println(weaponObjects.get(i).getLabel());
 					pos = weaponObjects.get(i).getPosition();
 					panels.grid[pos.getCol()][pos.getRow()].setText(weaponObjects.get(i).getLabel());
 					weaponObjects.get(i).action();
-				}
 			}
 		}
 		
