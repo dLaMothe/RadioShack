@@ -107,20 +107,28 @@ public class Space {
 	 * jovians, stars and space stations and distribute them throughout the space
 	 */
 	public void initPopulation(Ship ship){
-		int TotalJovianInGame = Configs.TOTAL_JOVIANS;
+		int TotalCruisers = Configs.TOTAL_CRUISERS;
+		int TotalCommanders = Configs.TOTAL_COMMANDERS;
 		int TotalStarsInGame = Configs.TOTAL_STARS;
 		int TotalStationsInGame = Configs.TOTAL_STATIONS;
 		Random random = new Random();
 		Sector [][]tempSec;
 		for (int i = 0; i < quadrant.length; i++) {
 			for (int j = 0; j < quadrant.length; j++) {
-				int numJovianInSec = 0;
+				int numCruisersInSector = 0;
+				int numCommandersInSector = 0;
 				int numStarsinSec = 0;
 				int numStationInSec = 0;
-				if(TotalJovianInGame >0 ){
-					numJovianInSec = random.nextInt(5);
-					TotalJovianInGame -= numJovianInSec;
+				if(TotalCruisers >0 ){
+					numCruisersInSector = random.nextInt(5);
+					TotalCruisers -= numCruisersInSector;
 				}
+				
+				if(TotalCommanders > 0) {
+					numCommandersInSector = random.nextInt(1);
+					TotalCommanders -= numCommandersInSector;
+				}
+				
 				if(TotalStarsInGame > 0) {
 					numStarsinSec = random.nextInt(5);
 					TotalStarsInGame -= numStarsinSec;
@@ -130,7 +138,7 @@ public class Space {
 					numStationInSec = random.nextInt(2);
 					TotalStationsInGame -= numStationInSec;
 				}
-				for(int k =0; k < numJovianInSec; k++){
+				for(int k =0; k < numCruisersInSector; k++){
 					tempSec = quadrant[i][j].getSectors();
 					quadrant[i][j].getAllObjectsFromQuadrant().add(new JovianBattleCruiser(tempSec[0][k],ship));
 				}
@@ -143,6 +151,11 @@ public class Space {
 					tempSec = quadrant[i][j].getSectors();
 					quadrant[i][j].getAllObjectsFromQuadrant().add(new SpaceStation(tempSec[2][k]));
 				}
+				for(int k = 0; k < numCommandersInSector; k++) {
+					tempSec = quadrant[i][j].getSectors();
+					quadrant[i][j].getAllObjectsFromQuadrant().add(new JovianCommandCruiser(tempSec[3][k],ship));
+				}
+				
 				quadrant[i][j].unpopulate();
 			}
 		}

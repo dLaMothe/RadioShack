@@ -8,10 +8,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-/*import java.awt.Point;
-import java.util.*;
-import javax.swing.*;
-import java.awt.Color;*/
+/*
+ * AUTHOR: MANDIP SANGHA, DAVID LAMOTHE
+ * OVERVIEW: DRAWS GAME GUI
+ */
 
 public class GamePanels {
 	
@@ -48,12 +48,23 @@ public class GamePanels {
 	//Bottom Panel Labels
 	public JLabel invalidCommandLabel;
 	
+	/*
+	 * REQUIRES: NONE
+	 * MODIFIES: NONE
+	 * EFFECTS: Creates all panels
+	 */
 	GamePanels() {
 		createLeftPanel();
 		createMiddlePanel();
 		createRightPanel();
 		createBottomPanel();
 	}
+	
+	/*
+	 * REQUIRES: NONE
+	 * MODIFIES: lRSensorLabel, powerLabels, leftPanel
+	 * EFFECTS: Creates all labels that belong in the Left panel
+	 */
 	private void createLeftPanel()
 	{
 		int X=0;
@@ -173,6 +184,11 @@ public class GamePanels {
 		leftPanel = test;
 	}
 	   
+	/*
+	 * REQUIRES: NONE
+	 * MODIFIES: grid, middlePanel
+	 * EFFECTS: Creates all labels that belong in the middle panel
+	 */
 	private void createMiddlePanel()
 	{
 		int X=0;
@@ -249,6 +265,13 @@ public class GamePanels {
 		middlePanel = test;
 	}
 	   
+	/*
+	 * REQUIRES: NONE
+	 * MODIFIES: starTimeLabel, conditionLabel, quadrantLabel, sectorLabel,
+	 * tritonMislsLabel, powerAvailLabel, totalPowerLabel, joviansLeftLabel,
+	 * antimatterPodsLabel, textField, rightPanel
+	 * EFFECTS: Creates all labels that belong in the Right panel
+	 */
 	private void createRightPanel()
 	{
 		int X=0;
@@ -401,6 +424,11 @@ public class GamePanels {
 		rightPanel = test;
 	}
 	
+	/*
+	 * REQUIRES: NONE
+	 * MODIFIES: invalidCommandLabel, bottomPanel
+	 * EFFECTS: Creates all labels that belong in the Bottom panel
+	 */
 	private void createBottomPanel()
 	{ 
 		JPanel test = new JPanel();
@@ -430,27 +458,55 @@ public class GamePanels {
 		test.setBackground(Color.MAGENTA);
 		bottomPanel = test;
 	}
-	   
+
+	/*
+	 * REQUIRES: NONE
+	 * MODIFIES: NONE
+	 * EFFECTS: returns Left panel
+	 */
 	public JPanel getLeftPanel()
 	{
 		return leftPanel;
 	}
+	
+	/*
+	 * REQUIRES: NONE
+	 * MODIFIES: NONE
+	 * EFFECTS: returns middle panel
+	 */
 	   
 	public JPanel getMiddlePanel()
 	{
 		return middlePanel;
 	}
+	
+	/*
+	 * REQUIRES: NONE
+	 * MODIFIES: NONE
+	 * EFFECTS: returns right panel
+	 */
 	   
 	public JPanel getRightPanel()
 	{
 		return rightPanel;
 	}
 	
+	/*
+	 * REQUIRES: NONE
+	 * MODIFIES: NONE
+	 * EFFECTS: returns bottom panel
+	 */
+	
 	public JPanel getBottomPanel()
 	{
 		return bottomPanel;
 	}
 	
+	/*
+	 * REQUIRES: NONE
+	 * MODIFIES: NONE
+	 * EFFECTS: returns text field panel
+	 */
 	public JTextField getTextField()
 	{
 		return textField;

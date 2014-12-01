@@ -17,6 +17,11 @@ import static settings.Configs.*;
  * NOTE: Round() Method taken from http://stackoverflow.com/questions/2808535/round-a-double-to-2-decimal-places
  */
 
+/*
+ * AUTHOR: DAVID LAMOTHE, MANDIP SANGHA
+ * OVERVIEW: RUNS THE GAMES
+ */
+
 public class GameEngine {
 	
 	public GamePanels panels;
@@ -31,7 +36,12 @@ public class GameEngine {
 	private ArrayList<SpaceObject> quadObjects;
 	private ArrayList<Weapon> weaponObjects;
 	
-	
+	/*
+	 * REQUIRES: new GamePanels
+	 * MODIFIES: criticalCounter,destructCounter,selfDestructActive,starTime,
+	 * panels,quad,ship,quadObjects,weaponObjects,deltaLoop
+	 * EFFECTS: Initializes game engine variables
+	 */
 	public GameEngine(GamePanels newPanel) {
 		criticalCounter = INITCRITICALTIMER;
 		destructCounter = INITDESTRUCTTIMER;
@@ -49,6 +59,11 @@ public class GameEngine {
 		update();
 	}
 	
+	/*
+	 * REQUIRES: speed, direction
+	 * MODIFIES: NONE
+	 * EFFECTS: pass speed and direction to ship object
+	 */
 	public void setVelocity(int speed, int direction) {
 		int[] velocity;
 		velocity = new int[2];
@@ -57,6 +72,12 @@ public class GameEngine {
 		ship.setSpeed(velocity);
 	}
 	
+	/*
+	 * REQUIRES: NONE
+	 * MODIFIES: panel
+	 * EFFECTS: populates the panel's labels that show ship
+	 * inventory with the values from ship  
+	 */
 	private void populateSidePanel() {
 		for(int i = 0; i < TOTAL_POWERS; i++) {
 			panels.powerLabels[i].setText(String.valueOf(ship.getPower(i)));
@@ -70,7 +91,12 @@ public class GameEngine {
 		panels.joviansLeftLabel.setText(String.valueOf(Space.getInstance().TotalJovian));
 	}
 	
-	public void update() {
+	/*
+	 * REQUIRES: NONE
+	 * MODIFIES:  panel
+	 * EFFECTS: updates GUI and calls action for all game objects
+	 */
+	public void update() {	
 		Position pos = new Position(0,0);
 		if(quad != ship.getQuadrant()) {
 			quad = ship.getQuadrant();
@@ -96,7 +122,11 @@ public class GameEngine {
 					panels.grid[sector.getPosition().getCol()][sector.getPosition().getRow()].setText(weaponObjects.get(i).getLabel());
 				}
 				weaponObjects.get(i).action();
-			} else {
+			} else if(weaponObjects.get(i) instanceof AntimatterPod) {
+				weaponObjects.get(i).action();
+				pos = weaponObjects.get(i).getPosition();
+				panels.grid[pos.getCol()][pos.getRow()].setText(weaponObjects.get(i).getLabel());
+			}else {
 				pos = weaponObjects.get(i).getPosition();
 				panels.grid[pos.getCol()][pos.getRow()].setText(weaponObjects.get(i).getLabel());
 				weaponObjects.get(i).action();
@@ -135,8 +165,18 @@ public class GameEngine {
 		if(criticalCounter == CRITICALMASS || destructCounter == SELFDESTRUCTMAX || ship.getPower() == 0) {
 			endGame();
 		}
+		
+		if(Space.getInstance().TotalJovian == 0) {
+			winGame();
+		}
 	}
 	
+	/*
+	 * REQUIRES: type, value
+	 * MODIFIES: panels
+	 * EFFECTS: pass type and value to ship and set the labels that they use
+	 * in panel
+	 */
 	public void setPower(int type, double value){
 
 		try{
@@ -150,7 +190,12 @@ public class GameEngine {
 		panels.totalPowerLabel.setText(String.valueOf(round(ship.getPower(),2)) + "%");
 	}
 
-
+	/*
+	 * REQUIRES: NONE
+	 * MODIFIES: selfDestructActive, panels
+	 * EFFECTS: Actives and deactives ship self destruct by toggling selfDestructActive
+	 * and set destructCounter to INITDESTRUCTTIMER if selfDestructActive false
+	 */
 	public void selfDestruct(){
 		if(selfDestructActive) {
 			selfDestructActive = false;
@@ -162,30 +207,72 @@ public class GameEngine {
 		}
 	}
 	
+	/*
+	 * REQUIRES: NONE
+	 * MODIFIES:  panels
+	 * EFFECTS: set panel's invalidCommandLabel
+	 */
 	public void invalidCommand()
 	{
 		panels.invalidCommandLabel.setText("Captain your an idiot");
 	}
 	
+	/*
+	 * REQUIRES: NONE
+	 * MODIFIES:  panels
+	 * EFFECTS: set panel's invalidCommandLabel to ""
+	 */
 	public void clearInvalidCommand()
 	{
 		panels.invalidCommandLabel.setText("");
 	}
 	
+	/*
+	 * REQUIRES: type, direction
+	 * MODIFIES:  NONE
+	 * EFFECTS: pass type and direction to ship
+	 */
 	public void shootWeapon(int type, int direction) {
 		ship.shootWeapon(type, direction);
 	}
 	
+	/*
+	 * REQUIRES: NONE
+	 * MODIFIES:  NONE
+	 * EFFECTS: call ship's detonateAntiPod
+	 */
 	public void explodePod() {
 		ship.detonateAntiPod();
 	}
 	
+	/*
+	 * REQUIRES: NONE
+	 * MODIFIES:  NONE
+	 * EFFECTS: calls deltaloop to stop timer and ship selfdestruct and
+	 * a pop window to say you lost
+	 */
 	private void endGame() {
 		deltaLoop.stopRunning();
 		ship.selfDestruct();
 		JOptionPane.showMessageDialog(null,"You have lost the game");
 	}
 	
+	/*
+	 * REQUIRES: NONE
+	 * MODIFIES:  NONE
+	 * EFFECTS: calls deltaloop to stop timer and
+	 * a pop window to say you won
+	 */
+	private void winGame() {
+		deltaLoop.stopRunning();
+		JOptionPane.showMessageDialog(null,"You have won the game!");
+	}
+	
+	/*
+	 * REQUIRES: NONE
+	 * MODIFIES:  panels
+	 * EFFECTS: clear panels grid to the empty label
+	 */
 	private void clearBoard(){
 		for(int i = 0; i < QUADRANT_SIZE; i++) {
 			for(int j = 0; j < QUADRANT_SIZE; j++) {
@@ -194,6 +281,11 @@ public class GameEngine {
 		}
 	}
 	
+	/*
+	 * REQUIRES: isActive
+	 * MODIFIES:  panel
+	 * EFFECTS: set panel's grid visiblty to isActive
+	 */
 	private void isActiveSR(boolean isActive) {
 		for(int i = 0; i < QUADRANT_SIZE; i++) {
 			for(int j = 0; j < QUADRANT_SIZE; j++) {
@@ -202,19 +294,33 @@ public class GameEngine {
 		}
 	}
 
+	/*
+	 * REQUIRES: isActive
+	 * MODIFIES:  panel
+	 * EFFECTS: set panel's lRSensorLabel visiblty to isActive
+	 */
 	private void isActiveLR(boolean isActive) {
 		for(int i = 0; i < LRARRSIZE; i++) {
 			panels.lRSensorLabel[i].setVisible(isActive);
 		}
 	}
 
-	
+	/*
+	 * REQUIRES: NONE
+	 * MODIFIES:  panel
+	 * EFFECTS: set panel's resource labels to right values from ship
+	 */
 	private void updateResource()
 	{
 		panels.antimatterPodsLabel.setText(String.valueOf(ship.getNumAntimatterPods()));
 		panels.tritonMislsLabel.setText(String.valueOf(ship.getNumTrtMissiles()));
 	}
 	
+	/*
+	 * REQUIRES: NONE
+	 * MODIFIES:  panels
+	 * EFFECTS: set panel's condition labels to right values from ship condition
+	 */
 	private void updateCondition()
 	{
 		for (int i = CONDITIONLEVELAMOUNT; i >= 0; i--){

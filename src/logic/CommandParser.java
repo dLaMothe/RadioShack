@@ -1,15 +1,35 @@
 package logic;
 import static settings.Configs.*;
 
+/*
+ * AUTHOR: DAVID LAMOTHE, MANDIP SANGHA
+ * OVERVIEW: PARSINGS COMMANDS SENT BY
+ * INPUT HANDLER AND SENDS THEM TO THE 
+ * GAME ENGINE FOR PROCESSING
+ */
+
 public class CommandParser {
 	
 	private static final int firstIndex = 0;
 	private static final int subCommand = 1;
 	private GameEngine game;
 	
+	/*
+	 * REQUIRES: New Game Object
+	 * MODIFIES: NONE
+	 * EFFECTS: Initializes game object
+	 */
 	public CommandParser(GameEngine newGame) {
 		game = newGame;
 	}
+	
+	/*
+	 * REQUIRES: String Command 
+	 * MODIFIES: NONE
+	 * EFFECTS: Parses various commands 
+	 * and calls various methods on the game object to
+	 * act on the commands
+	 */
 
 	public void parseCommand(String command) {
 		game.clearInvalidCommand();
@@ -49,6 +69,16 @@ public class CommandParser {
 				
 		}
 	}
+	
+	/*
+	 * REQUIRES: Substring of the initial command
+	 * MODIFIES: NONE
+	 * EFFECTS: Parses various the direction
+	 * and calls handle speed method to 
+	 * act on the commands and catch if number format is wrong
+	 * or if the substring is an empty string
+	 * 
+	 */
 
 	private void handleHyperDirection(String substring) {
 		try {
@@ -82,16 +112,26 @@ public class CommandParser {
 					break;
 				default: 
 					invalidCommand();
-					System.out.println("IC 1");
 					break;
 					
 			}
 		} catch(NumberFormatException e) {
 			invalidCommand();
-
-			System.out.println("IC 2");
+		} catch(IndexOutOfBoundsException e) {
+			invalidCommand();
 		}
 	}
+	
+	/*
+	 * REQUIRES: Substring of the initial command
+	 * MODIFIES: NONE
+	 * EFFECTS: Parses various the direction
+	 * and calls handle speed method to 
+	 * act on the commands and catch if number format is wrong
+	 * or if the substring is an empty string
+	 * 
+	 */
+	
 	private void handleIonDirection(String substring) {
 		try {
 			switch(Integer.parseInt(substring.substring(firstIndex, firstIndex + 1) )) {
@@ -129,8 +169,19 @@ public class CommandParser {
 			}
 		} catch(NumberFormatException e) {
 			invalidCommand();
+		} catch(IndexOutOfBoundsException e) {
+			invalidCommand();
 		}
 	}
+	
+	/*
+	 * REQUIRES: Substring of the initial command and direction
+	 * MODIFIES: NONE
+	 * EFFECTS: Parses various the direction and speed to
+	 * game object to act on the commands and catch if number format is wrong
+	 * or if the substring is an empty string
+	 * 
+	 */
 	
 	private void handleSpeed(String substring, int direction) {
 		try {
@@ -170,17 +221,24 @@ public class CommandParser {
 					break;
 				default: 
 					invalidCommand();
-
-					System.out.println("IC 3");
 					break;
 					
 			}
 		} catch(NumberFormatException e) {
 			invalidCommand();
-
-			System.out.println("IC 4");
+		} catch(IndexOutOfBoundsException e) {
+			invalidCommand();
 		}
 	}
+	
+	/*
+	 * REQUIRES: Substring of the initial command and type
+	 * MODIFIES: NONE
+	 * EFFECTS: Parses various the direction and type to
+	 * game object to act on the commands and catch if number format is wrong
+	 * or if the substring is an empty string
+	 * 
+	 */
 	
 	private void handleWeapon(String substring, int type) {
 		try {
@@ -216,8 +274,19 @@ public class CommandParser {
 			}
 		} catch(NumberFormatException e) {
 			invalidCommand();
+		} catch(IndexOutOfBoundsException e) {
+			invalidCommand();
 		}
 	}
+	
+	/*
+	 * REQUIRES: Substring of the initial command 
+	 * MODIFIES: NONE
+	 * EFFECTS: Parses various the command and type to
+	 * game object to act on the commands and catch if number format is wrong
+	 * or if the substring is an empty string
+	 * 
+	 */
 	
 	private void handlePower(String cmd) {
 		try {
@@ -253,27 +322,50 @@ public class CommandParser {
 			}
 		} catch(NumberFormatException e) {
 			invalidCommand();
+		} catch(IndexOutOfBoundsException e) {
+			invalidCommand();
 		}
 	}
 
+	/*
+	 * REQUIRES: Substring of the initial command and type
+	 * MODIFIES: NONE
+	 * EFFECTS: Calls game object self destruct
+	 * 
+	 */
 	private void handleDestruct(String substring) {
 		// TODO Auto-generated method stub
 		System.out.println("S Process: " + substring);
 		game.selfDestruct();
 	}
-	
+	/*
+	 * REQUIRES: NONE
+	 * MODIFIES: NONE
+	 * EFFECTS: Calls game object explode pod
+	 */
 	private void handleEx() {
 		// TODO Auto-generated method stub
 		game.explodePod();
 		
 	}
 
+	/*NOT USED
+	 * REQUIRES: NONE
+	 * MODIFIES: NONE
+	 * EFFECTS: NONE
+	 */
 	private void handleExperiment(String substring) {
 		// TODO Auto-generated method stub
 		System.out.println("X Process");
 		
 	}
 	
+	/*
+	 * REQUIRES: NONE
+	 * MODIFIES: NONE
+	 * EFFECTS: Prints "invalid command" to console and
+	 * calls game invalid command 
+	 */
 	private void invalidCommand() {
 		// TODO Auto-generated method stub
 		System.out.println("Invalid Command");

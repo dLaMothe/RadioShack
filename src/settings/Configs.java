@@ -29,9 +29,10 @@ public class Configs {
     public static final int TRT_MISSILE = 9;
     public static final int ANITMATTER_POD = 10;
     
+    //Ship total power system
     public static final int TOTAL_POWERS = 7;
     
-
+    //default star date
 	public static final int INITTIME = 300200;
 	public static final int TIMEINCREMENT = 1;
 
@@ -42,6 +43,7 @@ public class Configs {
     public static final double INIT_SRSENSOR = 20.0;
     public static final double INIT_MASER = 9.0;
     public static final double INIT_TRT_MISSILE = 11.0;
+    
     //minimum system power(This is the minimum power a system must have in order to function)
     public static final double MIN_SYSTEM_POWER = 2.0;
     public static final double MIN_TOTAL_POWER = 0;
@@ -54,14 +56,18 @@ public class Configs {
     public static final int ANTIMATTER_PODS = 3;
     public static final double MAX_POWER = 99.0;
     
-    //Navigational directions
+    //GUI INFO
 	public static final int WINDOW_SIZE = 500;
 	public static final int SECTORS_PER_SIDE = 10;
+	
+	//Object totals
 	public static final int TOTAL_JOVIANS = 44;
 	public static final int TOTAL_STARS = 33;
 	public static final int TOTAL_STATIONS = 2;
+	public static final int TOTAL_COMMANDERS = 2;
+	public static final int TOTAL_CRUISERS = 42;
 	
-	
+	//Navigational directions
 	public static final int NORTH = 8;
 	public static final int SOUTH = 2;
 	public static final int WEST = 4;
@@ -82,7 +88,6 @@ public class Configs {
     
     //BOARD CHARACTERS
     public static final String MINE ="%";
-
     public static final String SHIP ="^";
     public static final String SSTN ="0";
     public static final String JCC ="@";
@@ -90,8 +95,6 @@ public class Configs {
     public static final String UNKN ="X";
     public static final String EMPTY = ".";
     public static final String STAR ="*";
-    
-    //SPEED CONSTANTS
     public static final String TRT_MSSL ="+";
     public static final String MSR ="~";
     public static final String ANTM_POD ="#";
@@ -124,7 +127,6 @@ public class Configs {
     public static final int SPEED = 0;
     public static final int DIRECTION = 1;
     public static final int HYPER_DELTA = 5;
-    
     public static final int INITDESTRUCTTIMER = 16;
     public static final int SELFDESTRUCTMAX = 0;
     public static final int INITCRITICALTIMER = 10;

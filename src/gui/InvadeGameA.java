@@ -10,12 +10,21 @@ import board.Space;
 
 import logic.KeyDispatcher;
 
+/*
+ * AUTHOR: MANDIP SANGHA, DAVID LAMOTHE
+ * OVERVIEW: STARTS GAME AND DRAWS JFRAME
+ */
 public class InvadeGameA extends JFrame {
 	
 	private static KeyDispatcher dispatcher;
 	private GameEngine game;
 	private GamePanels panel;
 	
+	/*
+	 * REQUIRES: NONE
+	 * MODIFIES: NONE
+	 * EFFECTS: Initializes game, UI and dispatcher
+	 */
 	InvadeGameA() {
 		initUI();
 		initGame();
@@ -26,6 +35,11 @@ public class InvadeGameA extends JFrame {
     	manager.addKeyEventDispatcher( dispatcher );
 	}
 	
+	/*
+	 * REQUIRES: NONE
+	 * MODIFIES: NONE
+	 * EFFECTS: Initializes UI 
+	 */
 	private void initUI() {
     	panel = new GamePanels();
 		setTitle("Test");
@@ -93,12 +107,21 @@ public class InvadeGameA extends JFrame {
 		
 	}
 	
+	/*
+	 * REQUIRES: NONE
+	 * MODIFIES: NONE
+	 * EFFECTS: Initializes game object
+	 */
 	private void initGame() {
 		//Initialize Game
 		game = new GameEngine(panel);
 	}
 	
-	
+	/*
+	 * REQUIRES: NONE
+	 * MODIFIES: NONE
+	 * EFFECTS: Initializes whole game
+	 */
 	public static void main(String[] args) {
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			@Override
