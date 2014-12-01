@@ -90,6 +90,10 @@ public class CommandParser {
 	private void handleIonSpeed(String substring, int direction) {
 		try {
 			switch(Integer.parseInt(substring)) {
+				case SZERO: 
+					game.setVelocity(SZERO,direction);
+					break;
+
 				case SONE: 
 					game.setVelocity(SONE,direction);
 					break;
@@ -116,9 +120,6 @@ public class CommandParser {
 					break;
 				case SNINE:
 					game.setVelocity(SNINE,direction);
-					break;
-				case STEN:
-					game.setVelocity(STEN,direction);
 					break;
 				default: 
 					invalidCommand();
@@ -169,31 +170,35 @@ public class CommandParser {
 	
 	private void handlePower(String cmd) {
 		try {
-			switch(cmd.charAt(firstIndex)) {
-				case 'H':
-					game.setPower(HYPER, Double.parseDouble((cmd.substring(subCommand))));
-					break;
-				case 'I':
-					game.setPower(ION, Double.parseDouble((cmd.substring(subCommand))));
-					break;
-				case 'L':
-					game.setPower(LRSENSOR, Double.parseDouble((cmd.substring(subCommand))));
-					break;
-				case 'S':
-					game.setPower(SRSENSOR, Double.parseDouble((cmd.substring(subCommand))));
-					break;
-				case 'D':
-					game.setPower(SHIELD, Double.parseDouble((cmd.substring(subCommand))));
-					break;
-				case 'M':
-					game.setPower(MASER, Double.parseDouble((cmd.substring(subCommand))));
-					break;
-				case 'T':
-					game.setPower(LAUNCHER, Double.parseDouble((cmd.substring(subCommand))));
-					break;
-				default:
+			if(Double.parseDouble((cmd.substring(subCommand))) >= 0) {
+				switch(cmd.charAt(firstIndex)) {
+					case 'H':
+						game.setPower(HYPER, Double.parseDouble((cmd.substring(subCommand))));
+						break;
+					case 'I':
+						game.setPower(ION, Double.parseDouble((cmd.substring(subCommand))));
+						break;
+					case 'L':
+						game.setPower(LRSENSOR, Double.parseDouble((cmd.substring(subCommand))));
+						break;
+					case 'S':
+						game.setPower(SRSENSOR, Double.parseDouble((cmd.substring(subCommand))));
+						break;
+					case 'D':
+						game.setPower(SHIELD, Double.parseDouble((cmd.substring(subCommand))));
+						break;
+					case 'M':
+						game.setPower(MASER, Double.parseDouble((cmd.substring(subCommand))));
+						break;
+					case 'T':
+						game.setPower(LAUNCHER, Double.parseDouble((cmd.substring(subCommand))));
+						break;
+					default:
+						invalidCommand();
+						break;
+				} 
+			} else {
 					invalidCommand();
-					break;
 			}
 		} catch(NumberFormatException e) {
 			invalidCommand();
@@ -203,18 +208,12 @@ public class CommandParser {
 	private void handleDestruct(String substring) {
 		// TODO Auto-generated method stub
 		System.out.println("S Process: " + substring);
-		
+		game.selfDestruct();
 	}
 	
 	private void handleEx(String substring) {
 		// TODO Auto-generated method stub
 		System.out.println("E Process: " + substring);
-		
-	}
-	
-	private void handlePod(String substring) {
-		// TODO Auto-generated method stub
-		System.out.println("A Process: " + substring);
 		
 	}
 	

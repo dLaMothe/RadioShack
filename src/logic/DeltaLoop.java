@@ -1,10 +1,9 @@
 package logic;
-
 import java.util.*;
 
 
 public class DeltaLoop{
-	private static final int FPS = 8;
+	private static final int FPS = 1;
 	private Timer timer;
 	private GameEngine game;
 	private boolean isRunning;
@@ -21,7 +20,6 @@ public class DeltaLoop{
 	private class GameLoop extends TimerTask{
 		public void run()
 		{
-			System.out.println("HELLO");
 			//game.ship.sapPower();
 			game.update();
 	        if (!isRunning)

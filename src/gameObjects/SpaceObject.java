@@ -117,6 +117,11 @@ public abstract class SpaceObject extends Observable implements Positionable{
      * exception can be generated in the event that the place this is moving to 
      * is already occupied. 
      */
+    
+    public String getLabel() {
+    	return this.label;
+    }
+    
     public abstract void action();
     
     public abstract void bumped(SpaceObject object);
