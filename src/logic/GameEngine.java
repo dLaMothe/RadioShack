@@ -80,9 +80,11 @@ public class GameEngine {
 				}
 				weaponObjects.get(i).action();
 			} else {
-				pos = weaponObjects.get(i).getPosition();
-				panels.grid[pos.getCol()][pos.getRow()].setText(weaponObjects.get(i).getLabel());
-				weaponObjects.get(i).action();
+				{	
+					pos = weaponObjects.get(i).getPosition();
+					panels.grid[pos.getCol()][pos.getRow()].setText(weaponObjects.get(i).getLabel());
+					weaponObjects.get(i).action();
+				}
 			}
 		}
 		
