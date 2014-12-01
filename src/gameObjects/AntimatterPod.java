@@ -61,6 +61,7 @@ public class AntimatterPod
 	 */
 	public void detonate(){	
 		for(int i = 1; i < 10; i++){			
+			if(i == 5) continue;
 			Sector nextSector  = quadrant.getNext(sector, i);
 			if(nextSector != null){
 				SpaceObject object = nextSector.getInhabitant();
@@ -69,6 +70,7 @@ public class AntimatterPod
 				}
 			}
 		}
+		selfDestruct();
 	}
 	
 	/**
@@ -77,10 +79,7 @@ public class AntimatterPod
 	 */
 	@Override
 	public void bump(SpaceObject object) {
-		if(object != this) {
-			this.move();
-		}
-		selfDestruct();
+		this.move();
 	}
 	
 	/**

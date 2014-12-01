@@ -31,7 +31,6 @@ public class TritonMissile
 	 * bumps the object in the next sector if the next sector contains any.
 	 */
 	public void move(){
-		sector.setInhabitant(null);
 		Sector nextSector = quadrant.getNext(sector, velocity[0]);	
 		if(nextSector == null){
 			selfDestruct();
