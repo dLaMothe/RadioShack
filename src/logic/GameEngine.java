@@ -63,6 +63,7 @@ public class GameEngine {
 			quad = ship.getQuadrant();
 			quadObjects = ship.getQuadrant().getGeneratedObjects();
 			weaponObjects = ship.getQuadrant().getWeaponList();
+			panels.quadrantLabel.setText(String.valueOf(quad.getPosition().getRow()) + "-" + String.valueOf(quad.getPosition().getCol()));
 		}
 		
 		clearBoard();
@@ -91,7 +92,11 @@ public class GameEngine {
 			endGame();
 		}
 		
+		
+		
 		ship.action();
+
+		panels.sectorLabel.setText(String.valueOf(ship.getSector().getPosition().getRow()) + "-" + String.valueOf(ship.getSector().getPosition().getCol()));
 		isActiveSR(ship.getPower(SRSENSOR) > MIN_SYSTEM_POWER);
 		isActiveLR(ship.getPower(LRSENSOR) > MIN_SYSTEM_POWER);
 		panels.powerAvailLabel.setText(String.valueOf(ship.getUnusedPower()) + "%");
