@@ -556,6 +556,9 @@ public class Ship extends SpaceObject implements Movable{
 			// add yourself to the next quadrant's generated objects list
 			// populate the next quadrant
 			quadrant.populate();
+			if(((Launchers) systems.getSystem(LAUNCHER)).getActive()){
+				((Launchers) systems.getSystem(LAUNCHER)).clearActive();
+			}
 		}
     }
     
@@ -744,6 +747,13 @@ public class Ship extends SpaceObject implements Movable{
 			return this.antimatterPods;
 		}
 		
+		public boolean getActive(){
+			return null == active;
+		}
+		
+		public void clearActive(){
+			active = null;
+		}
 		/**
 	     * REQUIRES: nothing
 	     * MODIFIES: game state
@@ -804,6 +814,7 @@ public class Ship extends SpaceObject implements Movable{
 		public void detonatePod(){
 			if(null != active){
 				this.active.detonate();
+				this.active = null;
 			}
 		}
     }
