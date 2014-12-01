@@ -161,5 +161,9 @@ public class Space {
 	public static void clear() {
 		instance = null;
 	}
+	
+	public void decrementJovian() {
+		TotalJovian--;
+	}
 
 }

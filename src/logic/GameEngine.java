@@ -1,5 +1,6 @@
 package logic;
-
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
@@ -8,6 +9,13 @@ import board.*;
 import gui.GamePanels;
 import gameObjects.*;
 import static settings.Configs.*;
+
+/*
+ * 
+ * 
+ * 
+ * NOTE: Round() Method taken from http://stackoverflow.com/questions/2808535/round-a-double-to-2-decimal-places
+ */
 
 public class GameEngine {
 	
@@ -53,12 +61,13 @@ public class GameEngine {
 		for(int i = 0; i < TOTAL_POWERS; i++) {
 			panels.powerLabels[i].setText(String.valueOf(ship.getPower(i)));
 		}
-		panels.powerAvailLabel.setText(String.valueOf(ship.getUnusedPower()) + "%");
-		panels.totalPowerLabel.setText(String.valueOf(ship.getPower()) + "%");
+		panels.powerAvailLabel.setText(String.valueOf(round(ship.getUnusedPower(),2)) + "%");
+		panels.totalPowerLabel.setText(String.valueOf(round(ship.getPower(),2)) + "%");
 		panels.antimatterPodsLabel.setText(String.valueOf(ship.getNumAntimatterPods()));
 		panels.tritonMislsLabel.setText(String.valueOf(ship.getNumTrtMissiles()));
 		panels.quadrantLabel.setText(String.valueOf(quad.getPosition().getRow()) + "-" + String.valueOf(quad.getPosition().getCol()));
 		panels.sectorLabel.setText(String.valueOf(ship.getSector().getPosition().getRow()) + "-" + String.valueOf(ship.getSector().getPosition().getCol()));
+		panels.joviansLeftLabel.setText(String.valueOf(Space.getInstance().TotalJovian));
 	}
 	
 	public void update() {
@@ -74,7 +83,11 @@ public class GameEngine {
 		for(int i= 0; i < quadObjects.size(); i++){
 			pos = quadObjects.get(i).getPosition();
 			panels.grid[pos.getCol()][pos.getRow()].setText(quadObjects.get(i).getLabel());
-			quadObjects.get(i).action();
+			try {
+				quadObjects.get(i).action();
+			} catch (CriticalPowerException e){
+				panels.invalidCommandLabel.setText("Captian the power levels are going critical");
+			}
 		}
 		
 		for(int i= 0; i < weaponObjects.size(); i++){
@@ -84,16 +97,17 @@ public class GameEngine {
 				}
 				weaponObjects.get(i).action();
 			} else {
-					System.out.println(weaponObjects.get(i).getLabel());
-					pos = weaponObjects.get(i).getPosition();
-					panels.grid[pos.getCol()][pos.getRow()].setText(weaponObjects.get(i).getLabel());
-					weaponObjects.get(i).action();
+				pos = weaponObjects.get(i).getPosition();
+				panels.grid[pos.getCol()][pos.getRow()].setText(weaponObjects.get(i).getLabel());
+				weaponObjects.get(i).action();
 			}
 		}
 		
 		if(ship.getUnusedPower() < MIN_TOTAL_POWER) {
 			criticalCounter--;
 			panels.invalidCommandLabel.setText("Critical power: Self destruct in " + criticalCounter);
+		} else {
+			criticalCounter = INITCRITICALTIMER;
 		}
 		
 		if(selfDestructActive) {
@@ -111,9 +125,10 @@ public class GameEngine {
 		panels.sectorLabel.setText(String.valueOf(ship.getSector().getPosition().getRow()) + "-" + String.valueOf(ship.getSector().getPosition().getCol()));
 		isActiveSR(ship.getPower(SRSENSOR) > MIN_SYSTEM_POWER);
 		isActiveLR(ship.getPower(LRSENSOR) > MIN_SYSTEM_POWER);
-		panels.powerAvailLabel.setText(String.valueOf(ship.getUnusedPower()) + "%");
-		panels.totalPowerLabel.setText(String.valueOf(ship.getPower()) + "%");
+		panels.powerAvailLabel.setText(String.valueOf(round(ship.getUnusedPower(),2)) + "%");
+		panels.totalPowerLabel.setText(String.valueOf(round(ship.getPower(),2)) + "%");
 		panels.starTimeLabel.setText(String.valueOf(starTime));
+		panels.joviansLeftLabel.setText(String.valueOf(Space.getInstance().TotalJovian));
 		starTime += TIMEINCREMENT;
 		updateCondition();
 		
@@ -128,12 +143,11 @@ public class GameEngine {
 			ship.adjustPower(type,value);
 		}
 		catch (CriticalPowerException e){
-			criticalCounter = INITCRITICALTIMER;
 			panels.invalidCommandLabel.setText("Captian the power levels are going critical");
 		}
-		panels.powerLabels[type].setText(String.valueOf(ship.getPower(type)));
-		panels.powerAvailLabel.setText(String.valueOf(ship.getUnusedPower()) + "%");
-		panels.totalPowerLabel.setText(String.valueOf(ship.getPower()) + "%");
+		panels.powerLabels[type].setText(String.valueOf(round(ship.getPower(type),2)));
+		panels.powerAvailLabel.setText(String.valueOf(round(ship.getUnusedPower(),2)) + "%");
+		panels.totalPowerLabel.setText(String.valueOf(round(ship.getPower(),2)) + "%");
 	}
 
 
@@ -209,5 +223,13 @@ public class GameEngine {
 				panels.conditionLabel.setForeground(CONDITIONCOLOR[i]);
 			}
 		}
+	}
+	
+	public static double round(double value, int places) {
+	    if (places < 0) throw new IllegalArgumentException();
+
+	    BigDecimal bd = new BigDecimal(value);
+	    bd = bd.setScale(places, RoundingMode.HALF_UP);
+	    return bd.doubleValue();
 	}
 }
