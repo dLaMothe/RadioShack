@@ -2,6 +2,8 @@ package logic;
 
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import board.*;
 import gui.GamePanels;
 import gameObjects.*;
@@ -96,10 +98,7 @@ public class GameEngine {
 			destructCounter--;
 			panels.invalidCommandLabel.setText("Self destruct in " + destructCounter);
 		}
-		
-		if(criticalCounter == CRITICALMASS || destructCounter == SELFDESTRUCTMAX) {
-			endGame();
-		}
+
 		
 		
 		//SHIP ACTION
@@ -115,6 +114,10 @@ public class GameEngine {
 		panels.starTimeLabel.setText(String.valueOf(starTime));
 		starTime += TIMEINCREMENT;
 		updateCondition();
+		
+		if(criticalCounter == CRITICALMASS || destructCounter == SELFDESTRUCTMAX || ship.getPower() == 0) {
+			endGame();
+		}
 	}
 	
 	public void setPower(int type, double value){
@@ -162,7 +165,9 @@ public class GameEngine {
 	}
 	
 	private void endGame() {
+		deltaLoop.stopRunning();
 		ship.selfDestruct();
+		JOptionPane.showMessageDialog(null,"You have lost the game");
 	}
 	
 	private void clearBoard(){

@@ -20,13 +20,17 @@ public class DeltaLoop{
 	private class GameLoop extends TimerTask{
 		public void run()
 		{
-			//game.ship.sapPower();
+			game.ship.sapPower();
 			game.update();
 	        if (!isRunning)
 	        {
 	            timer.cancel();
 	        }
 		}
+	}
+	
+	public void stopRunning() {
+		isRunning = false;
 	}
 }
 
