@@ -1,5 +1,7 @@
 package logic;
 
+import java.util.ArrayList;
+
 import board.*;
 import gui.GamePanels;
 import gameObjects.*;
@@ -16,6 +18,9 @@ public class GameEngine {
 	private int destructCounter;
 	private boolean selfDestructActive;
 	
+	private ArrayList<SpaceObject> quadObjects;
+	private ArrayList<Weapon> weaponObjects;
+	
 	
 	public GameEngine(GamePanels newPanel) {
 		criticalCounter = INITCRITICALTIMER;
@@ -25,6 +30,8 @@ public class GameEngine {
 		panels = newPanel;
 		quad = Space.getInstance().getQuadrant(5, 5);
 		ship = new Ship(quad.getSector(new Position(5,5)));
+		quadObjects = ship.getQuadrant().getGeneratedObjects();
+		weaponObjects = ship.getQuadrant().getWeaponList();
 		deltaLoop = new DeltaLoop(this);
 		populateSidePanel();
 		update();
@@ -52,15 +59,22 @@ public class GameEngine {
 	
 	public void update() {
 		Position pos = new Position(0,0);
-		for(int i = 0; i < QUADRANT_SIZE; i++) {
-			for(int j = 0; j < QUADRANT_SIZE; j++) {
-				pos.setPositionAt(i, j);
-				if(ship.getPosition().equals(pos)) {
-					panels.grid[i][j].setText(SHIP);
-				} else {
-					panels.grid[i][j].setText(EMPTY);
-				}
-			}
+		if(quad != ship.getQuadrant()) {
+			quad = ship.getQuadrant();
+			quadObjects = ship.getQuadrant().getGeneratedObjects();
+			weaponObjects = ship.getQuadrant().getWeaponList();
+		}
+		
+		clearBoard();
+		for(int i= 0; i < quadObjects.size(); i++){
+			pos = quadObjects.get(i).getPosition();
+			panels.grid[pos.getCol()][pos.getRow()].setText(quadObjects.get(i).getLabel());
+		}
+		
+		for(int i= 0; i < weaponObjects.size(); i++){
+			weaponObjects.get(i).action();
+			pos = weaponObjects.get(i).getPosition();
+			panels.grid[pos.getCol()][pos.getRow()].setText(weaponObjects.get(i).getLabel());
 		}
 		
 		if(ship.getUnusedPower() < MIN_TOTAL_POWER) {
@@ -130,6 +144,14 @@ public class GameEngine {
 	public void shootWeapon(int type, int direction) {
 		ship.shootWeapon(type, direction);
 		updateResource();
+	}
+	
+	private void clearBoard(){
+		for(int i = 0; i < QUADRANT_SIZE; i++) {
+			for(int j = 0; j < QUADRANT_SIZE; j++) {
+				panels.grid[i][j].setText(EMPTY);
+			}
+		}
 	}
 	
 	private void isActiveSR(boolean isActive) {

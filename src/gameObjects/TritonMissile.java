@@ -58,7 +58,6 @@ public class TritonMissile
 	}
 	
 	/**
->>>>>>> impShip
 	 * PURPOSE: A feedback message from the object this has collided with.
 	 * EFFECTS: Destroys the missile;
 	 * @param object The object that collided with this.

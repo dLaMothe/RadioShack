@@ -3,7 +3,7 @@ import java.util.*;
 
 
 public class DeltaLoop{
-	private static final int FPS = 1;
+	private static final int FPS = 5;
 	private Timer timer;
 	private GameEngine game;
 	private boolean isRunning;
