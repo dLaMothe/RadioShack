@@ -22,7 +22,7 @@ public class DeltaLoop{
 	private class GameLoop extends TimerTask{
 		public void run()
 		{
-			System.out.println("HELLO");
+			//System.out.println("HELLO");
 			//game.ship.sapPower();
 			game.update();
 	        if (!isRunning)

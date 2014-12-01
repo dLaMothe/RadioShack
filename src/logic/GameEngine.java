@@ -65,7 +65,7 @@ public class GameEngine {
 		updateCondition();
 	}
 	
-	public void setPower(int type, double value){//throws NumberFormatException {
+	public void setPower(int type, double value){
 		try{
 			ship.adjustPower(type,value);
 		}
