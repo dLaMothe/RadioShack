@@ -86,11 +86,13 @@ public class Configs {
     public static final String JBC ="&";
     public static final String UNKN ="X";
     public static final String EMPTY = ".";
+    public static final String STAR ="*";
     
     //SPEED CONSTANTS
     public static final String TRT_MSSL ="+";
     public static final String MSR ="~";
     public static final String ANTM_POD ="#";
+    
     
     //SPEED CONSTANTS
     public static final int SZERO = 0;

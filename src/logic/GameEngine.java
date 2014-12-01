@@ -1,7 +1,5 @@
 package logic;
 
-import java.util.ArrayList;
-
 import board.*;
 import gui.GamePanels;
 import gameObjects.*;
@@ -13,25 +11,14 @@ public class GameEngine {
 	public Ship ship;
 	public Quadrant quad;
 	public DeltaLoop deltaLoop;
-	private int starTime;
-	private int criticalCounter;
-	private int destructCounter;
-	private boolean selfDestructActive;
-	
-	private ArrayList<SpaceObject> quadObjects;
-	private ArrayList<Weapon> weaponObjects;
+	private int starTime; 
 	
 	
 	public GameEngine(GamePanels newPanel) {
-		criticalCounter = INITCRITICALTIMER;
-		destructCounter = INITDESTRUCTTIMER;
-		selfDestructActive = false;
 		starTime = INITTIME;
 		panels = newPanel;
 		quad = Space.getInstance().getQuadrant(5, 5);
 		ship = new Ship(quad.getSector(new Position(5,5)));
-		quadObjects = ship.getQuadrant().getGeneratedObjects();
-		weaponObjects = ship.getQuadrant().getWeaponList();
 		deltaLoop = new DeltaLoop(this);
 		populateSidePanel();
 		update();
@@ -40,8 +27,8 @@ public class GameEngine {
 	public void setVelocity(int speed, int direction) {
 		int[] velocity;
 		velocity = new int[2];
-		velocity[SPEED] = speed;
-		velocity[DIRECTION] = direction;
+		velocity[0] = speed;
+		velocity[1] = direction;
 		ship.setSpeed(velocity);
 	}
 	
@@ -59,82 +46,36 @@ public class GameEngine {
 	
 	public void update() {
 		Position pos = new Position(0,0);
-		if(quad != ship.getQuadrant()) {
-			quad = ship.getQuadrant();
-			quadObjects = ship.getQuadrant().getGeneratedObjects();
-			weaponObjects = ship.getQuadrant().getWeaponList();
-			panels.quadrantLabel.setText(String.valueOf(quad.getPosition().getRow()) + "-" + String.valueOf(quad.getPosition().getCol()));
+		for(int i = 0; i < QUADRANT_SIZE; i++) {
+			for(int j = 0; j < QUADRANT_SIZE; j++) {
+				pos.setPositionAt(i, j);
+				if(ship.getPosition().equals(pos)) {
+					panels.grid[i][j].setText(SHIP);
+				} else {
+					panels.grid[i][j].setText(EMPTY);
+				}
+			}
 		}
-		
-		clearBoard();
-		for(int i= 0; i < quadObjects.size(); i++){
-			pos = quadObjects.get(i).getPosition();
-			panels.grid[pos.getCol()][pos.getRow()].setText(quadObjects.get(i).getLabel());
-		}
-		
-		for(int i= 0; i < weaponObjects.size(); i++){
-			weaponObjects.get(i).action();
-			pos = weaponObjects.get(i).getPosition();
-			panels.grid[pos.getCol()][pos.getRow()].setText(weaponObjects.get(i).getLabel());
-		}
-		
-		if(ship.getUnusedPower() < MIN_TOTAL_POWER) {
-			criticalCounter--;
-			panels.invalidCommandLabel.setText("Critical power: Self destruct in " + criticalCounter);
-		}
-		
-		if(selfDestructActive) {
-			destructCounter--;
-			panels.invalidCommandLabel.setText("Self destruct in " + destructCounter);
-		}
-		
-		if(criticalCounter == CRITICALMASS || destructCounter == SELFDESTRUCTMAX) {
-			endGame();
-		}
-		
-		
-		
-		ship.action();
-
-		panels.sectorLabel.setText(String.valueOf(ship.getSector().getPosition().getRow()) + "-" + String.valueOf(ship.getSector().getPosition().getCol()));
 		isActiveSR(ship.getPower(SRSENSOR) > MIN_SYSTEM_POWER);
 		isActiveLR(ship.getPower(LRSENSOR) > MIN_SYSTEM_POWER);
-		panels.powerAvailLabel.setText(String.valueOf(ship.getUnusedPower()) + "%");
 		panels.totalPowerLabel.setText(String.valueOf(ship.getPower()) + "%");
 		panels.starTimeLabel.setText(String.valueOf(starTime));
 		starTime += TIMEINCREMENT;
 		updateCondition();
 	}
 	
-	public void setPower(int type, double value){
-
+	public void setPower(int type, double value){//throws NumberFormatException {
 		try{
 			ship.adjustPower(type,value);
 		}
 		catch (CriticalPowerException e){
-			criticalCounter = INITCRITICALTIMER;
-			panels.invalidCommandLabel.setText("Captian the power levels are going critical");
+			criticalPowerLevelCommand();
 		}
 		panels.powerLabels[type].setText(String.valueOf(ship.getPower(type)));
 		panels.powerAvailLabel.setText(String.valueOf(ship.getUnusedPower()) + "%");
 		panels.totalPowerLabel.setText(String.valueOf(ship.getPower()) + "%");
 	}
 
-
-	public void selfDestruct(){
-		if(selfDestructActive) {
-			selfDestructActive = false;
-			panels.invalidCommandLabel.setText("Self destruct de-actived");
-		} else {
-			selfDestructActive=true;
-			destructCounter=INITDESTRUCTTIMER;
-			panels.invalidCommandLabel.setText("Self destruct active");
-		}
-	}
-	
-	private void endGame() {
-		ship.selfDestruct();
-	}
 	
 	public void invalidCommand()
 	{
@@ -151,12 +92,9 @@ public class GameEngine {
 		updateResource();
 	}
 	
-	private void clearBoard(){
-		for(int i = 0; i < QUADRANT_SIZE; i++) {
-			for(int j = 0; j < QUADRANT_SIZE; j++) {
-				panels.grid[i][j].setText(EMPTY);
-			}
-		}
+	private void criticalPowerLevelCommand()
+	{
+		panels.invalidCommandLabel.setText("Captian the power levels are going critical");
 	}
 	
 	private void isActiveSR(boolean isActive) {
