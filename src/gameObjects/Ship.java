@@ -5,6 +5,8 @@ package gameObjects;
 import static settings.Configs.*;
 import java.util.ArrayList;
 import settings.Configs;
+import board.Position;
+import board.Quadrant;
 import board.Sector;
 import board.Space;
 
@@ -214,6 +216,7 @@ public class Ship extends SpaceObject implements Movable{
     	private double powerAvailable;
     	private double powerConsumed;
     	private ArrayList<ShipSystem> systems;
+    	public Ship ship;
     	
     	/**
     	 * REQUIRES: @param ship - a pointer to the ship that this is a part of
@@ -224,6 +227,7 @@ public class Ship extends SpaceObject implements Movable{
     	public PowerSystem(Ship ship){
     		this.powerAvailable = MAX_POWER;
     		this.powerConsumed = 0.0;
+    		this.ship = ship;
     		systems = new ArrayList<ShipSystem>();
     		systems.add(SHIELD, new Ship.Sheilds(INIT_SHIELD));
     		systems.add(LRSENSOR, new Ship.LRSensors(INIT_LRSENSOR));
@@ -503,10 +507,55 @@ public class Ship extends SpaceObject implements Movable{
 		protected void moveToNextQuadrant() {
 			// TODO Auto-generated method stub
 			// figure out which quadrant is the next quadrant
-			// unpopulate the current quadrant 
+			int xCurrent = quadrant.getPosition().getCol();
+			int yCurrent = quadrant.getPosition().getRow();
+			switch (this.direction){
+			case(Configs.NORTH):
+				yCurrent -= 1;
+				break;
+			case(Configs.EAST):
+				//x quadrant + 1
+				xCurrent +=1;
+				break;
+			case(Configs.SOUTH):
+				//y quadrant + 1
+				yCurrent += 1;
+				break;
+			case(Configs.WEST):
+				//x quadrant - 1
+				xCurrent -= 1;
+				break;
+			case(Configs.NORTH_WEST):
+				//x quadrant - 1 && y quadrant - 1
+				xCurrent -= 1;
+				yCurrent -= 1;
+				break;
+			case(Configs.NORTH_EAST):
+				//x quadrant + 1 && y quadrant - 1
+				xCurrent += 1;
+				yCurrent -= 1;
+				break;
+			case(Configs.SOUTH_EAST):
+				//x quadrant + 1 && y quadrant + 1
+				xCurrent += 1;
+				yCurrent += 1;
+				break;
+			case(Configs.SOUTH_WEST):
+				//x quadrant - 1 && y quadrant + 1
+				xCurrent -= 1;
+				yCurrent += 1;
+				break;
+			}
+			Quadrant next = Space.getInstance().getQuadrant(yCurrent, xCurrent);
+			// unpopulate the current quadrant
+			quadrant.unpopulate();
 			// remove yourself from the current quadrant's generated objects list
+			next.getGeneratedObjects().add(systems.ship);
+			quadrant.getGeneratedObjects().remove(systems.ship);
+			quadrant = next;
 			// add yourself to the next quadrant's generated objects list
 			// populate the next quadrant
+			quadrant.populate();
 		}
     }
     
@@ -603,32 +652,7 @@ public class Ship extends SpaceObject implements Movable{
 			if(this.active){
 				this.moveToNextQuadrant();
 				/*
-				switch (this.direction){
-				case(Configs.NORTH):
-					//y quadrant + 1
-					break;
-				case(Configs.EAST):
-					//x quadrant + 1
-					break;
-				case(Configs.SOUTH):
-					//y quadrant - 1
-					break;
-				case(Configs.WEST):
-					//x quadrant - 1
-					break;
-				case(Configs.NORTH_WEST):
-					//x quadrant - 1 && y quadrant + 1
-					break;
-				case(Configs.NORTH_EAST):
-					//x quadrant + 1 && y quadrant + 1
-					break;
-				case(Configs.SOUTH_EAST):
-					//x quadrant + 1 && y quadrant - 1
-					break;
-				case(Configs.SOUTH_WEST):
-					//x quadrant - 1 && y quadrant - 1
-					break;
-				}*/					
+				*/					
 			}			
 		}    	
     }
@@ -825,7 +849,7 @@ public class Ship extends SpaceObject implements Movable{
 	     */
 		private void shoot() {
 			if(Configs.NEUTRAL != direction){
-				//new Maser(direction, sector);
+				Space.getInstance().getQuadrant(sector.getQuadPosition()).getWeaponList().add(new Maser(sector, direction));
 			}
 			this.direction = Configs.NEUTRAL;
 		}

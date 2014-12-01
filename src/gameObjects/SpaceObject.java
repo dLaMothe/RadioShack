@@ -103,6 +103,13 @@ public abstract class SpaceObject extends Observable implements Positionable{
     }
     
     /**
+     * 
+     * @return
+     */
+    public Quadrant getQuadrant(){
+    	return this.quadrant;
+    }
+    /**
      * REQUIRES: nothing
      * MODIFIES: this
      * EFFECTS: effects very depending on the implementation of the SpaceObject
