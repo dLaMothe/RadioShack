@@ -130,6 +130,9 @@ public class Configs {
     public static final int INITCRITICALTIMER = 10;
     public static final int CRITICALMASS = 0;
 	public static final int MAX_ION = 10;
+	
+	//DELTA
+	public static final int JOVIAN_DELTA = 8;
     
     
 

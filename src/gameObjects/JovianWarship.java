@@ -33,7 +33,7 @@ public abstract class JovianWarship
 	public JovianWarship(Sector sector, Ship ship){
 		super(sector);
 		random = new Random();
-		DELTA = 4;
+		DELTA = Configs.JOVIAN_DELTA;
 		setSpeed(new int[]{Configs.NEUTRAL, 1});
 		this.ship = ship;
 	}
@@ -44,7 +44,7 @@ public abstract class JovianWarship
 	@Override
 	public void action(){
 		if(DELTA == 0) {
-			DELTA = 4;
+			DELTA = Configs.JOVIAN_DELTA;
 			move();
 			ship.sapPower();
 		} else {
