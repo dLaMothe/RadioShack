@@ -66,6 +66,7 @@ public class GameEngine {
 	}
 	
 	public void setPower(int type, double value){
+
 		try{
 			ship.adjustPower(type,value);
 		}
@@ -76,6 +77,7 @@ public class GameEngine {
 		panels.powerAvailLabel.setText(String.valueOf(ship.getUnusedPower()) + "%");
 		panels.totalPowerLabel.setText(String.valueOf(ship.getPower()) + "%");
 	}
+
 
 	public void selfDestruct(){
 		ship.selfDestruct();

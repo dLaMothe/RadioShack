@@ -78,12 +78,19 @@ public class Configs {
     
     //BOARD CHARACTERS
     public static final String MINE ="%";
+
     public static final String SHIP ="^";
     public static final String SSTN ="0";
     public static final String JCC ="@";
     public static final String JBC ="&";
     public static final String UNKN ="X";
     public static final String EMPTY = ".";
+    
+    //SPEED CONSTANTS
+    public static final String TRT_MSSL ="+";
+    public static final String TRT_MINE ="%";
+    public static final String MSR ="~";
+    public static final String ANTM_POD ="#";
     
     //SPEED CONSTANTS
     public static final int SZERO = 0;
@@ -96,7 +103,7 @@ public class Configs {
     public static final int SSEVEN = 7;
     public static final int SEIGHT = 8;
     public static final int SNINE = 9;
-    
+
     //CONDITION LEVELS
     public static final double CONDITIONLEVELS[] = {75,50,25,0};
     public static final String CONDITIONSTRINGVALUES[] = {"GREEN","YELLOW", "RED","CRITICAL"};

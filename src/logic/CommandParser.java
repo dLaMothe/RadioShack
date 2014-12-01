@@ -93,6 +93,7 @@ public class CommandParser {
 				case SZERO: 
 					game.setVelocity(SZERO,direction);
 					break;
+
 				case SONE: 
 					game.setVelocity(SONE,direction);
 					break;

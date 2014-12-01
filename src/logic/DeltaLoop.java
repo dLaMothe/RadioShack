@@ -1,6 +1,9 @@
 package logic;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> impShip
 import java.util.*;
 
 
@@ -22,7 +25,11 @@ public class DeltaLoop{
 	private class GameLoop extends TimerTask{
 		public void run()
 		{
+<<<<<<< HEAD
 			//System.out.println("HELLO");
+=======
+			System.out.println("HELLO");
+>>>>>>> impShip
 			//game.ship.sapPower();
 			game.update();
 	        if (!isRunning)
