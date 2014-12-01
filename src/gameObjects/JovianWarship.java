@@ -15,6 +15,7 @@ public abstract class JovianWarship
 	/**
 	 * The Jovian's random roaming generator.
 	 */
+	private int DELTA;
 	protected Random random;
 	/**
 	 * The ship is the target of this Jovian.
@@ -32,6 +33,7 @@ public abstract class JovianWarship
 	public JovianWarship(Sector sector, Ship ship){
 		super(sector);
 		random = new Random();
+		DELTA = 4;
 		setSpeed(new int[]{Configs.NEUTRAL, 1});
 		this.ship = ship;
 	}
@@ -42,8 +44,13 @@ public abstract class JovianWarship
 	 */
 	@Override
 	public void action() throws CriticalPowerException{
-		move();
-		ship.sapPower();
+		if(DELTA == 0) {
+			DELTA = 4;
+			move();
+			ship.sapPower();
+		} else {
+			DELTA--;
+		}
 	}
 	
 	/**
@@ -52,27 +59,19 @@ public abstract class JovianWarship
 	 * puts the Jovian into the next sector if it's empty. 
 	 */
 	@Override
-	public void move(){				
-		sector.setInhabitant(null);
-		//Quadrant quadrant = getCurQuadrant();
-		Sector nextSector = null;
-		int direction = 0;
-		do{
+	public void move(){	
+
+			sector.setInhabitant(null);
+			Sector nextSector = null;
+			int direction = 0;
 			do{
-				direction = 1 + random.nextInt(9);
-			}while(direction == 5);
-			nextSector = quadrant.getNext(sector, direction);
-		}while(nextSector == null || nextSector.getInhabitant() != null);
-		setSpeed(new int[]{direction, 1});
-		setSector(nextSector);	
-	}
-	
-	/**
-	 * EFFECTS: Retrieves the Jovian's current quadrant
-	 * @return The Jovian's current quadrant
-	 */
-	private Quadrant getCurQuadrant(){
-		return Space.getInstance().getQuadrantOfObject(this);
+				do{
+					direction = 1 + random.nextInt(9);
+				}while(direction == 5);
+				nextSector = quadrant.getNext(sector, direction);
+			}while(nextSector == null || nextSector.getInhabitant() != null);
+			setSpeed(new int[]{direction, 1});
+			setSector(nextSector);	
 	}
 	
 	/**

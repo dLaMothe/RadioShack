@@ -58,6 +58,8 @@ public class Configs {
 	public static final int WINDOW_SIZE = 500;
 	public static final int SECTORS_PER_SIDE = 10;
 	public static final int TOTAL_JOVIANS = 44;
+	public static final int TOTAL_STARS = 33;
+	public static final int TOTAL_STATIONS = 2;
 	
 	
 	public static final int NORTH = 8;
