@@ -20,7 +20,6 @@ import board.Space;
 public class Ship extends SpaceObject implements Movable{
     
     private static final int MAGNITUDE = 0;
-	private static final int MAX_ION = 10;
 	public static final int DIRECTION = 1;
 	private final int[] STOP = {0, Configs.NEUTRAL};
 	private final PowerSystem systems;
@@ -190,7 +189,7 @@ public class Ship extends SpaceObject implements Movable{
      */
     @Override
     public void setSpeed(int[] velocity) {
-    	if(velocity[MAGNITUDE] < MAX_ION){
+    	if(velocity[MAGNITUDE] < Configs.MAX_ION){
     		this.setEngineState(ION, velocity);
     	}else{
     		this.setEngineState(HYPER, velocity);
@@ -620,7 +619,7 @@ public class Ship extends SpaceObject implements Movable{
 			super.setActive(velocity);
 			this.throttle = velocity[Ship.MAGNITUDE];
 			if(0 < this.throttle){
-				setDelta(10 - this.throttle);
+				setDelta(Configs.MAX_ION - this.throttle);
 			}else{
 				setDelta(-1);
 			}
@@ -670,7 +669,7 @@ public class Ship extends SpaceObject implements Movable{
 		public void setActive(int[] velocity){
 			super.setActive(velocity);
 			if(this.active){
-				setDelta(5);
+				setDelta(Configs.HYPER_DELTA);
 			}else{
 				setDelta(-1);
 			}
