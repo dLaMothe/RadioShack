@@ -73,9 +73,9 @@ public class GameEngine {
 		}
 		
 		for(int i= 0; i < weaponObjects.size(); i++){
-			weaponObjects.get(i).action();
 			pos = weaponObjects.get(i).getPosition();
 			panels.grid[pos.getCol()][pos.getRow()].setText(weaponObjects.get(i).getLabel());
+			//weaponObjects.get(i).action();
 		}
 		
 		if(ship.getUnusedPower() < MIN_TOTAL_POWER) {
@@ -93,9 +93,11 @@ public class GameEngine {
 		}
 		
 		
-		
+		//SHIP ACTION
 		ship.action();
-
+		
+		
+		updateResource();
 		panels.sectorLabel.setText(String.valueOf(ship.getSector().getPosition().getRow()) + "-" + String.valueOf(ship.getSector().getPosition().getCol()));
 		isActiveSR(ship.getPower(SRSENSOR) > MIN_SYSTEM_POWER);
 		isActiveLR(ship.getPower(LRSENSOR) > MIN_SYSTEM_POWER);
@@ -132,10 +134,6 @@ public class GameEngine {
 		}
 	}
 	
-	private void endGame() {
-		ship.selfDestruct();
-	}
-	
 	public void invalidCommand()
 	{
 		panels.invalidCommandLabel.setText("Captain your an idiot");
@@ -148,7 +146,14 @@ public class GameEngine {
 	
 	public void shootWeapon(int type, int direction) {
 		ship.shootWeapon(type, direction);
-		updateResource();
+	}
+	
+	public void explodePod() {
+		ship.detonateAntiPod();
+	}
+	
+	private void endGame() {
+		ship.selfDestruct();
 	}
 	
 	private void clearBoard(){

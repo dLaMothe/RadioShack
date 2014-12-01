@@ -30,13 +30,13 @@ public class CommandParser {
 				handleDestruct(command.substring(subCommand));
 				break;
 			case 'E':
-				handleEx(command.substring(subCommand));
+				handleExperiment(command.substring(subCommand));
 				break;
 			case 'A':
 				handleWeapon(command.substring(subCommand),ANITMATTER_POD);
 				break;
 			case 'X':
-				handleExperiment(command.substring(subCommand));
+				handleEx();
 				break;
 			default:
 				invalidCommand();
@@ -211,9 +211,9 @@ public class CommandParser {
 		game.selfDestruct();
 	}
 	
-	private void handleEx(String substring) {
+	private void handleEx() {
 		// TODO Auto-generated method stub
-		System.out.println("E Process: " + substring);
+		game.explodePod();
 		
 	}
 	
