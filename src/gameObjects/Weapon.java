@@ -29,9 +29,10 @@ public abstract class Weapon
 	 * @param sector The current ship's sector.
 	 * @param direction The direction of the shot.
 	 */
-	public Weapon(Sector sector, int direction){		
+	public Weapon(Sector sector, int direction){
+		
 		super(Space.getInstance().
-				getQuadrant(sector.getPosition()).
+				getQuadrant(sector.getQuadPosition()).
 				getNext(sector, direction));
 		setSpeed(new int[]{direction, 1});
 	}
