@@ -14,6 +14,9 @@ public class CommandParser {
 	public void parseCommand(String command) {
 		game.clearInvalidCommand();
 		switch(command.charAt(firstIndex)) {
+			case 'H':
+				handleHyperDirection(command.substring(subCommand));
+				break;
 			case 'I':
 				handleIonDirection(command.substring(subCommand));
 				break;
@@ -40,42 +43,84 @@ public class CommandParser {
 				break;
 			default:
 				invalidCommand();
+
+				System.out.println("IC 0");
 				break;
 				
 		}
 	}
 
+	private void handleHyperDirection(String substring) {
+		try {
+			switch(Integer.parseInt(substring.substring(firstIndex) )) {
+				case NORTH: 
+					handleSpeed(String.valueOf(STEN), NORTH);
+					break;
+				case SOUTH:
+					handleSpeed(String.valueOf(STEN), SOUTH);
+					break;
+				case WEST:
+					handleSpeed(String.valueOf(STEN), WEST);
+					break;
+				case EAST:
+					handleSpeed(String.valueOf(STEN), EAST);
+					break;
+				case NORTH_WEST:
+					handleSpeed(String.valueOf(STEN), NORTH_WEST);
+					break;
+				case NORTH_EAST:
+					handleSpeed(String.valueOf(STEN), NORTH_EAST);
+					break;
+				case SOUTH_WEST:
+					handleSpeed(String.valueOf(STEN), SOUTH_WEST);
+					break;
+				case SOUTH_EAST:
+					handleSpeed(String.valueOf(STEN), SOUTH_EAST);
+					break;
+				case NEUTRAL:
+					handleSpeed(String.valueOf(STEN), NEUTRAL);
+					break;
+				default: 
+					invalidCommand();
+					System.out.println("IC 1");
+					break;
+					
+			}
+		} catch(NumberFormatException e) {
+			invalidCommand();
 
-
+			System.out.println("IC 2");
+		}
+	}
 	private void handleIonDirection(String substring) {
 		try {
 			switch(Integer.parseInt(substring.substring(firstIndex, firstIndex + 1) )) {
 				case NORTH: 
-					handleIonSpeed(substring.substring(subCommand), NORTH);
+					handleSpeed(substring.substring(subCommand), NORTH);
 					break;
 				case SOUTH:
-					handleIonSpeed(substring.substring(subCommand), SOUTH);
+					handleSpeed(substring.substring(subCommand), SOUTH);
 					break;
 				case WEST:
-					handleIonSpeed(substring.substring(subCommand), WEST);
+					handleSpeed(substring.substring(subCommand), WEST);
 					break;
 				case EAST:
-					handleIonSpeed(substring.substring(subCommand), EAST);
+					handleSpeed(substring.substring(subCommand), EAST);
 					break;
 				case NORTH_WEST:
-					handleIonSpeed(substring.substring(subCommand), NORTH_WEST);
+					handleSpeed(substring.substring(subCommand), NORTH_WEST);
 					break;
 				case NORTH_EAST:
-					handleIonSpeed(substring.substring(subCommand), NORTH_EAST);
+					handleSpeed(substring.substring(subCommand), NORTH_EAST);
 					break;
 				case SOUTH_WEST:
-					handleIonSpeed(substring.substring(subCommand), SOUTH_WEST);
+					handleSpeed(substring.substring(subCommand), SOUTH_WEST);
 					break;
 				case SOUTH_EAST:
-					handleIonSpeed(substring.substring(subCommand), SOUTH_EAST);
+					handleSpeed(substring.substring(subCommand), SOUTH_EAST);
 					break;
 				case NEUTRAL:
-					handleIonSpeed(substring.substring(subCommand), NEUTRAL);
+					handleSpeed(substring.substring(subCommand), NEUTRAL);
 					break;
 				default: 
 					invalidCommand();
@@ -87,13 +132,12 @@ public class CommandParser {
 		}
 	}
 	
-	private void handleIonSpeed(String substring, int direction) {
+	private void handleSpeed(String substring, int direction) {
 		try {
 			switch(Integer.parseInt(substring)) {
 				case SZERO: 
 					game.setVelocity(SZERO,direction);
 					break;
-
 				case SONE: 
 					game.setVelocity(SONE,direction);
 					break;
@@ -121,13 +165,20 @@ public class CommandParser {
 				case SNINE:
 					game.setVelocity(SNINE,direction);
 					break;
+				case STEN:
+					game.setVelocity(STEN, direction);
+					break;
 				default: 
 					invalidCommand();
+
+					System.out.println("IC 3");
 					break;
 					
 			}
 		} catch(NumberFormatException e) {
 			invalidCommand();
+
+			System.out.println("IC 4");
 		}
 	}
 	

@@ -29,7 +29,7 @@ public class GameEngine {
 		starTime = INITTIME;
 		panels = newPanel;
 		quad = Space.getInstance().getQuadrant(5, 5);
-		ship = new Ship(quad.getSector(new Position(5,5)));
+		ship = new Ship(quad.getSector(new Position(0,0)));
 		quadObjects = ship.getQuadrant().getGeneratedObjects();
 		weaponObjects = ship.getQuadrant().getWeaponList();
 		deltaLoop = new DeltaLoop(this);
@@ -70,15 +70,19 @@ public class GameEngine {
 		for(int i= 0; i < quadObjects.size(); i++){
 			pos = quadObjects.get(i).getPosition();
 			panels.grid[pos.getCol()][pos.getRow()].setText(quadObjects.get(i).getLabel());
+			quadObjects.get(i).action();
 		}
 		
 		for(int i= 0; i < weaponObjects.size(); i++){
 			if(weaponObjects.get(i) instanceof Maser) {
-				//for(int i = 0; i<weaponObjects.get(i))
+				for (Sector sector : ((Maser)weaponObjects.get(i)).getTail()){
+					panels.grid[sector.getPosition().getCol()][sector.getPosition().getRow()].setText(weaponObjects.get(i).getLabel());
+				}
+				weaponObjects.get(i).action();
 			} else {
 				pos = weaponObjects.get(i).getPosition();
 				panels.grid[pos.getCol()][pos.getRow()].setText(weaponObjects.get(i).getLabel());
-				//weaponObjects.get(i).action();
+				weaponObjects.get(i).action();
 			}
 		}
 		

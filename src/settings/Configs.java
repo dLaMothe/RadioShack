@@ -105,6 +105,7 @@ public class Configs {
     public static final int SSEVEN = 7;
     public static final int SEIGHT = 8;
     public static final int SNINE = 9;
+    public static final int STEN = 10;
 
     //CONDITION LEVELS
     public static final double CONDITIONLEVELS[] = {75,50,25,0};
@@ -124,6 +125,7 @@ public class Configs {
     public static final int SELFDESTRUCTMAX = 0;
     public static final int INITCRITICALTIMER = 10;
     public static final int CRITICALMASS = 0;
+	private static final int MAX_ION = 10;
     
     
 

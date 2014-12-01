@@ -157,7 +157,7 @@ public class Quadrant implements Positionable {
 			nextCol -= 1;
 			break;
 		default:
-			return sector;
+			//return sector;
 		}
 		pos.setCol(nextCol);
 		pos.setRow(nextRow);
