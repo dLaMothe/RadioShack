@@ -120,7 +120,7 @@ public class GamePanels {
 		  
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;
-		test.add(new JLabel("LAUNCHER"),gridConstraint);
+		test.add(new JLabel("TRITONMISSLE"),gridConstraint);
 		  
 		gridConstraint.gridx = X;
 		gridConstraint.gridy = Y++;

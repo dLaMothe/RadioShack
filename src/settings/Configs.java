@@ -88,7 +88,6 @@ public class Configs {
     
     //SPEED CONSTANTS
     public static final String TRT_MSSL ="+";
-    public static final String TRT_MINE ="%";
     public static final String MSR ="~";
     public static final String ANTM_POD ="#";
     
@@ -109,9 +108,14 @@ public class Configs {
     public static final String CONDITIONSTRINGVALUES[] = {"GREEN","YELLOW", "RED","CRITICAL"};
     public static final Color CONDITIONCOLOR[] = {Color.GREEN,Color.YELLOW,Color.RED,Color.PINK};
     public static final int CONDITIONLEVELAMOUNT = 3;
+    public static final int CRITICALMASS = 10;
     
     //PANEL VARIABLES
     public static final int LRARRSIZE = 3;
+    
+    //VELOCITY VARIABLES
+    public static final int SPEED = 0;
+    public static final int DIRECTION = 1;
     
     
 

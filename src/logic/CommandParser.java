@@ -170,31 +170,35 @@ public class CommandParser {
 	
 	private void handlePower(String cmd) {
 		try {
-			switch(cmd.charAt(firstIndex)) {
-				case 'H':
-					game.setPower(HYPER, Double.parseDouble((cmd.substring(subCommand))));
-					break;
-				case 'I':
-					game.setPower(ION, Double.parseDouble((cmd.substring(subCommand))));
-					break;
-				case 'L':
-					game.setPower(LRSENSOR, Double.parseDouble((cmd.substring(subCommand))));
-					break;
-				case 'S':
-					game.setPower(SRSENSOR, Double.parseDouble((cmd.substring(subCommand))));
-					break;
-				case 'D':
-					game.setPower(SHIELD, Double.parseDouble((cmd.substring(subCommand))));
-					break;
-				case 'M':
-					game.setPower(MASER, Double.parseDouble((cmd.substring(subCommand))));
-					break;
-				case 'T':
-					game.setPower(LAUNCHER, Double.parseDouble((cmd.substring(subCommand))));
-					break;
-				default:
+			if(Double.parseDouble((cmd.substring(subCommand))) >= 0) {
+				switch(cmd.charAt(firstIndex)) {
+					case 'H':
+						game.setPower(HYPER, Double.parseDouble((cmd.substring(subCommand))));
+						break;
+					case 'I':
+						game.setPower(ION, Double.parseDouble((cmd.substring(subCommand))));
+						break;
+					case 'L':
+						game.setPower(LRSENSOR, Double.parseDouble((cmd.substring(subCommand))));
+						break;
+					case 'S':
+						game.setPower(SRSENSOR, Double.parseDouble((cmd.substring(subCommand))));
+						break;
+					case 'D':
+						game.setPower(SHIELD, Double.parseDouble((cmd.substring(subCommand))));
+						break;
+					case 'M':
+						game.setPower(MASER, Double.parseDouble((cmd.substring(subCommand))));
+						break;
+					case 'T':
+						game.setPower(LAUNCHER, Double.parseDouble((cmd.substring(subCommand))));
+						break;
+					default:
+						invalidCommand();
+						break;
+				} 
+			} else {
 					invalidCommand();
-					break;
 			}
 		} catch(NumberFormatException e) {
 			invalidCommand();

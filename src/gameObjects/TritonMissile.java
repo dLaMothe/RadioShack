@@ -1,9 +1,5 @@
 package gameObjects;
-
-<<<<<<< HEAD
-=======
 import settings.Configs;
->>>>>>> impShip
 import board.Quadrant;
 import board.Sector;
 
@@ -25,44 +21,6 @@ public class TritonMissile
 	 */
 	public TritonMissile(Sector sector, int direction){
 		super(sector, direction);
-<<<<<<< HEAD
-		label = "$";
-	}
-	
-	/**
-	 * MODIFIES: This. The missile's current sector or destroy the missile if it bumped something.
-	 * EFFECTS: Checks what is in the next sector; destroys the missile if it has reached 
-	 * the quadrant border; puts the missile into the next sector if it's empty; 
-	 * bumps the object in the next sector if the next sector contains any.
-	 */
-	public void move(){
-		sector.setInhabitant(null);
-		Quadrant quadrant = getCurQuadrant();
-		Sector nextSector = quadrant.getNext(sector, velocity[0]);	
-		if(nextSector == null){
-			destroyItself();
-		} else {
-			SpaceObject object = nextSector.getInhabitant();
-			if(object != null) {
-				object.bump(this);
-			}
-			setSector(nextSector);
-		} 		
-	}
-	
-	/**
-	 * PURPOSE: This has been hit by other SpaceObject so it destroys itself and object's 
-	 * bumped() called so that they can deal with this particular impact
-	 * EFFECTS: Destroys the missile.
-	 */
-	@Override
-	public void bump(SpaceObject object) {
-		object.bumped();
-		destroyItself();
-	}
-	
-	/**
-=======
 		label = Configs.TRT_MSSL;
 	}
 	

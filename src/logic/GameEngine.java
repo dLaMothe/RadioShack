@@ -11,10 +11,14 @@ public class GameEngine {
 	public Ship ship;
 	public Quadrant quad;
 	public DeltaLoop deltaLoop;
-	private int starTime; 
+	private int starTime;
+	private int criticalCounter;
+	private int destructCounter;
 	
 	
 	public GameEngine(GamePanels newPanel) {
+		criticalCounter = 0;
+		destructCounter = 0;
 		starTime = INITTIME;
 		panels = newPanel;
 		quad = Space.getInstance().getQuadrant(5, 5);
@@ -27,8 +31,8 @@ public class GameEngine {
 	public void setVelocity(int speed, int direction) {
 		int[] velocity;
 		velocity = new int[2];
-		velocity[0] = speed;
-		velocity[1] = direction;
+		velocity[SPEED] = speed;
+		velocity[DIRECTION] = direction;
 		ship.setSpeed(velocity);
 	}
 	
@@ -56,9 +60,19 @@ public class GameEngine {
 				}
 			}
 		}
+		
+		if(ship.getUnusedPower() < 0) {
+			criticalCounter++;
+		}
+		
+		if(criticalCounter == CRITICALMASS) {
+			endGame();
+		}
+		
 		ship.action();
 		isActiveSR(ship.getPower(SRSENSOR) > MIN_SYSTEM_POWER);
 		isActiveLR(ship.getPower(LRSENSOR) > MIN_SYSTEM_POWER);
+		panels.powerAvailLabel.setText(String.valueOf(ship.getUnusedPower()) + "%");
 		panels.totalPowerLabel.setText(String.valueOf(ship.getPower()) + "%");
 		panels.starTimeLabel.setText(String.valueOf(starTime));
 		starTime += TIMEINCREMENT;
@@ -71,7 +85,8 @@ public class GameEngine {
 			ship.adjustPower(type,value);
 		}
 		catch (CriticalPowerException e){
-			criticalPowerLevelCommand();
+			criticalCounter = 0;
+			panels.invalidCommandLabel.setText("Captian the power levels are going critical");
 		}
 		panels.powerLabels[type].setText(String.valueOf(ship.getPower(type)));
 		panels.powerAvailLabel.setText(String.valueOf(ship.getUnusedPower()) + "%");
@@ -80,6 +95,10 @@ public class GameEngine {
 
 
 	public void selfDestruct(){
+		endGame();
+	}
+	
+	private void endGame() {
 		ship.selfDestruct();
 	}
 	
@@ -96,11 +115,6 @@ public class GameEngine {
 	public void shootWeapon(int type, int direction) {
 		ship.shootWeapon(type, direction);
 		updateResource();
-	}
-	
-	private void criticalPowerLevelCommand()
-	{
-		panels.invalidCommandLabel.setText("Captian the power levels are going critical");
 	}
 	
 	private void isActiveSR(boolean isActive) {
