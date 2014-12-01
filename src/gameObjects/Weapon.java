@@ -53,13 +53,4 @@ public abstract class Weapon
 	public void action(){
 		this.move();
 	}
-	
-	/**
-	 * MODIFIES: Sector: Puts null into it; Quadrant: Removes the weapon from the weapon list.
-	 * EFFECTS: Removes all the references to the weapon the sector. 
-	 */
-	protected void destroyItself(){
-		sector.setInhabitant(null);
-		getCurQuadrant().getWeaponList().remove(this);		
-	}
 }

@@ -4,37 +4,37 @@ import settings.Configs;
 import board.*;
 
 /**
- * The Jovian Battle Cruiser which can move changing its direction randomly
+ * The Jovian Command Cruiser which can move changing its direction randomly
  * every turn and saps the ship's power.
  * @author Laurens van Wingerden, Vitalii Egorchatov
  */
-public class JovianBattleCruiser 
+public class JovianCommandCruiser 
 	extends JovianWarship{
 
 	/**
 	 * REQUIRES: The Jovian's current sector and the ship as a target.
 	 * MODIFIES: This.
-	 * EFFECTS: Creates an instance of Jovian Battle Cruiser and puts it into a sector;
+	 * EFFECTS: Creates an instance of Jovian Command Cruiser and puts it into a sector;
 	 * sets the cruiser's label and initial speed; passes the ship as a target.
-	 * @param sector The current Jovian Battle Cruiser's sector.
+	 * @param sector The current Jovian Command Cruiser's sector.
 	 * @param ship The reference to the ship.
 	 */
-	public JovianBattleCruiser(Sector sector, Ship ship) {
+	public JovianCommandCruiser(Sector sector, Ship ship) {
 		super(sector, ship);
-		label = Configs.JBC;
+		label = Configs.JCC;
 	}
 	
 	/**
 	 * PURPOSE: This has been hit by other SpaceObject so it destroys itself 
-	 * if the object is any weapon and object's bumped() called so that they can 
+	 * if the object is an Antimatter Pod and object's bumped() called so that they can 
 	 * deal with this particular impact;
-	 * EFFECTS: Destroys the battle cruiser by any weapon.
+	 * EFFECTS: Destroys the command cruiser only by an Antimatter Pod.
 	 * @param object The object that collided with this.
 	 */
 	@Override
 	public void bump(SpaceObject object) {
 		object.bumped(this);
-		if(object instanceof Weapon){
+		if(object instanceof AntimatterPod){
 			selfDestruct();
 		}
 	}
@@ -48,3 +48,4 @@ public class JovianBattleCruiser
 		
 	}	
 }
+

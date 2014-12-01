@@ -51,7 +51,7 @@ public class Maser
 		if(hit){
 			tail = getNext();
 			if(tail == null){	
-				destroyItself();
+				selfDestruct();
 			} else {		
 				sector.setInhabitant(null);
 			}
@@ -92,6 +92,7 @@ public class Maser
 	 * bumped() called so that they can deal with this particular impact
 	 * MODIFIES: This: hit.
 	 * EFFECTS: Starts destroying the maser starting with its tail.
+	 * @param object The object that collided with this.
 	 */
 	@Override
 	public void bump(SpaceObject object) {
@@ -103,6 +104,7 @@ public class Maser
 	 * PURPOSE: A feedback message from the object this has collided with.
 	 * MODIFIES: This: hit.
 	 * EFFECTS: Starts destroying the maser starting with its tail.
+	 * @param object The object that collided with this.
 	 */
 	@Override
 	public void bumped(SpaceObject object) {
