@@ -545,10 +545,18 @@ public class Ship extends SpaceObject implements Movable{
 				yCurrent += 1;
 				break;
 			}
-			if(xCurrent > Configs.SPACE_SIZE) xCurrent = 0;
-			if(xCurrent < 0) xCurrent = Configs.SPACE_SIZE - 1;
-			if(yCurrent > Configs.SPACE_SIZE) yCurrent = 0;
-			if(yCurrent < 0) yCurrent = Configs.SPACE_SIZE - 1;
+			if(xCurrent > Configs.SPACE_SIZE - 1){
+				xCurrent = 0;
+			}
+			if(xCurrent < 0){
+				xCurrent = (Configs.SPACE_SIZE - 1);
+			}
+			if(yCurrent > Configs.SPACE_SIZE - 1){
+				yCurrent = 0;
+			}
+			if(yCurrent < 0){
+				yCurrent = (Configs.SPACE_SIZE - 1);
+			}
 			Quadrant next = Space.getInstance().getQuadrant(yCurrent, xCurrent);
 			quadrant.unpopulate();
 			next.getGeneratedObjects().add(systems.ship);
