@@ -38,9 +38,10 @@ public abstract class JovianWarship
 	
 	/**
 	 * EFFECTS: Moves the Jovian and saps the ship's power.
+	 * @throws CriticalPowerException 
 	 */
 	@Override
-	public void action(){
+	public void action() throws CriticalPowerException{
 		move();
 		ship.sapPower();
 	}
