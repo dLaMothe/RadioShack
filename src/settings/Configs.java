@@ -120,12 +120,13 @@ public class Configs {
     //VELOCITY VARIABLES
     public static final int SPEED = 0;
     public static final int DIRECTION = 1;
+    public static final int HYPER_DELTA = 5;
     
     public static final int INITDESTRUCTTIMER = 16;
     public static final int SELFDESTRUCTMAX = 0;
     public static final int INITCRITICALTIMER = 10;
     public static final int CRITICALMASS = 0;
-	private static final int MAX_ION = 10;
+	public static final int MAX_ION = 10;
     
     
 
