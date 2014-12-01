@@ -653,11 +653,28 @@ public class Ship extends SpaceObject implements Movable{
 		@Override
 		public void act() {
 			if(this.active){
-				this.moveToNextQuadrant();
-				/*
-				*/					
+				if(this.getDelta() == 0){
+					this.moveToNextQuadrant();					
+				}else{
+					this.setDelta(this.getDelta() - 1);
+				}
 			}			
-		}    	
+		}
+		
+		/**
+	     * REQUIRES: see super
+	     * MODIFIES: this
+	     * EFFECTS: see super, sets values outside the scope of the super method
+	     */
+		@Override
+		public void setActive(int[] velocity){
+			super.setActive(velocity);
+			if(this.active){
+				setDelta(5);
+			}else{
+				setDelta(-1);
+			}
+		}
     }
     
     private class LRSensors extends ShipSystem{
