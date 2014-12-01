@@ -44,6 +44,7 @@ public class Configs {
     public static final double INIT_TRT_MISSILE = 11.0;
     //minimum system power(This is the minimum power a system must have in order to function)
     public static final double MIN_SYSTEM_POWER = 2.0;
+    public static final double MIN_TOTAL_POWER = 0;
     public static final double POWER_SAP = 0.5;
     
     public static final int TOTAL_SENSORS_ROWS = 3;
@@ -77,18 +78,22 @@ public class Configs {
     public static final int Y = 1;
     
     //BOARD CHARACTERS
+    public static final String MINE ="%";
+
     public static final String SHIP ="^";
     public static final String SSTN ="0";
     public static final String JCC ="@";
     public static final String JBC ="&";
     public static final String UNKN ="X";
-    public static final String EMPTY = "-";
+    public static final String EMPTY = ".";
+    
+    //SPEED CONSTANTS
     public static final String TRT_MSSL ="+";
-    public static final String MINE ="%";
     public static final String MSR ="~";
     public static final String ANTM_POD ="#";
     
     //SPEED CONSTANTS
+    public static final int SZERO = 0;
     public static final int SONE = 1;
     public static final int STWO = 2;
     public static final int STHREE = 3;
@@ -98,16 +103,25 @@ public class Configs {
     public static final int SSEVEN = 7;
     public static final int SEIGHT = 8;
     public static final int SNINE = 9;
-    public static final int STEN = 10;
-    
+
     //CONDITION LEVELS
     public static final double CONDITIONLEVELS[] = {75,50,25,0};
     public static final String CONDITIONSTRINGVALUES[] = {"GREEN","YELLOW", "RED","CRITICAL"};
     public static final Color CONDITIONCOLOR[] = {Color.GREEN,Color.YELLOW,Color.RED,Color.PINK};
     public static final int CONDITIONLEVELAMOUNT = 3;
+
     
     //PANEL VARIABLES
     public static final int LRARRSIZE = 3;
+    
+    //VELOCITY VARIABLES
+    public static final int SPEED = 0;
+    public static final int DIRECTION = 1;
+    
+    public static final int INITDESTRUCTTIMER = 16;
+    public static final int SELFDESTRUCTMAX = 0;
+    public static final int INITCRITICALTIMER = 10;
+    public static final int CRITICALMASS = 0;
     
     
 
