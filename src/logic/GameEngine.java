@@ -73,9 +73,13 @@ public class GameEngine {
 		}
 		
 		for(int i= 0; i < weaponObjects.size(); i++){
-			pos = weaponObjects.get(i).getPosition();
-			panels.grid[pos.getCol()][pos.getRow()].setText(weaponObjects.get(i).getLabel());
-			//weaponObjects.get(i).action();
+			if(weaponObjects.get(i) instanceof Maser) {
+				//for(int i = 0; i<weaponObjects.get(i))
+			} else {
+				pos = weaponObjects.get(i).getPosition();
+				panels.grid[pos.getCol()][pos.getRow()].setText(weaponObjects.get(i).getLabel());
+				//weaponObjects.get(i).action();
+			}
 		}
 		
 		if(ship.getUnusedPower() < MIN_TOTAL_POWER) {

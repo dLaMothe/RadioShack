@@ -6,6 +6,8 @@ import java.awt.KeyboardFocusManager;
 
 import javax.swing.*;
 
+import board.Space;
+
 import logic.KeyDispatcher;
 
 public class InvadeGameA extends JFrame {
@@ -65,7 +67,14 @@ public class InvadeGameA extends JFrame {
 		menuBar.add(menu);
 		menuItem = new JMenuItem(new AbstractAction("New Game") {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-		       
+				KeyboardFocusManager manager =
+		    	         KeyboardFocusManager.getCurrentKeyboardFocusManager();
+		    	manager.removeKeyEventDispatcher( dispatcher );
+		       dispose();
+		       Space.clear();
+		       Space.getInstance();
+		       String []arr = {};
+		       main(arr);
 			}
 		});
 		menu.add(menuItem);
@@ -88,6 +97,7 @@ public class InvadeGameA extends JFrame {
 		//Initialize Game
 		game = new GameEngine(panel);
 	}
+	
 	
 	public static void main(String[] args) {
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {

@@ -106,5 +106,9 @@ public class Space {
 		}
 		return instance;
 	}
+	
+	public static void clear() {
+		instance = null;
+	}
 
 }
