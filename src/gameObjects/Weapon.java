@@ -15,7 +15,7 @@ public abstract class Weapon
 	 * MODIFIES: This.
 	 * EFFECTS: Creates an instance of weapon and puts it into a sector
 	 * next to the ship depending on the direction of the shoot;
-	 * sets the weapon's initial direction.
+	 * sets the weapon's initial direction and speed.
 	 * @param sector The current ship's sector.
 	 * @param direction The direction of the shot.
 	 */
