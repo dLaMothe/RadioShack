@@ -545,15 +545,15 @@ public class Ship extends SpaceObject implements Movable{
 				yCurrent += 1;
 				break;
 			}
+			if(xCurrent > Configs.SPACE_SIZE) xCurrent = 0;
+			if(xCurrent < 0) xCurrent = Configs.SPACE_SIZE - 1;
+			if(yCurrent > Configs.SPACE_SIZE) yCurrent = 0;
+			if(yCurrent < 0) yCurrent = Configs.SPACE_SIZE - 1;
 			Quadrant next = Space.getInstance().getQuadrant(yCurrent, xCurrent);
-			// unpopulate the current quadrant
 			quadrant.unpopulate();
-			// remove yourself from the current quadrant's generated objects list
 			next.getGeneratedObjects().add(systems.ship);
 			quadrant.getGeneratedObjects().remove(systems.ship);
 			quadrant = next;
-			// add yourself to the next quadrant's generated objects list
-			// populate the next quadrant
 			quadrant.populate();
 			if(((Launchers) systems.getSystem(LAUNCHER)).getActive()){
 				((Launchers) systems.getSystem(LAUNCHER)).clearActive();
