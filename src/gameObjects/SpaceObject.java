@@ -108,8 +108,8 @@ public abstract class SpaceObject extends Observable implements Positionable{
      */
     public abstract void action();
     
-    public abstract void bumped();
+    public abstract void bumped(SpaceObject object);
     
-    public abstract void bump(SpaceObject sb);
+    public abstract void bump(SpaceObject object);
     
 }
