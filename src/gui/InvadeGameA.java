@@ -14,7 +14,7 @@ import logic.KeyDispatcher;
  * AUTHOR: MANDIP SANGHA, DAVID LAMOTHE
  * OVERVIEW: STARTS GAME AND DRAWS JFRAME
  */
-public class InvadeGameA extends JFrame {
+public class InvadeGameA extends JApplet {
 	
 	private static KeyDispatcher dispatcher;
 	private GameEngine game;
@@ -26,7 +26,7 @@ public class InvadeGameA extends JFrame {
 	 * EFFECTS: Initializes game, UI and dispatcher
 	 */
 	InvadeGameA() {
-		initUI();
+		init();
 		initGame();
 		dispatcher = new KeyDispatcher(game,panel.getTextField());
     	//Hijack the keyboard manager
@@ -40,7 +40,7 @@ public class InvadeGameA extends JFrame {
 	 * MODIFIES: NONE
 	 * EFFECTS: Initializes UI 
 	 */
-	private void initUI() {
+	public void init() {
     	panel = new GamePanels();
 		setTitle("Test");
 		setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
