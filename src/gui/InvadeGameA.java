@@ -25,7 +25,7 @@ public class InvadeGameA extends JApplet {
 	 * MODIFIES: NONE
 	 * EFFECTS: Initializes game, UI and dispatcher
 	 */
-	InvadeGameA() {
+	public InvadeGameA() {
 		init();
 		initGame();
 		dispatcher = new KeyDispatcher(game,panel.getTextField());
@@ -42,8 +42,8 @@ public class InvadeGameA extends JApplet {
 	 */
 	public void init() {
     	panel = new GamePanels();
-		setTitle("Test");
-		setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+		//setTitle("Test");
+		//setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
 	      
 		setLayout(new java.awt.GridBagLayout());
 		java.awt.GridBagConstraints gridConstraint = new java.awt.GridBagConstraints();
@@ -84,7 +84,7 @@ public class InvadeGameA extends JApplet {
 				KeyboardFocusManager manager =
 		    	         KeyboardFocusManager.getCurrentKeyboardFocusManager();
 		    	manager.removeKeyEventDispatcher( dispatcher );
-		       dispose();
+		       System.exit(0);
 		       Space.clear();
 		       Space.getInstance();
 		       String []arr = {};
@@ -94,7 +94,7 @@ public class InvadeGameA extends JApplet {
 		menu.add(menuItem);
 		menuItem = new JMenuItem(new AbstractAction("Exit Game") {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-				dispose();
+				System.exit(0);
 			}
 		});
 		menu.add(menuItem);
@@ -102,7 +102,7 @@ public class InvadeGameA extends JApplet {
 		setJMenuBar(menuBar);
 		
 		setSize(575,300);
-		setLocationRelativeTo(null);
+		//setLocationRelativeTo(null);
 		
 		
 	}

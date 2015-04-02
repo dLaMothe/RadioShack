@@ -36,7 +36,7 @@ public class ExperimentalRay
 	 */
 	public void detonate(){	
 		//If it's 0, the ship gets hurt
-		if(random.nextInt(2) == 0){
+		/*if(random.nextInt(2) == 0){
 			//ship
 		} 
 		//If it's 1, all the Jovians get killed
@@ -46,7 +46,7 @@ public class ExperimentalRay
 					
 				}
 			}
-		}
+		}*/
 	}
 	
 	public void move(){
