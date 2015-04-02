@@ -33,40 +33,43 @@ public class CommandParser {
 
 	public void parseCommand(String command) {
 		game.clearInvalidCommand();
-		switch(command.charAt(firstIndex)) {
-			case 'H':
-				handleHyperDirection(command.substring(subCommand));
-				break;
-			case 'I':
-				handleIonDirection(command.substring(subCommand));
-				break;
-			case 'M':
-				handleWeapon(command.substring(subCommand),MASER);
-				break;
-			case 'T':
-				handleWeapon(command.substring(subCommand),TRT_MISSILE);
-				break;
-			case 'D':
-				handlePower(command.substring(subCommand));
-				break;
-			case 'S':
-				handleDestruct(command.substring(subCommand));
-				break;
-			case 'E':
-				handleExperiment(command.substring(subCommand));
-				break;
-			case 'A':
-				handleWeapon(command.substring(subCommand),ANITMATTER_POD);
-				break;
-			case 'X':
-				handleEx();
-				break;
-			default:
-				invalidCommand();
-
-				System.out.println("IC 0");
-				break;
-				
+		try {
+		    switch(command.charAt(firstIndex)) {
+			    case 'H':
+				    handleHyperDirection(command.substring(subCommand));
+				    break;
+			    case 'I':
+				    handleIonDirection(command.substring(subCommand));
+				    break;
+			    case 'M':
+				    handleWeapon(command.substring(subCommand),MASER);
+				    break;
+			    case 'T':
+				    handleWeapon(command.substring(subCommand),TRT_MISSILE);
+				    break;
+			    case 'D':
+				    handlePower(command.substring(subCommand));
+				    break;
+			    case 'S':
+				    handleDestruct(command.substring(subCommand));
+				    break;
+			    case 'E':
+				    handleExperiment(command.substring(subCommand));
+				    break;
+			    case 'A':
+				    handleWeapon(command.substring(subCommand),ANITMATTER_POD);
+				    break;
+			    case 'X':
+				    handleEx();
+				    break;
+			    default:
+				    invalidCommand();
+				    System.out.println("IC 0");
+				    break;
+		} catch(NumberFormatException e) {
+		    invalidCommand();
+		} catch(IndexOutOfBoundsException e) {
+		    invalidCommand();
 		}
 	}
 	
